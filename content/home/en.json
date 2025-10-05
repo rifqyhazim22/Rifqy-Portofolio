@@ -1,30 +1,30 @@
 {
   "hero": {
     "name": "Rifqy Hazim Haidar Ramadhan",
-    "title": "AI Creative Specialist & Prompt Engineer",
-    "tagline": "Designing AI-first campaigns, sales strategy assets, and modern web delivery.",
-    "summary": "I am an AI Creative Specialist, Prompt Engineer, and Web Developer with roots in automotive sales and digital marketing. The Ad Astra Abyssosque philosophy pushes me to dive into complex systems and ship creative, measurable work.",
-    "availability": "Open to collaborations on AI-first video campaigns, sales enablement playbooks, and interactive web products.",
+    "title": "AI Creative Specialist & Agent Engineer",
+    "tagline": "Ad Astra Abyssosque \u2014 To the stars and into the depths.",
+    "summary": "LLM-first maker building AI agents, generative pipelines, and production-ready web apps. Every engagement starts with system design, evaluation harnesses, and privacy-first workflows.",
+    "availability": "Open to collaborations on LLM agent deployments, generative storytelling, and Web2/Web3 delivery.",
     "actions": [
       {
-        "label": "Explore AI Projects →",
-        "href": "/projects",
+        "label": "View AI Case Studies \u2197",
+        "href": "/works",
         "variant": "primary"
       },
       {
-        "label": "Start a Conversation →",
-        "href": "/contact",
+        "label": "Explore AI Playbooks \u2197",
+        "href": "/updates/ai-web",
         "variant": "outline"
       }
     ],
     "highlights": [
       {
-        "label": "Experience",
-        "value": "Generative AI, automotive sales, creative marketing"
+        "label": "LLM Stack",
+        "value": "GPT-5 Codex \u00b7 ChatGPT Plus \u00b7 OpenAI o1"
       },
       {
         "label": "Focus",
-        "value": "AI pipelines, storytelling, web orchestration"
+        "value": "Agents \u00b7 GenAI \u00b7 Web2/Web3 shipping"
       },
       {
         "label": "Base",
@@ -35,36 +35,36 @@
     "backgroundSrc": "/images/hero-background.png"
   },
   "quote": {
-    "label": "Motto",
-    "text": "Ad Astra Abyssosque — ‘To the stars and into the depths.’"
+    "label": "Quote",
+    "text": "In the beginning there was dark. Until someone set themselves aflame. Only then did the universe know light."
   },
   "whatIDo": {
     "heading": "What I Do",
     "items": [
       {
         "href": "/works",
-        "title": "AI Creative Production",
-        "sub": "Planning and shipping AI-first DVC campaigns."
+        "title": "AI Systems & Agents",
+        "sub": "Multi-agent orchestration, evaluation, and guardrails."
       },
       {
         "href": "/projects",
-        "title": "Sales & Strategy Assets",
-        "sub": "Value storytelling, pitch decks, and CRM flows."
+        "title": "Generative Pipelines",
+        "sub": "Video/image synthesis, context design, and tooling."
       },
       {
         "href": "/playbooks",
-        "title": "Web & Agent Delivery",
-        "sub": "Next.js migrations, agent workflow, and deployable docs."
+        "title": "Web2 + Web3 Delivery",
+        "sub": "Next.js apps, crypto experiments, and launch frameworks."
       }
     ]
   },
   "playbooks": {
     "heading": "Playbooks",
-    "description": "Practical frameworks for five future industries—AI→AGI/ASI, Crypto, Biotechnology, Renewables, and Space.",
+    "description": "Practical frameworks for five future industries\u2014AI\u2192AGI/ASI, Crypto, Biotechnology, Renewables, and Space.",
     "items": [
       {
         "href": "/industry/ai",
-        "title": "AI → AGI → ASI",
+        "title": "AI \u2192 AGI \u2192 ASI",
         "sub": "From today's AI delivery to general intelligence, complete with prompt & agent playbooks."
       },
       {
@@ -80,7 +80,7 @@
       {
         "href": "/industry/energy",
         "title": "Renewable Energy",
-        "sub": "Clean energy stack—from generation to storage and intelligent grids."
+        "sub": "Clean energy stack\u2014from generation to storage and intelligent grids."
       },
       {
         "href": "/industry/space",
@@ -93,14 +93,14 @@
     "heading": "Learning Hub",
     "description": "Need a guided path? The Playbooks hub bundles AI Basics, Prompt Patterns, and Tools & Workflow into actionable modules.",
     "cta": {
-      "label": "Open Learning Hub →",
+      "label": "Open Learning Hub \u2192",
       "href": "/playbooks#learning-hub"
     }
   },
   "updates": {
     "heading": "Updates",
     "cta": {
-      "label": "See all updates →",
+      "label": "See all updates \u2192",
       "href": "/updates"
     }
   }

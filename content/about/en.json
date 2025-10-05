@@ -1,14 +1,14 @@
 {
   "hero": {
     "title": "About Rifqy",
-    "tagline": "AI Creative Specialist, Prompt Engineer, and Strategist",
-    "summary": "I am an AI Creative Specialist, Prompt Engineer, and Web Developer shaped by experience in sales, digital marketing, and generative AI. Ad Astra Abyssosque keeps me diving into complex systems, then resurfacing with creative, measurable outcomes."
+    "tagline": "AI Creative Specialist \u00b7 Agent Engineer \u00b7 Web Developer",
+    "summary": "LLM-first maker using GPT-5 Codex, ChatGPT Plus, and generative toolchains to ship agents, automation, and immersive products. Every build begins with clear system maps, evaluation harnesses, and privacy-aware workflows."
   },
   "story": {
     "heading": "Philosophy & Vision",
     "paragraphs": [
-      "I believe future advantages belong to those who move first while keeping processes disciplined. Every collaboration starts with deep research, clarity on value, and transparent workflows.",
-      "My long-term vision is to build an innovation ecosystem that unites generative AI, Web3, and automation, while strengthening roots in automotive, property, and advanced mobility."
+      "Ad Astra Abyssosque is the North Star\u2014dive deep into complexity, surface with disciplined creativity, and document the path so teams can iterate with confidence.",
+      "Even when the brief is outside AI\u2014sales, operations, or field research\u2014I lean on LLM mastery, generative tooling, and automation to back every decision with insight."
     ]
   },
   "timeline": {
@@ -16,39 +16,39 @@
     "items": [
       {
         "id": "2025-tsl",
-        "period": "2025 – present",
-        "title": "The Social Linked — AI Creative Specialist & Prompt/Context Engineer",
-        "description": "Develop AI-first DVC campaigns, design the Sora → Runway → Flow pipeline, and lift production efficiency by 60%."
+        "period": "2025 \u2013 present",
+        "title": "The Social Linked \u2014 AI Creative Specialist & Prompt/Context Engineer",
+        "description": "Lead AI-first campaigns, design Sora \u2192 Runway \u2192 Flow pipelines, wire multi-agent workflows with GPT-5 Codex pairing, and raise production efficiency by 60%."
       },
       {
-        "id": "2024-mitsubishi",
-        "period": "2024 – 2025",
-        "title": "Mitsubishi Motors — Sales Consultant",
-        "description": "Lead value-creation sales for Xpander, Pajero, and Xforce while building long-term client relationships."
-      },
-      {
-        "id": "2024-tigapilar",
-        "period": "2024",
-        "title": "PT Tiga Pilar UKS — Strategy & Networking",
-        "description": "Craft go-to-market plans for construction and geotextile products and expand B2B partnerships."
-      },
-      {
-        "id": "2024-gems",
-        "period": "2024",
-        "title": "Gem's Food — Intern Business Owner",
-        "description": "Run market research and AI-assisted SOPs to launch a culinary venture."
-      },
-      {
-        "id": "2025-transport",
+        "id": "2025-mitsubishi",
         "period": "2025",
-        "title": "Ride-hailing Research — Gojek & Grab",
-        "description": "Map demand patterns as groundwork for future mobility and aerial transport concepts."
+        "title": "Mitsubishi Motors \u2014 Sales Consultant (Short Tenure)",
+        "description": "Two-month assignment supporting automotive sales; generated pitch scripts, follow-up automations, and CRM insights with LLM copilots."
       },
       {
-        "id": "2019-organizations",
-        "period": "2019 – 2023",
-        "title": "Community & Campus Organizations",
-        "description": "Manage national/regional events, public relations, and logistics for student communities."
+        "id": "2024-25-tigapilar",
+        "period": "2024 \u2013 2025",
+        "title": "PT Tiga Pilar UKS \u2014 Strategy & Networking",
+        "description": "Deployed AI agents to compile market research, draft proposals, and build geotextile opportunity dashboards for B2B expansion."
+      },
+      {
+        "id": "2024-portfolio",
+        "period": "2024 \u2013 present",
+        "title": "Next.js 15 Portfolio & AI Concierge",
+        "description": "Personal lab for bilingual Next.js delivery, pair-programming with GPT-5 Codex, and memory-aware agent concierge experiments."
+      },
+      {
+        "id": "2024-web3",
+        "period": "2024 \u2013 present",
+        "title": "Web3 & Crypto Research Sprints",
+        "description": "Prototype smart-contract flows, wallet UX, and token utilities with AI-augmented audits and simulation."
+      },
+      {
+        "id": "2025-grab",
+        "period": "2025",
+        "title": "Grab Partner Driver \u2014 Field Research",
+        "description": "Operated as an official motor driver to capture ground-truth demand data, later modelled with AI for service design insights."
       }
     ]
   },
@@ -56,53 +56,47 @@
     "heading": "Core Capabilities",
     "clusters": [
       {
-        "title": "Generative AI & Prompt Engineering",
-        "description": "Designing prompts, context, and production pipelines for video, image, and text outputs.",
+        "title": "LLM & Agent Engineering",
+        "description": "Designing multi-agent systems, memory, evaluation, and safety layers with GPT-5 Codex, ChatGPT Plus, and LangChain.",
+        "items": [
+          "GPT-5 Codex",
+          "ChatGPT Plus (o1/o3)",
+          "LangChain",
+          "Vercel AI SDK",
+          "Guardrailed workflows"
+        ]
+      },
+      {
+        "title": "Generative AI Pipelines",
+        "description": "Producing video, image, and audio assets with reproducible prompts and SOPs.",
         "items": [
           "Sora",
           "Runway",
-          "Flow",
-          "OpenAI",
-          "Context design"
+          "Veo",
+          "Pika",
+          "ElevenLabs"
         ]
       },
       {
-        "title": "Sales Strategy & Business Development",
-        "description": "Negotiation, relationship building, and value-based sales pipelines.",
+        "title": "Web Engineering (Web2 & Apps)",
+        "description": "Shipping Next.js apps, APIs, and automation tooling with performance and accessibility baked in.",
         "items": [
-          "Value creation",
-          "CRM",
-          "Pitch decks",
-          "B2B partnerships"
+          "Next.js 15",
+          "TypeScript",
+          "Node.js",
+          "Astro",
+          "Vercel"
         ]
       },
       {
-        "title": "Digital Marketing & Storytelling",
-        "description": "Campaign narratives, Gen Z content, and AI-assisted production orchestration.",
+        "title": "Web3 & Crypto Experiments",
+        "description": "Exploring wallets, token mechanics, and dApp flows with AI-assisted security reviews.",
         "items": [
-          "Storyboarding",
-          "Copywriting",
-          "Multilingual",
-          "Creative direction"
-        ]
-      },
-      {
-        "title": "Trend Insight & Market Research",
-        "description": "Scanning transportation, automotive, and frontier tech for long-term strategy.",
-        "items": [
-          "Market scan",
-          "Competitive insight",
-          "Opportunity mapping"
-        ]
-      },
-      {
-        "title": "Communication & Collaboration",
-        "description": "Public speaking, workshop facilitation, and rigorous operational documentation.",
-        "items": [
-          "Facilitation",
-          "Playbooks",
-          "Workshops",
-          "Client education"
+          "Solidity",
+          "Ethers.js",
+          "Thirdweb",
+          "Wallet UX",
+          "Token design"
         ]
       }
     ]
@@ -111,16 +105,16 @@
     "heading": "Operating Principles",
     "items": [
       {
-        "title": "Ad Astra Abyssosque",
-        "body": "Dive to the source of the problem and return with disciplined yet creative solutions."
+        "title": "Deep Systems Thinking",
+        "body": "Map the end-to-end system, then let AI co-design solutions with measurable checkpoints."
       },
       {
-        "title": "Creative Return on Value",
-        "body": "Every experiment must stay relevant to business goals and be measurable in impact."
+        "title": "AI-Augmented Delivery",
+        "body": "Every domain\u2014even outside tech\u2014is backed by LLM copilots, generative tooling, and automation."
       },
       {
         "title": "Transparent Collaboration",
-        "body": "Goals, boundaries, and privacy protocols are aligned before any project starts."
+        "body": "Share constraints, privacy rules, and iteration plans from day one to keep teams aligned."
       }
     ]
   },
@@ -129,7 +123,7 @@
     "items": [
       {
         "name": "Future collaborator",
-        "role": "—",
+        "role": "\u2014",
         "quote": "Testimonials will be added after the next shipped project."
       }
     ],

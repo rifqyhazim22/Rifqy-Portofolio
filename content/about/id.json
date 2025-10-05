@@ -1,14 +1,14 @@
 {
   "hero": {
     "title": "Tentang Rifqy",
-    "tagline": "AI Creative Specialist, Prompt Engineer, dan Strategist",
-    "summary": "Saya adalah AI Creative Specialist dan Prompt Engineer dengan pengalaman di sales, marketing digital, dan pengembangan AI generatif. Filosofi Ad Astra Abyssosque mengajak saya menyelami masalah kompleks dan menghadirkan solusi yang menggabungkan kreativitas dan nilai nyata."
+    "tagline": "AI Creative Specialist · Agent Engineer · Web Developer",
+    "summary": "Saya menggunakan GPT-5 Codex, ChatGPT Plus, dan toolchain generatif untuk membangun agen, otomasi, dan produk imersif. Setiap pengerjaan dimulai dengan pemetaan sistem, evaluasi, dan alur kerja yang menjaga privasi."
   },
   "story": {
     "heading": "Filosofi & Visi",
     "paragraphs": [
-      "Saya percaya masa depan dimiliki mereka yang berani melangkah duluan sembari menjaga proses tetap disiplin. Setiap kolaborasi dimulai dengan riset mendalam, orientasi nilai, dan bahasa kerja yang transparan.",
-      "Visi saya adalah membangun ekosistem inovasi AI, Web3, dan otomasi digital yang efisien, sambil menjaga pijakan di sektor otomotif, properti, dan transportasi udara."
+      "Ad Astra Abyssosque menjadi penuntun—menyelami kompleksitas, kembali dengan solusi kreatif yang terdokumentasi rapi. Setiap langkah dijaga agar tim dapat beriterasi dengan percaya diri.",
+      "Pengalaman di luar AI—sales, operasi, riset lapangan—selalu saya lapisi dengan kemampuan LLM, tool generatif, dan otomasi supaya keputusan tetap berbasis insight."
     ]
   },
   "timeline": {
@@ -16,39 +16,39 @@
     "items": [
       {
         "id": "2025-tsl",
-        "period": "2025 - sekarang",
-        "title": "The Social Linked - AI Creative Specialist & Prompt/Context Engineer",
-        "description": "Mengembangkan kampanye DVC berbasis AI, menyusun pipeline Sora -> Runway -> Flow, dan meningkatkan efisiensi produksi sampai 60%."
+        "period": "2025 – sekarang",
+        "title": "The Social Linked — AI Creative Specialist & Prompt/Context Engineer",
+        "description": "Memimpin kampanye AI-first, merancang pipeline Sora → Runway → Flow, menyusun workflow multi-agent dengan GPT-5 Codex, dan menaikkan efisiensi produksi hingga 60%."
       },
       {
-        "id": "2024-mitsubishi",
-        "period": "2024 - 2025",
-        "title": "Mitsubishi Motors - Sales Consultant",
-        "description": "Menjalankan proses penjualan Xpander, Pajero, dan Xforce dengan pendekatan value creation dan relasi jangka panjang."
-      },
-      {
-        "id": "2024-tigapilar",
-        "period": "2024",
-        "title": "PT Tiga Pilar UKS - Strategi dan Networking",
-        "description": "Menyusun strategi pemasaran material konstruksi, memperluas penetrasi pasar B2B, dan memimpin proyek pengembangan bisnis baru."
-      },
-      {
-        "id": "2024-gems",
-        "period": "2024",
-        "title": "Gem's Food - Intern Business Owner",
-        "description": "Merancang riset pasar dan SOP operasional dengan dukungan AI untuk merintis bisnis kuliner."
-      },
-      {
-        "id": "2025-transport",
+        "id": "2025-mitsubishi",
         "period": "2025",
-        "title": "Gojek & Grab - Transportasi Online",
-        "description": "Memetakan pola permintaan pelanggan sebagai riset layanan transportasi modern dan kendaraan terbang."
+        "title": "Mitsubishi Motors — Sales Consultant (Penugasan Singkat)",
+        "description": "Penugasan kurang dari dua bulan; memanfaatkan LLM untuk menyusun script pitching, otomatisasi follow-up, dan insight CRM."
       },
       {
-        "id": "2019-organisasi",
-        "period": "2019 - 2023",
-        "title": "Organisasi Mahasiswa dan Sosial",
-        "description": "Mengelola konferensi nasional, humas, serta logistik acara untuk komunitas dan kampus."
+        "id": "2024-25-tigapilar",
+        "period": "2024 – 2025",
+        "title": "PT Tiga Pilar UKS — Strategy & Networking",
+        "description": "Menggunakan agen AI untuk merangkai riset pasar, proposal, serta dashboard peluang geotekstil bagi ekspansi B2B."
+      },
+      {
+        "id": "2024-portfolio",
+        "period": "2024 – sekarang",
+        "title": "Portofolio Next.js 15 & AI Concierge",
+        "description": "Lab pribadi untuk delivery bilingual Next.js, pair-programming dengan GPT-5 Codex, dan eksperimen agent ber-memori."
+      },
+      {
+        "id": "2024-web3",
+        "period": "2024 – sekarang",
+        "title": "Web3 & Crypto Research Sprints",
+        "description": "Membuat prototipe alur smart contract, wallet UX, dan token utility dengan audit berbasis AI."
+      },
+      {
+        "id": "2025-grab",
+        "period": "2025",
+        "title": "Grab Partner Driver — Riset Lapangan",
+        "description": "Menjadi mitra driver motor resmi untuk menangkap data permintaan langsung, lalu dimodelkan ulang dengan AI sebagai insight desain layanan."
       }
     ]
   },
@@ -56,53 +56,47 @@
     "heading": "Keahlian Inti",
     "clusters": [
       {
-        "title": "Generative AI & Prompt Engineering",
-        "description": "Perancangan prompt, context, dan pipeline produksi AI untuk video, gambar, dan teks.",
+        "title": "LLM & Agent Engineering",
+        "description": "Merancang sistem multi-agent, memori, evaluasi, dan safety layer dengan GPT-5 Codex, ChatGPT Plus, dan LangChain.",
+        "items": [
+          "GPT-5 Codex",
+          "ChatGPT Plus (o1/o3)",
+          "LangChain",
+          "Vercel AI SDK",
+          "Guardrailed workflows"
+        ]
+      },
+      {
+        "title": "Generative AI Pipelines",
+        "description": "Produksi video, gambar, dan audio dengan prompt yang reproducible dan SOP jelas.",
         "items": [
           "Sora",
           "Runway",
-          "Flow",
-          "OpenAI",
-          "Context design"
+          "Veo",
+          "Pika",
+          "ElevenLabs"
         ]
       },
       {
-        "title": "Strategi Penjualan & Business Development",
-        "description": "Negosiasi, manajemen relasi, dan konstruksi pipeline penjualan berbasis nilai.",
+        "title": "Web Engineering (Web2 & Apps)",
+        "description": "Membangun aplikasi Next.js, API, dan otomasi dengan performa serta aksesibilitas terukur.",
         "items": [
-          "Value creation",
-          "CRM",
-          "Pitch deck",
-          "Kemitraan B2B"
+          "Next.js 15",
+          "TypeScript",
+          "Node.js",
+          "Astro",
+          "Vercel"
         ]
       },
       {
-        "title": "Digital Marketing & Storytelling",
-        "description": "Perancangan narasi kampanye, konten Gen Z, dan orkestrasi produksi AI.",
+        "title": "Web3 & Crypto Experiments",
+        "description": "Eksplor wallet, mekanik token, dan alur dApp dengan review keamanan berbasis AI.",
         "items": [
-          "Storyboarding",
-          "Copywriting",
-          "Multilingual",
-          "Creative direction"
-        ]
-      },
-      {
-        "title": "Analisis Tren & Riset Pasar",
-        "description": "Riset pasar transportasi, otomotif, hingga frontier tech untuk strategi jangka panjang.",
-        "items": [
-          "Market scan",
-          "Competitive insight",
-          "Opportunity mapping"
-        ]
-      },
-      {
-        "title": "Komunikasi & Kolaborasi",
-        "description": "Public speaking, fasilitasi workshop, dan dokumentasi operasional yang rapi.",
-        "items": [
-          "Facilitation",
-          "Playbook",
-          "Workshop",
-          "Client education"
+          "Solidity",
+          "Ethers.js",
+          "Thirdweb",
+          "Wallet UX",
+          "Token design"
         ]
       }
     ]
@@ -111,16 +105,16 @@
     "heading": "Prinsip Kerja",
     "items": [
       {
-        "title": "Ad Astra Abyssosque",
-        "body": "Menyelami persoalan sampai ke akar dan membawa solusi yang disiplin tetapi kreatif."
+        "title": "Deep Systems Thinking",
+        "body": "Memetakan sistem end-to-end lalu membiarkan AI ikut merancang solusi dengan checkpoint terukur."
       },
       {
-        "title": "Kreativitas Bernilai",
-        "body": "Setiap eksperimen harus menjaga relevansi bisnis dan dapat diukur dampaknya."
+        "title": "AI-Augmented Delivery",
+        "body": "Setiap domain—even di luar tech—disokong co-pilot LLM, tool generatif, dan otomasi."
       },
       {
         "title": "Kolaborasi Transparan",
-        "body": "Tujuan, batasan, dan protokol privasi selalu disepakati sejak awal proyek."
+        "body": "Sejak hari pertama, tujuan, aturan privasi, dan rencana iterasi disepakati bersama."
       }
     ]
   },

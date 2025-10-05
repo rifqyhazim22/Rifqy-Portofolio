@@ -1,30 +1,30 @@
 {
   "hero": {
     "name": "Rifqy Hazim Haidar Ramadhan",
-    "title": "AI Creative Specialist & Prompt Engineer",
-    "tagline": "Merancang pipeline AI generatif, strategi kampanye, dan web delivery adaptif.",
-    "summary": "Saya adalah AI Creative Specialist dan Prompt Engineer dengan pengalaman di sales, marketing digital, dan pengembangan AI generatif. Filosofi Ad Astra Abyssosque (Menuju Bintang & Menyelami Jurang) mendorong saya menyelami masalah kompleks dan menghadirkan solusi yang menggabungkan kreativitas dan nilai. Dengan komunikasi yang kuat, pemikiran strategis, dan adaptasi cepat terhadap teknologi baru, saya membangun karya yang relevan dan berdampak.",
-    "availability": "Terbuka untuk kolaborasi kampanye AI, strategi penjualan, dan produk digital.",
+    "title": "AI Creative Specialist & Agent Engineer",
+    "tagline": "Ad Astra Abyssosque — Menuju Bintang dan Menyelami Jurang.",
+    "summary": "Saya membangun agen LLM, pipeline generatif, dan aplikasi web siap produksi. Setiap kolaborasi dimulai dengan pemetaan sistem, evaluasi otomatis, dan alur kerja yang menjaga privasi.",
+    "availability": "Terbuka untuk kolaborasi deploy agen LLM, produksi konten generatif, dan delivery Web2/Web3.",
     "actions": [
       {
-        "label": "Lihat Proyek AI →",
-        "href": "/projects",
+        "label": "Lihat Studi Kasus AI ↗",
+        "href": "/works",
         "variant": "primary"
       },
       {
-        "label": "Hubungi Saya →",
-        "href": "/contact",
+        "label": "Eksplor Playbooks AI ↗",
+        "href": "/updates/ai-web",
         "variant": "outline"
       }
     ],
     "highlights": [
       {
-        "label": "Pengalaman",
-        "value": "AI generatif, sales otomotif, dan marketing"
+        "label": "Stack LLM",
+        "value": "GPT-5 Codex · ChatGPT Plus · OpenAI o1"
       },
       {
         "label": "Fokus",
-        "value": "Prompting, AI production, web delivery"
+        "value": "Agents · GenAI · Web2/Web3"
       },
       {
         "label": "Basis",
@@ -35,26 +35,26 @@
     "backgroundSrc": "/images/hero-background.png"
   },
   "quote": {
-    "label": "Motto",
-    "text": "Ad Astra Abyssosque — Menuju Bintang dan Menyelami Jurang."
+    "label": "Quotes",
+    "text": "In the beginning there was dark. Until someone set themselves aflame. Only then did the universe know light."
   },
   "whatIDo": {
     "heading": "Apa yang Saya Lakukan",
     "items": [
       {
         "href": "/works",
-        "title": "AI Creative Production",
-        "sub": "Perencanaan dan produksi DVC, storytelling, dan aset AI."
+        "title": "AI Systems & Agents",
+        "sub": "Orkestrasi multi-agent, evaluasi, dan guardrails."
       },
       {
         "href": "/projects",
-        "title": "Strategi & Sales Enablement",
-        "sub": "Blueprint pitching, CRM, dan kemitraan bisnis."
+        "title": "Generative Pipelines",
+        "sub": "Sintesis video/gambar, desain konteks, dan tooling."
       },
       {
         "href": "/playbooks",
-        "title": "Web & Agent Delivery",
-        "sub": "Migrasi Next.js, orkestrasi agent, dan dokumentasi deploy."
+        "title": "Delivery Web2 + Web3",
+        "sub": "Aplikasi Next.js, eksperimen crypto, dan framework launch."
       }
     ]
   },
