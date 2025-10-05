@@ -37,24 +37,32 @@ export default async function HomePage() {
           <h2 className="h2">{home.playbooks.heading}</h2>
           <p className="sub home__section-sub">{home.playbooks.description}</p>
         </header>
-        <div className="home__actions">
-          <BaseLink href={home.playbooks.cta.href} className="pill">
-            {home.playbooks.cta.label}
-          </BaseLink>
-        </div>
-      </section>
-
-      <section className="home__section">
-        <header className="home__section-header">
-          <h2 className="h2">{home.learning.heading}</h2>
-        </header>
         <div className="grid grid-3 home__tiles">
-          {home.learning.items.map((item) => (
+          {home.playbooks.items.map((item) => (
             <BaseLink key={item.href} href={item.href} className="tile">
               <div className="k">{item.title}</div>
               <div className="sub">{item.sub}</div>
             </BaseLink>
           ))}
+        </div>
+        {home.playbooks.cta ? (
+          <div className="home__actions">
+            <BaseLink href={home.playbooks.cta.href} className="pill">
+              {home.playbooks.cta.label}
+            </BaseLink>
+          </div>
+        ) : null}
+      </section>
+
+      <section className="home__section">
+        <header className="home__section-header">
+          <h2 className="h2">{home.learning.heading}</h2>
+          <p className="sub home__section-sub">{home.learning.description}</p>
+        </header>
+        <div className="home__actions">
+          <BaseLink href={home.learning.cta.href} className="pill">
+            {home.learning.cta.label}
+          </BaseLink>
         </div>
       </section>
 

@@ -24,7 +24,7 @@ export default async function PlaybooksPage() {
 
       <hr />
 
-      <section>
+      <section id="learning-hub">
         <h2 className="h2">{industry.learningHeading}</h2>
         <p className="sub">{industry.learningDescription}</p>
       </section>

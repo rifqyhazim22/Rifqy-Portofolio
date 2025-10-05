@@ -13,7 +13,7 @@
       },
       {
         "label": "Learn AI (Free) ↗",
-        "href": "/industry",
+        "href": "/playbooks",
         "variant": "outline"
       }
     ],
@@ -52,7 +52,7 @@
         "sub": "Lightweight landing pages & fast iteration (Astro · GitHub)."
       },
       {
-        "href": "/industry",
+        "href": "/playbooks",
         "title": "Strategy & Education",
         "sub": "Playbooks and frameworks you can apply."
       }
@@ -61,30 +61,41 @@
   "playbooks": {
     "heading": "Playbooks",
     "description": "Practical frameworks for five future industries—AI→AGI/ASI, Crypto, Biotechnology, Renewables, and Space.",
-    "cta": {
-      "label": "Browse Playbooks & AI Education →",
-      "href": "/industry"
-    }
+    "items": [
+      {
+        "href": "/industry/ai",
+        "title": "AI → AGI → ASI",
+        "sub": "From today's AI delivery to general intelligence, complete with prompt & agent playbooks."
+      },
+      {
+        "href": "/industry/crypto",
+        "title": "Crypto",
+        "sub": "Token design, smart-contract orchestration, and DeFi coordination patterns."
+      },
+      {
+        "href": "/industry/biotech",
+        "title": "Biotechnology",
+        "sub": "Bio innovation, precision food, and biomaterials with responsible guardrails."
+      },
+      {
+        "href": "/industry/energy",
+        "title": "Renewable Energy",
+        "sub": "Clean energy stack—from generation to storage and intelligent grids."
+      },
+      {
+        "href": "/industry/space",
+        "title": "Space",
+        "sub": "Orbital services, earth intelligence, and practical space exploration workflows."
+      }
+    ]
   },
   "learning": {
     "heading": "Learning Hub",
-    "items": [
-      {
-        "href": "/industry#ai-basics",
-        "title": "AI Basics",
-        "sub": "Core concepts, vocabulary, and ethics for a safe foundation."
-      },
-      {
-        "href": "/industry#prompt-patterns",
-        "title": "Prompt Patterns",
-        "sub": "When to use each pattern and how to avoid common traps."
-      },
-      {
-        "href": "/industry#tools-workflow",
-        "title": "Tools & Workflow",
-        "sub": "Brief → experiment → result with a lightweight pipeline."
-      }
-    ]
+    "description": "Need a guided path? The Playbooks hub bundles AI Basics, Prompt Patterns, and Tools & Workflow into actionable modules.",
+    "cta": {
+      "label": "Open Learning Hub →",
+      "href": "/playbooks#learning-hub"
+    }
   },
   "updates": {
     "heading": "Updates",

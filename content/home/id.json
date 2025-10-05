@@ -13,7 +13,7 @@
       },
       {
         "label": "Belajar AI (Gratis) ↗",
-        "href": "/industry",
+        "href": "/playbooks",
         "variant": "outline"
       }
     ],
@@ -52,7 +52,7 @@
         "sub": "Landing ringan & cepat (Astro · GitHub)."
       },
       {
-        "href": "/industry",
+        "href": "/playbooks",
         "title": "Strategy & Edukasi",
         "sub": "Playbooks & kerangka kerja yang bisa dipakai."
       }
@@ -61,30 +61,41 @@
   "playbooks": {
     "heading": "Playbooks",
     "description": "Kerangka kerja praktis untuk lima industri masa depan—AI→AGI/ASI, Crypto, Biotechnology, Energi Terbarukan, dan Space.",
-    "cta": {
-      "label": "Lihat Playbooks & Edukasi AI →",
-      "href": "/industry"
-    }
+    "items": [
+      {
+        "href": "/industry/ai",
+        "title": "AI → AGI → ASI",
+        "sub": "Strategi menggabungkan prompt, agent, dan governance menuju kecerdasan umum."
+      },
+      {
+        "href": "/industry/crypto",
+        "title": "Crypto",
+        "sub": "Playbook koordinasi on-chain: token, smart contract, dan mekanisme DeFi."
+      },
+      {
+        "href": "/industry/biotech",
+        "title": "Biotechnology",
+        "sub": "Eksperimen bio, food tech, dan biomaterial dengan etika & regulasi terukur."
+      },
+      {
+        "href": "/industry/energy",
+        "title": "Renewable Energy",
+        "sub": "Blueprint solusi energi bersih: generasi, penyimpanan, dan smart grid."
+      },
+      {
+        "href": "/industry/space",
+        "title": "Space",
+        "sub": "Orbital services, satelit, observasi bumi, dan eksplorasi luar angkasa."
+      }
+    ]
   },
   "learning": {
     "heading": "Learning Hub",
-    "items": [
-      {
-        "href": "/industry#ai-basics",
-        "title": "AI Basics",
-        "sub": "Konsep inti, istilah, dan etika; landasan yang aman & praktis."
-      },
-      {
-        "href": "/industry#prompt-patterns",
-        "title": "Prompt Patterns",
-        "sub": "Polanya apa, kapan dipakai, dan cara menghindari jebakan umum."
-      },
-      {
-        "href": "/industry#tools-workflow",
-        "title": "Tools & Workflow",
-        "sub": "Dari brief → eksperimen → hasil dengan pipeline ringan."
-      }
-    ]
+    "description": "Semua modul belajar—AI Basics, Prompt Patterns, Tools & Workflow—tersedia terkurasi di Playbooks. Mulai dari konsep hingga praktik siap pakai.",
+    "cta": {
+      "label": "Buka Learning Hub →",
+      "href": "/playbooks#learning-hub"
+    }
   },
   "updates": {
     "heading": "Updates",
