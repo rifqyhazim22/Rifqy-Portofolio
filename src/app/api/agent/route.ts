@@ -151,15 +151,16 @@ function resolveNavigationTarget(raw: string | null, messages: ChatMessage[]): s
   if (normalized && ROUTE_ALIAS_MAP[normalized]) {
     normalized = ROUTE_ALIAS_MAP[normalized];
   }
-  if (normalized && KNOWN_ROUTES.has(normalized)) {
-    return normalized;
-  }
 
   const candidateScores = new Map<string, number>();
 
   const consider = (route: string, score: number) => {
     candidateScores.set(route, Math.max(candidateScores.get(route) ?? 0, score));
   };
+
+  if (normalized && KNOWN_ROUTES.has(normalized)) {
+    consider(normalized, 6);
+  }
 
   const evaluateString = (value: string, weight = 1) => {
     if (!value) return;
@@ -206,12 +207,13 @@ function resolveNavigationTarget(raw: string | null, messages: ChatMessage[]): s
   evaluateString(raw ?? "", 1.5);
   evaluateString(lastUserMessage, 2);
 
-  const best = [...candidateScores.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
-  if (best && candidateScores.get(best)! >= 2) {
-    return best;
+  const sorted = [...candidateScores.entries()].sort((a, b) => b[1] - a[1]);
+  const [bestRoute, bestScore] = sorted[0] ?? [];
+  if (bestRoute && bestScore >= 2) {
+    return bestRoute;
   }
 
-  return null;
+  return normalized && KNOWN_ROUTES.has(normalized) ? normalized : null;
 }
 
 export async function POST(request: NextRequest) {
