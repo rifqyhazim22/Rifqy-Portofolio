@@ -615,6 +615,30 @@ button.pill[disabled] {
   flex-wrap: wrap;
 }
 
+@media (max-width: 720px) {
+  .home__quote {
+    text-align: center;
+  }
+
+  .home__section-header {
+    align-items: center;
+    text-align: center;
+  }
+
+  .home__section-sub {
+    margin: 0 auto;
+  }
+
+  .home__tiles {
+    display: grid;
+    gap: 16px;
+  }
+
+  .home__actions {
+    justify-content: center;
+  }
+}
+
 .about {
   display: flex;
   flex-direction: column;
