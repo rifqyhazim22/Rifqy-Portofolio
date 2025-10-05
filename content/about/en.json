@@ -1,14 +1,14 @@
 {
   "hero": {
     "title": "About Rifqy",
-    "tagline": "AI Creative Specialist \u00b7 Agent Engineer \u00b7 Web Developer",
-    "summary": "LLM-first maker using GPT-5 Codex, ChatGPT Plus, and generative toolchains to ship agents, automation, and immersive products. Every build begins with clear system maps, evaluation harnesses, and privacy-aware workflows."
+    "tagline": "AI Engineer · Prompt Strategist · Web Developer",
+    "summary": "I design AI systems, prompt strategies, and web products that stay measurable yet human. The goal is to translate intent into dependable software and automation."
   },
   "story": {
-    "heading": "Philosophy & Vision",
+    "heading": "Philosophy & Mission",
     "paragraphs": [
-      "Ad Astra Abyssosque is the North Star\u2014dive deep into complexity, surface with disciplined creativity, and document the path so teams can iterate with confidence.",
-      "Even when the brief is outside AI\u2014sales, operations, or field research\u2014I lean on LLM mastery, generative tooling, and automation to back every decision with insight."
+      "I believe the future rewards those who move first while staying disciplined. Every collaboration begins with deep research, clear value intent, and transparent communication. My focus is on AI engineering and web development executed in disciplined, well-documented iterations so teams can experiment safely.",
+      "My vision is to build an innovation ecosystem across AI and digital automation while staying grounded in real operations and partnerships. I want AI to help ship software, power responsible automation, and lift locally-built web products."
     ]
   },
   "timeline": {
@@ -16,39 +16,39 @@
     "items": [
       {
         "id": "2025-tsl",
-        "period": "2025 \u2013 present",
-        "title": "The Social Linked \u2014 AI Creative Specialist & Prompt/Context Engineer",
-        "description": "Lead AI-first campaigns, design Sora \u2192 Runway \u2192 Flow pipelines, wire multi-agent workflows with GPT-5 Codex pairing, and raise production efficiency by 60%."
+        "period": "2025 – present",
+        "title": "The Social Linked — AI Creative Specialist & Prompt/Context Engineer",
+        "description": "Lead AI-first campaigns, design the Sora → Runway → Flow pipeline, and wire LLM agent workflows for production."
+      },
+      {
+        "id": "2025-ai-concierge",
+        "period": "2025 – present",
+        "title": "AI Concierge Lab",
+        "description": "Experiment with GPT-5 Codex agents for navigation, documentation, and product integrations."
       },
       {
         "id": "2025-mitsubishi",
         "period": "2025",
-        "title": "Mitsubishi Motors \u2014 Sales Consultant (Short Tenure)",
-        "description": "Two-month assignment supporting automotive sales; generated pitch scripts, follow-up automations, and CRM insights with LLM copilots."
+        "title": "Mitsubishi Motors — Sales Consultant (Short Tenure)",
+        "description": "Applied LLM tooling for pitching scripts, follow-up automation, and CRM insights during a sub-two-month assignment."
       },
       {
         "id": "2024-25-tigapilar",
-        "period": "2024 \u2013 2025",
-        "title": "PT Tiga Pilar UKS \u2014 Strategy & Networking",
-        "description": "Deployed AI agents to compile market research, draft proposals, and build geotextile opportunity dashboards for B2B expansion."
+        "period": "2024 – 2025",
+        "title": "PT Tiga Pilar UKS — Strategy & Networking",
+        "description": "Deployed AI agents to compile market research, draft proposals, and surface geotextile opportunities for B2B expansion."
       },
       {
-        "id": "2024-portfolio",
-        "period": "2024 \u2013 present",
-        "title": "Next.js 15 Portfolio & AI Concierge",
-        "description": "Personal lab for bilingual Next.js delivery, pair-programming with GPT-5 Codex, and memory-aware agent concierge experiments."
+        "id": "2024-gems",
+        "period": "2024",
+        "title": "Gem's Food — Business Owner",
+        "description": "Piloted a culinary venture with data-driven research, SOPs, and lightweight AI-assisted operations."
       },
       {
-        "id": "2024-web3",
-        "period": "2024 \u2013 present",
-        "title": "Web3 & Crypto Research Sprints",
-        "description": "Prototype smart-contract flows, wallet UX, and token utilities with AI-augmented audits and simulation."
-      },
-      {
-        "id": "2025-grab",
-        "period": "2025",
-        "title": "Grab Partner Driver \u2014 Field Research",
-        "description": "Operated as an official motor driver to capture ground-truth demand data, later modelled with AI for service design insights."
+        "id": "2019-community",
+        "period": "2019 – 2023",
+        "title": "Community & Campus Organizations",
+        "description": "Managed national/regional events, public relations, and logistics while growing collaborative networks."
       }
     ]
   },
@@ -56,47 +56,35 @@
     "heading": "Core Capabilities",
     "clusters": [
       {
-        "title": "LLM & Agent Engineering",
-        "description": "Designing multi-agent systems, memory, evaluation, and safety layers with GPT-5 Codex, ChatGPT Plus, and LangChain.",
+        "title": "LLM & Prompt Engineering",
+        "description": "Designing multi-agent systems, memory, evaluation, and safety layers.",
         "items": [
           "GPT-5 Codex",
-          "ChatGPT Plus (o1/o3)",
-          "LangChain",
-          "Vercel AI SDK",
-          "Guardrailed workflows"
+          "ChatGPT",
+          "OpenAI o1",
+          "Guardrails",
+          "Custom evaluators"
         ]
       },
       {
         "title": "Generative AI Pipelines",
-        "description": "Producing video, image, and audio assets with reproducible prompts and SOPs.",
+        "description": "Producing video, image, and audio assets with reproducible SOPs.",
         "items": [
           "Sora",
           "Runway",
           "Veo",
-          "Pika",
           "ElevenLabs"
         ]
       },
       {
-        "title": "Web Engineering (Web2 & Apps)",
-        "description": "Shipping Next.js apps, APIs, and automation tooling with performance and accessibility baked in.",
+        "title": "Web Engineering",
+        "description": "Shipping Next.js apps, APIs, and automation tooling end to end.",
         "items": [
-          "Next.js 15",
+          "Next.js",
           "TypeScript",
           "Node.js",
           "Astro",
           "Vercel"
-        ]
-      },
-      {
-        "title": "Web3 & Crypto Experiments",
-        "description": "Exploring wallets, token mechanics, and dApp flows with AI-assisted security reviews.",
-        "items": [
-          "Solidity",
-          "Ethers.js",
-          "Thirdweb",
-          "Wallet UX",
-          "Token design"
         ]
       }
     ]
@@ -110,7 +98,7 @@
       },
       {
         "title": "AI-Augmented Delivery",
-        "body": "Every domain\u2014even outside tech\u2014is backed by LLM copilots, generative tooling, and automation."
+        "body": "Every domain—even outside tech—is backed by LLM copilots, generative tooling, and automation."
       },
       {
         "title": "Transparent Collaboration",
@@ -119,17 +107,11 @@
     ]
   },
   "testimonials": {
-    "heading": "Testimonials & Collaboration",
-    "items": [
-      {
-        "name": "Future collaborator",
-        "role": "\u2014",
-        "quote": "Testimonials will be added after the next shipped project."
-      }
-    ],
+    "heading": "",
+    "items": [],
     "cta": {
-      "label": "Ready to collaborate?",
-      "href": "/contact"
+      "label": "",
+      "href": "#"
     }
   }
 }

@@ -1,14 +1,14 @@
 {
   "hero": {
     "title": "Tentang Rifqy",
-    "tagline": "AI Creative Specialist · Agent Engineer · Web Developer",
-    "summary": "Saya menggunakan GPT-5 Codex, ChatGPT Plus, dan toolchain generatif untuk membangun agen, otomasi, dan produk imersif. Setiap pengerjaan dimulai dengan pemetaan sistem, evaluasi, dan alur kerja yang menjaga privasi."
+    "tagline": "AI Engineer · Prompt Strategist · Web Developer",
+    "summary": "Saya merancang sistem AI, strategi prompt, dan pengalaman web yang terukur namun tetap manusiawi. Fokusnya menerjemahkan tujuan founder dan tim menjadi perangkat lunak serta otomasi yang nyata."
   },
   "story": {
-    "heading": "Filosofi & Visi",
+    "heading": "Filosofi & Misi",
     "paragraphs": [
-      "Ad Astra Abyssosque menjadi penuntun—menyelami kompleksitas, kembali dengan solusi kreatif yang terdokumentasi rapi. Setiap langkah dijaga agar tim dapat beriterasi dengan percaya diri.",
-      "Pengalaman di luar AI—sales, operasi, riset lapangan—selalu saya lapisi dengan kemampuan LLM, tool generatif, dan otomasi supaya keputusan tetap berbasis insight."
+      "Saya percaya masa depan dimiliki mereka yang berani melangkah duluan sembari menjaga proses tetap disiplin. Setiap kolaborasi dimulai dengan riset mendalam, orientasi nilai, dan bahasa kerja yang transparan. Fokus saya ada pada rekayasa AI dan pengembangan web yang dirancang bertahap, diuji, dan terdokumentasi supaya tim merasa aman saat bereksperimen.",
+      "Visi saya adalah membangun ekosistem inovasi AI dan otomasi digital yang efisien, sambil menjaga pijakan di sektor otomotif, properti, dan transportasi udara. Saya ingin AI membantu bisnis ship produk, membangun otomasi yang bertanggung jawab, dan mengangkat solusi software serta web buatan lokal."
     ]
   },
   "timeline": {
@@ -18,37 +18,37 @@
         "id": "2025-tsl",
         "period": "2025 – sekarang",
         "title": "The Social Linked — AI Creative Specialist & Prompt/Context Engineer",
-        "description": "Memimpin kampanye AI-first, merancang pipeline Sora → Runway → Flow, menyusun workflow multi-agent dengan GPT-5 Codex, dan menaikkan efisiensi produksi hingga 60%."
+        "description": "Memimpin kampanye AI-first, menyusun pipeline Sora → Runway → Flow, serta merancang workflow agen LLM untuk produksi konten."
+      },
+      {
+        "id": "2025-ai-concierge",
+        "period": "2025 – sekarang",
+        "title": "AI Concierge Lab",
+        "description": "Eksperimen agen GPT-5 Codex untuk navigasi konten, dokumentasi proses, dan integrasi ke produk web."
       },
       {
         "id": "2025-mitsubishi",
         "period": "2025",
         "title": "Mitsubishi Motors — Sales Consultant (Penugasan Singkat)",
-        "description": "Penugasan kurang dari dua bulan; memanfaatkan LLM untuk menyusun script pitching, otomatisasi follow-up, dan insight CRM."
+        "description": "Menerapkan LLM untuk script pitching, otomasi follow-up, dan insight CRM selama penugasan kurang dari dua bulan."
       },
       {
         "id": "2024-25-tigapilar",
         "period": "2024 – 2025",
         "title": "PT Tiga Pilar UKS — Strategy & Networking",
-        "description": "Menggunakan agen AI untuk merangkai riset pasar, proposal, serta dashboard peluang geotekstil bagi ekspansi B2B."
+        "description": "Menggunakan agen AI untuk riset pasar, penyusunan proposal, dan dashboard peluang geotekstil bagi ekspansi B2B."
       },
       {
-        "id": "2024-portfolio",
-        "period": "2024 – sekarang",
-        "title": "Portofolio Next.js 15 & AI Concierge",
-        "description": "Lab pribadi untuk delivery bilingual Next.js, pair-programming dengan GPT-5 Codex, dan eksperimen agent ber-memori."
+        "id": "2024-gems",
+        "period": "2024",
+        "title": "Gem's Food — Business Owner",
+        "description": "Merintis bisnis kuliner berbasis riset data, SOP, dan otomasi ringan dengan tool AI untuk operasional harian."
       },
       {
-        "id": "2024-web3",
-        "period": "2024 – sekarang",
-        "title": "Web3 & Crypto Research Sprints",
-        "description": "Membuat prototipe alur smart contract, wallet UX, dan token utility dengan audit berbasis AI."
-      },
-      {
-        "id": "2025-grab",
-        "period": "2025",
-        "title": "Grab Partner Driver — Riset Lapangan",
-        "description": "Menjadi mitra driver motor resmi untuk menangkap data permintaan langsung, lalu dimodelkan ulang dengan AI sebagai insight desain layanan."
+        "id": "2019-community",
+        "period": "2019 – 2023",
+        "title": "Komunitas & Organisasi Kampus",
+        "description": "Mengelola konferensi, humas, dan logistik acara nasional/regional sambil membangun jaringan kolaborasi."
       }
     ]
   },
@@ -56,47 +56,35 @@
     "heading": "Keahlian Inti",
     "clusters": [
       {
-        "title": "LLM & Agent Engineering",
-        "description": "Merancang sistem multi-agent, memori, evaluasi, dan safety layer dengan GPT-5 Codex, ChatGPT Plus, dan LangChain.",
+        "title": "LLM & Prompt Engineering",
+        "description": "Merancang agen multi-langkah, memori, evaluasi, dan guardrails.",
         "items": [
           "GPT-5 Codex",
-          "ChatGPT Plus (o1/o3)",
-          "LangChain",
-          "Vercel AI SDK",
-          "Guardrailed workflows"
+          "ChatGPT",
+          "OpenAI o1",
+          "Guardrails",
+          "Custom evaluators"
         ]
       },
       {
         "title": "Generative AI Pipelines",
-        "description": "Produksi video, gambar, dan audio dengan prompt yang reproducible dan SOP jelas.",
+        "description": "Produksi video, gambar, dan audio dengan SOP reproducible.",
         "items": [
           "Sora",
           "Runway",
           "Veo",
-          "Pika",
           "ElevenLabs"
         ]
       },
       {
-        "title": "Web Engineering (Web2 & Apps)",
-        "description": "Membangun aplikasi Next.js, API, dan otomasi dengan performa serta aksesibilitas terukur.",
+        "title": "Web Engineering",
+        "description": "Pengembangan aplikasi Next.js, API, dan otomasi backend/frontend.",
         "items": [
-          "Next.js 15",
+          "Next.js",
           "TypeScript",
           "Node.js",
           "Astro",
           "Vercel"
-        ]
-      },
-      {
-        "title": "Web3 & Crypto Experiments",
-        "description": "Eksplor wallet, mekanik token, dan alur dApp dengan review keamanan berbasis AI.",
-        "items": [
-          "Solidity",
-          "Ethers.js",
-          "Thirdweb",
-          "Wallet UX",
-          "Token design"
         ]
       }
     ]
@@ -119,17 +107,11 @@
     ]
   },
   "testimonials": {
-    "heading": "Testimoni & Kolaborasi",
-    "items": [
-      {
-        "name": "Kolaborator berikutnya",
-        "role": "-",
-        "quote": "Testimoni akan ditambahkan setelah proyek kolaborasi berikutnya."
-      }
-    ],
+    "heading": "",
+    "items": [],
     "cta": {
-      "label": "Siap berkolaborasi?",
-      "href": "/contact"
+      "label": "",
+      "href": "#"
     }
   }
 }

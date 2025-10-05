@@ -52,10 +52,12 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="about__section">
-        <h2 className="h2">{testimonials.heading}</h2>
-        <TestimonialsDeck items={testimonials.items} cta={testimonials.cta} />
-      </section>
+      {testimonials.items.length > 0 && testimonials.heading && (
+        <section className="about__section">
+          <h2 className="h2">{testimonials.heading}</h2>
+          <TestimonialsDeck items={testimonials.items} cta={testimonials.cta} />
+        </section>
+      )}
 
       <div className="hr" />
 

@@ -10,6 +10,7 @@ export default async function ContactPage() {
   return (
     <div>
       <h1 className="h1">{contact.title}</h1>
+      {contact.intro && <p className="sub" style={{ marginTop: "8px" }}>{contact.intro}</p>}
       <div className="grid grid-2" style={{ marginTop: "14px" }}>
         {contact.contacts.map((item) => (
           <a key={item.title} className="card" href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} rel={item.href.startsWith("http") ? "noopener" : undefined}>

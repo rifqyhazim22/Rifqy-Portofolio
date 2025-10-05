@@ -104,6 +104,7 @@ export interface Dictionary {
   };
   contact: {
     title: string;
+    intro: string;
     contacts: LinkCard[];
     faqHeading: string;
     faq: LinkCard[];
@@ -167,7 +168,7 @@ const dictionaries: Record<Language, Dictionary> = {
     },
     updates: {
       title: "Updates",
-      intro: "Kurasi kabar & insight singkat seputar AI, Web, dan 5 industri masa depan.",
+      intro: "Catatan ringkas tentang eksperimen LLM, generative AI, dan proyek web yang sedang berjalan.",
       list: [
         {
           href: "/updates/ai-web",
@@ -458,7 +459,7 @@ const dictionaries: Record<Language, Dictionary> = {
     },
     works: {
       title: "Karya",
-      intro: "Showcase AI-first: agen multi-langkah, pipeline generatif, dan AI delivery yang siap produksi. Koleksi penuh tetap ada di Google Drive untuk ditelusuri.",
+      intro: "Saya menggunakan GPT-5 Codex, ChatGPT, dan toolchain generatif untuk membangun agen, otomasi, dan produk imersif. Setiap pengerjaan dimulai dengan pemetaan sistem, evaluasi, dan alur kerja yang menjaga privasi.",
       buttons: [
         {
           href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
@@ -474,13 +475,8 @@ const dictionaries: Record<Language, Dictionary> = {
       gallery: [
         {
           href: "mailto:rifqyhazim22@gmail.com",
-          title: "LLM Concierge Next.js 15",
-          sub: "Pair-programming dengan GPT-5 Codex untuk agen memori, toggle bilingual, dan evaluasi otomatis."
-        },
-        {
-          href: "mailto:rifqyhazim22@gmail.com",
-          title: "TSL AI-first SPA",
-          sub: "Landing page TSL dengan orkestrasi agen untuk kontak, theme switcher, dan telemetry real-time."
+          title: "LLM Concierge Lab",
+          sub: "Pair-programming dengan GPT-5 Codex untuk navigasi konten, memori, dan evaluasi otomatis."
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
@@ -489,8 +485,8 @@ const dictionaries: Record<Language, Dictionary> = {
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
-          title: "Campaign AI TSL × Gema",
-          sub: "Generative influencer content dengan penjaga konsistensi karakter dan naskah agent-driven."
+          title: "Campaign AI TSL",
+          sub: "Konten video generatif berbasis prompt LLM dengan SOP produksi ringkas."
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
@@ -500,13 +496,13 @@ const dictionaries: Record<Language, Dictionary> = {
         {
           href: "mailto:rifqyhazim22@gmail.com",
           title: "Generative Asset Lab",
-          sub: "Eksperimen Runway, Veo, dan Pika untuk library video & image siap deploy."
+          sub: "Eksperimen Runway dan Veo untuk library video & image siap deploy."
         },
       ],
     },
     projects: {
       title: "Projects",
-      intro: "Blueprint jangka panjang: orkestrasi agen LLM, pipeline generatif berskala, serta eksplorasi Web2/Web3 dan crypto. Google Drive menyimpan lampiran mendalamnya.",
+      intro: "Proyek jangka panjang untuk mengorkestrasi agen LLM, memperbesar pipeline generatif, dan meneliti peluang Web2/Web3 & crypto. Detail mendalam tersimpan di Google Drive.",
       buttons: [
         {
           href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
@@ -523,11 +519,11 @@ const dictionaries: Record<Language, Dictionary> = {
         {
           href: "mailto:rifqyhazim22@gmail.com",
           title: "Entropy Inc",
-          sub: "Rancangan ekosistem AI + Web3 dengan agent governance dan token utility."
+          sub: "Rancangan ekosistem AI + Web3 dengan tata kelola agen dan utilitas token."
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
-          title: "Agent Playbooks",
+          title: "AI Playbooks",
           sub: "Framework evaluasi prompt, guardrails, dan SOP deployment untuk tim kreator."
         },
         {
@@ -537,13 +533,14 @@ const dictionaries: Record<Language, Dictionary> = {
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
-          title: "Web3 Experiment Hub",
-          sub: "Prototype wallet UX, tokenomics, dan smart-contract flow dengan audit AI."
+          title: "Web3 Research Hub",
+          sub: "Riset wallet UX, tokenomics, dan smart contract berbasis insight AI."
         },
       ],
     },
     contact: {
       title: "Contact",
+      intro: "Ajak diskusi seputar AI engineering, pengembangan web/app, atau kolaborasi riset.",
       contacts: [
         { href: "mailto:rifqyhazim22@gmail.com", title: "Email", sub: "rifqyhazim22@gmail.com" },
         { href: "https://wa.me/6281322963566", title: "WhatsApp", sub: "081322963566" },
@@ -626,7 +623,7 @@ const dictionaries: Record<Language, Dictionary> = {
     },
     updates: {
       title: "Updates",
-      intro: "Short-form insight curation across AI, the modern web, and five future industries.",
+      intro: "Short notes on current LLM experiments, generative AI pipelines, and shipping web work.",
       list: [
         {
           href: "/updates/ai-web",
@@ -745,7 +742,7 @@ const dictionaries: Record<Language, Dictionary> = {
     },
     industry: {
       title: "Playbooks & AI Education",
-      intro: "Pick a theme to explore the summary, potential impact, and practical starting points.",
+      intro: "These playbooks capture LLM experiments, generative AI workflows, and web delivery patterns you can apply quickly.",
       playbooks: [
         { href: "/industry/ai", title: "AI → AGI → ASI", sub: "From narrow systems to general and super intelligence: opportunities and ethics." },
         { href: "/industry/crypto", title: "Crypto in Finance", sub: "Blockchain, asset tokenization, smart contracts, and new economic models." },
@@ -916,7 +913,7 @@ const dictionaries: Record<Language, Dictionary> = {
     },
     works: {
       title: "Works",
-      intro: "AI-first delivery: multi-agent workflows, generative pipelines, and production-ready interfaces. Drive links keep the full archive accessible.",
+      intro: "I use GPT-5 Codex, ChatGPT, and generative toolchains to build agents, automation, and immersive products. Every delivery starts with system mapping, evaluation, and privacy-first workflows.",
       buttons: [
         {
           href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
@@ -932,13 +929,8 @@ const dictionaries: Record<Language, Dictionary> = {
       gallery: [
         {
           href: "mailto:rifqyhazim22@gmail.com",
-          title: "Next.js 15 LLM Concierge",
-          sub: "Memory-aware agent pairing with GPT-5 Codex, bilingual UX, and automated evaluation."
-        },
-        {
-          href: "mailto:rifqyhazim22@gmail.com",
-          title: "TSL AI-first SPA",
-          sub: "Agent-assisted contact workflows, theming, and telemetry within a single-page app."
+          title: "LLM Concierge Lab",
+          sub: "GPT-5 Codex pairing for navigation, memory, and evaluation harnesses in web interfaces."
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
@@ -947,8 +939,8 @@ const dictionaries: Record<Language, Dictionary> = {
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
-          title: "TSL × Gema Influencer AI",
-          sub: "Agent-directed scripts and guardrails for 56-second campaigns."
+          title: "TSL AI Campaign",
+          sub: "Generative video content shaped by LLM prompt systems and focused production SOPs."
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
@@ -958,13 +950,13 @@ const dictionaries: Record<Language, Dictionary> = {
         {
           href: "mailto:rifqyhazim22@gmail.com",
           title: "Generative Asset Lab",
-          sub: "Runway, Veo, and Pika explorations for reusable media libraries."
+          sub: "Runway and Veo explorations for reusable media libraries."
         },
       ],
     },
     projects: {
       title: "Projects",
-      intro: "Long-horizon blueprints for LLM agents, scaled generative ops, and Web3/crypto experiments—Drive folders store the deep dives.",
+      intro: "Long-horizon blueprints for LLM agents, scaled generative operations, and Web2/Web3/crypto research—Drive folders keep the deep dives ready.",
       buttons: [
         {
           href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
@@ -981,12 +973,12 @@ const dictionaries: Record<Language, Dictionary> = {
         {
           href: "mailto:rifqyhazim22@gmail.com",
           title: "Entropy Inc",
-          sub: "AI + Web3 ecosystem blueprint with agent governance and token utility."
+          sub: "AI + Web3 ecosystem blueprint with agent governance and token utility models."
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
-          title: "Agent Playbooks",
-          sub: "Prompt libraries, evaluation harnesses, and deployment SOPs."
+          title: "AI Playbooks",
+          sub: "Prompt evaluation, guardrails, and deployment SOPs for creative teams."
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
@@ -995,13 +987,14 @@ const dictionaries: Record<Language, Dictionary> = {
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
-          title: "Web3 Experiment Hub",
-          sub: "Wallet UX, tokenomics, and smart-contract prototypes with AI-assisted audits."
+          title: "Web3 Research Hub",
+          sub: "Wallet UX, tokenomics, and smart-contract studies driven by AI insights."
         },
       ],
     },
     contact: {
       title: "Contact",
+      intro: "Reach out for AI engineering, web/app development, or research collaborations.",
       contacts: [
         { href: "mailto:rifqyhazim22@gmail.com", title: "Email", sub: "rifqyhazim22@gmail.com" },
         { href: "https://wa.me/6281322963566", title: "WhatsApp", sub: "+62 813-2296-3566" },

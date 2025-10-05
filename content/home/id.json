@@ -2,7 +2,7 @@
   "hero": {
     "name": "Rifqy Hazim Haidar Ramadhan",
     "title": "AI Creative Specialist & Agent Engineer",
-    "tagline": "Ad Astra Abyssosque — Menuju Bintang dan Menyelami Jurang.",
+    "tagline": "AI Engineer · Prompt Strategist · Web Developer",
     "summary": "Saya membangun agen LLM, pipeline generatif, dan aplikasi web siap produksi. Setiap kolaborasi dimulai dengan pemetaan sistem, evaluasi otomatis, dan alur kerja yang menjaga privasi.",
     "availability": "Terbuka untuk kolaborasi deploy agen LLM, produksi konten generatif, dan delivery Web2/Web3.",
     "actions": [
@@ -20,15 +20,15 @@
     "highlights": [
       {
         "label": "Stack LLM",
-        "value": "GPT-5 Codex · ChatGPT Plus · OpenAI o1"
+        "value": "Codex · ChatGPT · Gemini"
       },
       {
         "label": "Fokus",
-        "value": "Agents · GenAI · Web2/Web3"
+        "value": "LLM · GenAI · Web/App Dev"
       },
       {
         "label": "Basis",
-        "value": "Tangerang, Indonesia"
+        "value": "Jabodetabek, Indonesia"
       }
     ],
     "portraitSrc": "/images/hero.jpg",
