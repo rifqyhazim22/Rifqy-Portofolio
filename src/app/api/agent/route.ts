@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import { NextRequest, NextResponse } from "next/server";
 import navigationEmbeddings from "@/content/navigation/embeddings.json";
+import navigationConfig from "@/content/navigation/config.json";
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -10,6 +11,7 @@ const SYSTEM_PROMPT = `You are the AI concierge for Rifqy Hazim HR's portfolio w
 - Answer questions concisely and helpfully in the language specified by the client.
 - Suggest relevant sections (About, Works, Projects, Playbooks/Industry, Updates, Contact) based on the user's intent.
 - If the user explicitly wants to navigate somewhere, append a directive at the end of your reply using the format [[NAVIGATE:/path]].
+- Pick the closest destination from the official menu list and use its exact route when producing [[NAVIGATE:/path]]. If unsure, ask for clarification first.
 - Keep the directive separate from the natural language reply. Only include one directive per reply when appropriate.
 - Prefer short paragraphs and bullet lists when useful.
 - Sprinkle in fitting emojis (maximum three per reply) to keep the tone energetic and human.`;
@@ -131,6 +133,10 @@ const ROUTE_ALIAS_MAP = ROUTE_CONFIG.reduce<Record<string, string>>((acc, config
 
 const NAVIGATION_EMBEDDINGS = navigationEmbeddings as NavigationEmbedding[];
 const EMBEDDING_THRESHOLD = 0.78;
+const intentMemory = new Map<string, Map<string, number>>();
+const ROUTE_MENU_TEXT = (navigationConfig as Array<{ title: string; route: string }> )
+  .map((item) => `- ${item.title} (${item.route})`)
+  .join("\n");
 
 function normalizePath(value: string | null): string | null {
   if (!value) return null;
@@ -140,6 +146,12 @@ function normalizePath(value: string | null): string | null {
     return trimmed.replace(/\/$/, "").toLowerCase() || "/";
   }
   return ("/" + trimmed).replace(/\/$/, "").toLowerCase();
+}
+
+function normalizeQueryText(value: string | null): string | null {
+  if (!value) return null;
+  const trimmed = value.trim().toLowerCase();
+  return trimmed.length ? trimmed : null;
 }
 
 function levenshtein(a: string, b: string): number {
@@ -236,6 +248,40 @@ function resolveNavigationByHeuristics(raw: string | null, messages: ChatMessage
   return normalized && KNOWN_ROUTES.has(normalized) ? normalized : null;
 }
 
+function recordIntent(query: string | null, route: string | null) {
+  if (!route) return;
+  const key = normalizeQueryText(query);
+  if (!key) return;
+  const map = intentMemory.get(key) ?? new Map<string, number>();
+  map.set(route, (map.get(route) ?? 0) + 1);
+  intentMemory.set(key, map);
+}
+
+function resolveFromMemory(query: string | null): string | null {
+  const key = normalizeQueryText(query);
+  if (!key) return null;
+  const direct = intentMemory.get(key);
+  if (direct && direct.size > 0) {
+    return [...direct.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+  }
+
+  let bestRoute: string | null = null;
+  let bestScore = 0;
+
+  for (const [storedKey, routes] of intentMemory.entries()) {
+    if (!storedKey) continue;
+    if (key.includes(storedKey) || storedKey.includes(key)) {
+      const [route, score] = [...routes.entries()].sort((a, b) => b[1] - a[1])[0] ?? [];
+      if (route && score && score > bestScore) {
+        bestRoute = route;
+        bestScore = score;
+      }
+    }
+  }
+
+  return bestRoute;
+}
+
 function cosineSimilarity(a: number[], b: number[]): number {
   let dot = 0;
   let normA = 0;
@@ -250,13 +296,22 @@ function cosineSimilarity(a: number[], b: number[]): number {
 }
 
 async function resolveNavigationTarget(raw: string | null, messages: ChatMessage[]): Promise<string | null> {
+  const lastUserMessage = [...messages].reverse().find((msg) => msg.role === "user")?.content ?? "";
+  const query = raw?.trim()?.length ? raw : lastUserMessage;
+  const normalizedQuery = normalizeQueryText(query);
+
+  const memorySuggestion = resolveFromMemory(normalizedQuery) ?? resolveFromMemory(lastUserMessage);
+  if (memorySuggestion) {
+    recordIntent(normalizedQuery ?? lastUserMessage, memorySuggestion);
+    return memorySuggestion;
+  }
+
   const heuristic = resolveNavigationByHeuristics(raw, messages);
   if (heuristic) {
+    recordIntent(normalizedQuery ?? lastUserMessage, heuristic);
     return heuristic;
   }
 
-  const lastUserMessage = [...messages].reverse().find((msg) => msg.role === "user")?.content ?? "";
-  const query = raw?.trim()?.length ? raw : lastUserMessage;
   if (!query?.trim()) {
     return null;
   }
@@ -284,6 +339,7 @@ async function resolveNavigationTarget(raw: string | null, messages: ChatMessage
     }
 
     if (bestRoute && bestScore >= EMBEDDING_THRESHOLD) {
+      recordIntent(normalizedQuery ?? lastUserMessage, bestRoute);
       return bestRoute;
     }
   } catch (error) {
@@ -327,6 +383,7 @@ export async function POST(request: NextRequest) {
     locationContext
       ? `Visitor is currently browsing ${locationContext}. Take that into account when crafting your answer and navigation hints.`
       : null,
+    `Routes you can navigate to:\n${ROUTE_MENU_TEXT}`,
   ].filter(Boolean) as string[];
 
   try {
