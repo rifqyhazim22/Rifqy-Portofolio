@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import { NextRequest, NextResponse } from "next/server";
+import navigationEmbeddings from "@/content/navigation/embeddings.json";
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -28,6 +29,13 @@ interface RouteConfig {
   route: string;
   aliases?: string[];
   keywords: string[];
+}
+
+interface NavigationEmbedding {
+  route: string;
+  title: string;
+  description: string;
+  embedding: number[];
 }
 
 const ROUTE_CONFIG: RouteConfig[] = [
@@ -121,6 +129,9 @@ const ROUTE_ALIAS_MAP = ROUTE_CONFIG.reduce<Record<string, string>>((acc, config
   return acc;
 }, {});
 
+const NAVIGATION_EMBEDDINGS = navigationEmbeddings as NavigationEmbedding[];
+const EMBEDDING_THRESHOLD = 0.78;
+
 function normalizePath(value: string | null): string | null {
   if (!value) return null;
   const trimmed = value.trim();
@@ -155,7 +166,7 @@ function levenshtein(a: string, b: string): number {
   return matrix[a.length][b.length];
 }
 
-function resolveNavigationTarget(raw: string | null, messages: ChatMessage[]): string | null {
+function resolveNavigationByHeuristics(raw: string | null, messages: ChatMessage[]): string | null {
   let normalized = normalizePath(raw);
   if (normalized && ROUTE_ALIAS_MAP[normalized]) {
     normalized = ROUTE_ALIAS_MAP[normalized];
@@ -225,6 +236,63 @@ function resolveNavigationTarget(raw: string | null, messages: ChatMessage[]): s
   return normalized && KNOWN_ROUTES.has(normalized) ? normalized : null;
 }
 
+function cosineSimilarity(a: number[], b: number[]): number {
+  let dot = 0;
+  let normA = 0;
+  let normB = 0;
+  for (let i = 0; i < a.length && i < b.length; i += 1) {
+    dot += a[i] * b[i];
+    normA += a[i] * a[i];
+    normB += b[i] * b[i];
+  }
+  if (normA === 0 || normB === 0) return 0;
+  return dot / (Math.sqrt(normA) * Math.sqrt(normB));
+}
+
+async function resolveNavigationTarget(raw: string | null, messages: ChatMessage[]): Promise<string | null> {
+  const heuristic = resolveNavigationByHeuristics(raw, messages);
+  if (heuristic) {
+    return heuristic;
+  }
+
+  const lastUserMessage = [...messages].reverse().find((msg) => msg.role === "user")?.content ?? "";
+  const query = raw?.trim()?.length ? raw : lastUserMessage;
+  if (!query?.trim()) {
+    return null;
+  }
+
+  try {
+    const resp = await client.embeddings.create({
+      model: "text-embedding-3-small",
+      input: query,
+    });
+
+    const queryEmbedding = resp.data[0]?.embedding;
+    if (!queryEmbedding) {
+      return null;
+    }
+
+    let bestRoute: string | null = null;
+    let bestScore = -Infinity;
+
+    for (const item of NAVIGATION_EMBEDDINGS) {
+      const score = cosineSimilarity(queryEmbedding, item.embedding);
+      if (score > bestScore) {
+        bestScore = score;
+        bestRoute = item.route;
+      }
+    }
+
+    if (bestRoute && bestScore >= EMBEDDING_THRESHOLD) {
+      return bestRoute;
+    }
+  } catch (error) {
+    console.error("Embedding match failed", error);
+  }
+
+  return null;
+}
+
 export async function POST(request: NextRequest) {
   if (!client.apiKey) {
     return NextResponse.json({ error: "OpenAI API key not configured." }, { status: 500 });
@@ -276,7 +344,7 @@ export async function POST(request: NextRequest) {
     const fullText = response.choices[0]?.message?.content?.trim() ?? "";
     const navigateMatch = fullText.match(/\[\[NAVIGATE:([^\]]+)\]\]/i);
     const rawNavigation = navigateMatch ? navigateMatch[1].trim() : null;
-    const navigation = resolveNavigationTarget(rawNavigation, messages);
+    const navigation = await resolveNavigationTarget(rawNavigation, messages);
     const cleanedText = fullText.replace(/\[\[NAVIGATE:[^\]]+\]\]/gi, "").trim();
 
     return NextResponse.json({ message: cleanedText, navigation });

@@ -1,0 +1,62 @@
+[
+  {
+    "route": "/",
+    "title": "Home",
+    "description": "Landing hero Rifqy Hazim HR: tagline AI engineer, CTA ke Works & Playbooks, quote, highlight."
+  },
+  {
+    "route": "/about",
+    "title": "About",
+    "description": "Cerita personal, timeline, capability grid, dan values Rifqy Hazim HR."
+  },
+  {
+    "route": "/updates",
+    "title": "Updates",
+    "description": "Koleksi insight singkat seputar AI, prompt engineering, web delivery, dan industri masa depan."
+  },
+  {
+    "route": "/playbooks",
+    "title": "Playbooks Hub",
+    "description": "Hub AI education & playbooks industri: AGI, Crypto, Biotech, Energy, Space."
+  },
+  {
+    "route": "/industry/ai",
+    "title": "Playbook AGI",
+    "description": "Strategi AI → AGI → ASI, prompt lanjutan, orkestrasi agent, dan etika implementasi."
+  },
+  {
+    "route": "/industry/crypto",
+    "title": "Playbook Crypto",
+    "description": "Blockchain & DeFi: smart contract, ekonomi token, koordinasi terprogram."
+  },
+  {
+    "route": "/industry/biotech",
+    "title": "Playbook Biotech",
+    "description": "Bioteknologi: rekayasa genetik, precision food, biomaterial future."
+  },
+  {
+    "route": "/industry/energy",
+    "title": "Playbook Energy",
+    "description": "Energi terbarukan: solar, storage, smart-grid, strategi dekarbonisasi."
+  },
+  {
+    "route": "/industry/space",
+    "title": "Playbook Space",
+    "description": "Eksplorasi luar angkasa: orbital services, satelit, observasi bumi."
+  },
+  {
+    "route": "/works",
+    "title": "Works",
+    "description": "Galeri works prompt engineering dan aset produksi multi-format."
+  },
+  {
+    "route": "/projects",
+    "title": "Projects",
+    "description": "Proyek web/app delivery dengan stack modern dan deployment cepat."
+  },
+  {
+    "route": "/contact",
+    "title": "Contact",
+    "description": "Hubungi Rifqy Hazim HR: email, sosial, FAQ kolaborasi."
+  }
+]

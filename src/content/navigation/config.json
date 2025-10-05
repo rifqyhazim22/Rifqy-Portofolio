@@ -1,0 +1,74 @@
+[
+  {
+    "id": "home",
+    "route": "/",
+    "title": "Home",
+    "description": "Landing hero Rifqy Hazim HR: tagline AI engineer, CTA ke Works & Playbooks, quote, highlight."
+  },
+  {
+    "id": "about",
+    "route": "/about",
+    "title": "About",
+    "description": "Cerita personal, timeline, capability grid, dan values Rifqy Hazim HR."
+  },
+  {
+    "id": "updates",
+    "route": "/updates",
+    "title": "Updates",
+    "description": "Koleksi insight singkat seputar AI, prompt engineering, web delivery, dan industri masa depan."
+  },
+  {
+    "id": "playbooks",
+    "route": "/playbooks",
+    "title": "Playbooks Hub",
+    "description": "Hub AI education & playbooks industri: AGI, Crypto, Biotech, Energy, Space."
+  },
+  {
+    "id": "playbook-ai",
+    "route": "/industry/ai",
+    "title": "Playbook AGI",
+    "description": "Strategi AI → AGI → ASI, prompt lanjutan, orkestrasi agent, dan etika implementasi."
+  },
+  {
+    "id": "playbook-crypto",
+    "route": "/industry/crypto",
+    "title": "Playbook Crypto",
+    "description": "Blockchain & DeFi: smart contract, ekonomi token, koordinasi terprogram."
+  },
+  {
+    "id": "playbook-biotech",
+    "route": "/industry/biotech",
+    "title": "Playbook Biotech",
+    "description": "Bioteknologi: rekayasa genetik, precision food, biomaterial future."
+  },
+  {
+    "id": "playbook-energy",
+    "route": "/industry/energy",
+    "title": "Playbook Energy",
+    "description": "Energi terbarukan: solar, storage, smart-grid, strategi dekarbonisasi."
+  },
+  {
+    "id": "playbook-space",
+    "route": "/industry/space",
+    "title": "Playbook Space",
+    "description": "Eksplorasi luar angkasa: orbital services, satelit, observasi bumi."
+  },
+  {
+    "id": "works",
+    "route": "/works",
+    "title": "Works",
+    "description": "Galeri works prompt engineering dan aset produksi multi-format."
+  },
+  {
+    "id": "projects",
+    "route": "/projects",
+    "title": "Projects",
+    "description": "Proyek web/app delivery dengan stack modern dan deployment cepat."
+  },
+  {
+    "id": "contact",
+    "route": "/contact",
+    "title": "Contact",
+    "description": "Hubungi Rifqy Hazim HR: email, sosial, FAQ kolaborasi."
+  }
+]
