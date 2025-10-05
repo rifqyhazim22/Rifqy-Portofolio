@@ -182,7 +182,7 @@ export default function AgentChat() {
         aria-expanded={open}
         aria-controls="agentPanel"
       >
-        🤖 AI Guide
+        📚 AI Guide
       </button>
 
       {open && (
