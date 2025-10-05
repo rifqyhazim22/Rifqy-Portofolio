@@ -155,15 +155,15 @@ const dictionaries: Record<Language, Dictionary> = {
         },
         {
           href: "/industry",
-          title: "Web2 + Web3 Delivery",
-          sub: "Next.js 15, API, serta eksperimen wallet & token.",
+          title: "Web Delivery & Automasi",
+          sub: "Next.js, API, dan orchestrasi otomasi untuk ship lebih cepat.",
         },
       ],
       learningHeading: "Eksplorasi Lanjutan",
       learningItems: [
         { href: "/updates/prompt-engineering", title: "Prompt & Agent", sub: "" },
         { href: "/updates/ai-web", title: "AI + Web Delivery", sub: "" },
-        { href: "/industry", title: "Web3 & Frontier", sub: "" },
+        { href: "/industry", title: "Shipping Frameworks", sub: "" },
       ],
     },
     updates: {
@@ -528,7 +528,7 @@ const dictionaries: Record<Language, Dictionary> = {
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
-          title: "Grab Field Intelligence",
+          title: "Grab Rideshare Intelligence",
           sub: "Ground-truth rideshare data dimodelkan ulang oleh LLM untuk strategi layanan."
         },
         {
@@ -592,7 +592,7 @@ const dictionaries: Record<Language, Dictionary> = {
     about: {
       title: "About",
       intro:
-        "I architect LLM agents, generative pipelines, and modern web delivery with GPT-5 Codex, ChatGPT Plus, and automation stacks—every engagement mapped, evaluated, and privacy-aware.",
+        "I architect LLM agents, generative pipelines, and modern web delivery with GPT-5 Codex, ChatGPT, and automation stacks—every engagement mapped, evaluated, and privacy-aware.",
       philosophyHeading: "Philosophy & Vision",
       philosophyBody:
         "Ad Astra Abyssosque is the compass: dive through complexity, surface with disciplined creativity, document the path. Even outside tech briefs, LLM copilots and generative tooling anchor every decision.",
@@ -610,15 +610,15 @@ const dictionaries: Record<Language, Dictionary> = {
         },
         {
           href: "/industry",
-          title: "Web2 + Web3 Delivery",
-          sub: "Next.js apps, crypto experiments, and launch frameworks.",
+          title: "Web Delivery & Automation",
+          sub: "Next.js builds, APIs, and automation scaffolding ready to ship.",
         },
       ],
       learningHeading: "Dive Deeper",
       learningItems: [
         { href: "/updates/prompt-engineering", title: "Prompt & Agent", sub: "" },
         { href: "/updates/ai-web", title: "AI + Web Delivery", sub: "" },
-        { href: "/industry", title: "Web3 & Frontier", sub: "" },
+        { href: "/industry", title: "Framework Pengiriman", sub: "" },
       ],
     },
     updates: {
