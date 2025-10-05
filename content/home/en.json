@@ -1,60 +1,60 @@
 {
   "hero": {
-    "name": "Rifqy Hazim HR",
-    "title": "AI Prompter & Strategist · Web Developer",
-    "tagline": "AI Engineer · Generative AI & LLM Specialist · Web & App Developer",
-    "summary": "I design AI-driven digital experiences—concise, measurable, and ready to ship today.",
-    "availability": "Open to collaborate on AI experiments, web delivery, and production-ready agents.",
+    "name": "Rifqy Hazim Haidar Ramadhan",
+    "title": "AI Creative Specialist & Prompt Engineer",
+    "tagline": "Designing AI-first campaigns, sales strategy assets, and modern web delivery.",
+    "summary": "I am an AI Creative Specialist, Prompt Engineer, and Web Developer with roots in automotive sales and digital marketing. The Ad Astra Abyssosque philosophy pushes me to dive into complex systems and ship creative, measurable work.",
+    "availability": "Open to collaborations on AI-first video campaigns, sales enablement playbooks, and interactive web products.",
     "actions": [
       {
-        "label": "View Works ↗",
-        "href": "/works",
+        "label": "Explore AI Projects →",
+        "href": "/projects",
         "variant": "primary"
       },
       {
-        "label": "Learn AI (Free) ↗",
-        "href": "/playbooks",
+        "label": "Start a Conversation →",
+        "href": "/contact",
         "variant": "outline"
       }
     ],
     "highlights": [
       {
         "label": "Experience",
-        "value": "5+ years building with AI & the web"
+        "value": "Generative AI, automotive sales, creative marketing"
       },
       {
         "label": "Focus",
-        "value": "Prompting · Agents · Delivery"
+        "value": "AI pipelines, storytelling, web orchestration"
       },
       {
         "label": "Base",
-        "value": "Bandung, Indonesia"
+        "value": "Tangerang, Indonesia"
       }
     ],
     "portraitSrc": "/images/hero.jpg",
     "backgroundSrc": "/images/hero-background.png"
   },
   "quote": {
-    "label": "Quote",
-    "text": "In the beginning there was dark. Until someone set themselves aflame. Only then did the universe know light."
+    "label": "Motto",
+    "text": "Ad Astra Abyssosque — ‘To the stars and into the depths.’"
   },
   "whatIDo": {
     "heading": "What I Do",
     "items": [
       {
         "href": "/works",
-        "title": "Prompt Engineering",
-        "sub": "Video, image, text—from idea to finished output."
+        "title": "AI Creative Production",
+        "sub": "Planning and shipping AI-first DVC campaigns."
       },
       {
         "href": "/projects",
-        "title": "Web Delivery",
-        "sub": "Lightweight landing pages & fast iteration (Astro · GitHub)."
+        "title": "Sales & Strategy Assets",
+        "sub": "Value storytelling, pitch decks, and CRM flows."
       },
       {
         "href": "/playbooks",
-        "title": "Strategy & Education",
-        "sub": "Playbooks and frameworks you can apply."
+        "title": "Web & Agent Delivery",
+        "sub": "Next.js migrations, agent workflow, and deployable docs."
       }
     ]
   },

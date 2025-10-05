@@ -136,33 +136,33 @@ const dictionaries: Record<Language, Dictionary> = {
     about: {
       title: "About",
       intro:
-        "Saya fokus pada AI Prompting, Strategi, dan Web Development. Misinya sederhana: menghadirkan solusi digital yang ringkas, terukur, dan siap dipakai hari ini—tanpa membagikan data pribadi sensitif.",
-      philosophyHeading: "Filosofi & Cara Pandang",
+        "Saya adalah AI Creative Specialist dan Prompt Engineer yang memadukan produksi konten generatif, strategi penjualan, dan web delivery modern. Fokusnya menghadirkan solusi yang ringkas, terukur, dan aman untuk kolaborasi hari ini.",
+      philosophyHeading: "Filosofi & Visi",
       philosophyBody:
-        "Teknologi bernilai ketika membantu orang menyelesaikan pekerjaan dengan lebih baik. Prinsip kerja saya: jelas (tujuan & batasan), cepat (iterasi kecil), dan aman (minim data sensitif). Motto: Ad Astra Abyssosque—menjelajah kemungkinan setinggi langit dan sedalam mungkin secara disiplin.",
-      workHeading: "Apa yang Saya Lakukan",
+        "Ad Astra Abyssosque menjadi kompas untuk menyelami persoalan sampai ke akar sebelum memberi cahaya. Setiap proyek dimulai dengan riset mendalam, definisi nilai, dan protokol privasi yang jelas; lalu dilanjutkan dengan iterasi singkat yang bisa diukur dampaknya.",
+      workHeading: "Fokus Utama",
       workItems: [
         {
           href: "/works",
-          title: "Prompt Engineering",
-          sub: "Video · Image · Text — dari ide ke hasil.",
+          title: "AI Creative Production",
+          sub: "DVC, storytelling, dan orkestrasi generative AI.",
         },
         {
           href: "/projects",
-          title: "Web Delivery",
-          sub: "Landing ringan & cepat (Astro · GitHub · Vercel).",
+          title: "AI & Web Delivery",
+          sub: "Migrasi Next.js, agent workflow, dan dokumentasi deploy.",
         },
         {
           href: "/industry",
-          title: "Strategy & Edukasi",
-          sub: "Playbooks & kerangka kerja yang bisa direplikasi.",
+          title: "Sales & Strategy Assets",
+          sub: "Pitch deck, SOP penjualan, dan analisis pasar terstruktur.",
         },
       ],
-      learningHeading: "Learning Hub",
+      learningHeading: "Eksplorasi Lanjutan",
       learningItems: [
-        { href: "/industry", title: "AI Basics", sub: "" },
-        { href: "/industry", title: "Prompt Patterns", sub: "" },
-        { href: "/industry", title: "Tools & Workflow", sub: "" },
+        { href: "/updates/prompt-engineering", title: "Prompt & Context", sub: "" },
+        { href: "/updates/ai-web", title: "Creative Ops", sub: "" },
+        { href: "/industry", title: "Playbooks & Frameworks", sub: "" },
       ],
     },
     updates: {
@@ -458,41 +458,99 @@ const dictionaries: Record<Language, Dictionary> = {
     },
     works: {
       title: "Karya",
-      intro: "Showcase terkurasi (manual). Untuk saat ini, tombol di bawah mengarah ke Google Drive.",
+      intro: "Koleksi proyek generatif, strategi, dan eksperimen AI. Demo lengkap tersedia lewat email atau WhatsApp.",
       buttons: [
-        { href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing", label: "AI Generated Video" },
-        { href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing", label: "AI Generated Image" },
+        { href: "mailto:rifqyhazim22@gmail.com", label: "Minta demo via email" },
+        { href: "https://wa.me/6281322963566", label: "WhatsApp untuk diskusi" },
       ],
       gallery: [
-        { href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing", title: "AI Generated Video (1)", sub: "Prompt & scene direction" },
-        { href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing", title: "AI Generated Image (1)", sub: "Prompt engineering" },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Redesain Landing Page TSL",
+          sub: "SPA interaktif dengan router, toggle tema, bahasa ganda, dan backend Node.js."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Migrasi Portofolio ke Next.js",
+          sub: "Sistem konten bilingual, UI adaptif, dan agent AI untuk navigasi."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Digital Video Commercial AI",
+          sub: "DVC 24 detik Goldi Skincare dengan pipeline Sora -> Runway -> Flow."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Influencer Marketing AI - TSL x Gema",
+          sub: "Iklan 56 detik dengan konsistensi karakter dan produksi cepat."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Riset & Strategi Bak Kwa Halal",
+          sub: "Analisis pasar, pricing, dan pitch deck untuk produk kuliner inovatif."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Web Portofolio AI Interaktif",
+          sub: "Situs pribadi modern dengan integrasi API AI dan modul bilingual."
+        },
       ],
     },
     projects: {
       title: "Projects",
-      intro: "Daftar proyek publik. Saat ini, dua tombol mengarah ke Google Drive.",
+      intro: "Inisiatif jangka panjang yang menggabungkan AI, strategi penjualan, dan riset pasar.",
       buttons: [
-        { href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing", label: "AI Generated Video" },
-        { href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing", label: "AI Generated Image" },
+        { href: "https://www.linkedin.com/in/rifqy-hazim-h-r-88963128a/", label: "LinkedIn" },
+        { href: "mailto:rifqyhazim22@gmail.com", label: "Minta CV lengkap" },
       ],
       gallery: [
-        { href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing", title: "AI Video – Prototype", sub: "Storyboard & direction" },
-        { href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing", title: "AI Image – Prototype", sub: "Prompt style exploration" },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Entropy Inc Initiative",
+          sub: "Blueprint ekosistem AI, Web3, dan otomasi digital jangka panjang."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Sales Enablement Playbook",
+          sub: "Toolkit value creation untuk otomotif dan B2B."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Transportasi Masa Depan",
+          sub: "Riset pola permintaan ride hailing sebagai dasar mobilitas udara."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Learning Modules",
+          sub: "Playbooks prompt, agent, dan governance untuk tim kreator."
+        },
       ],
     },
     contact: {
       title: "Contact",
       contacts: [
-        { href: "mailto:rifqyhazimforbs@gmail.com", title: "Email", sub: "rifqyhazimforbs@gmail.com" },
-        { href: "https://wa.me/6282123008601", title: "WhatsApp", sub: "082123008601" },
-        { href: "https://github.com/rifqyhazim22", title: "GitHub", sub: "rifqyhazim22" },
+        { href: "mailto:rifqyhazim22@gmail.com", title: "Email", sub: "rifqyhazim22@gmail.com" },
+        { href: "https://wa.me/6281322963566", title: "WhatsApp", sub: "081322963566" },
+        { href: "https://www.linkedin.com/in/rifqy-hazim-h-r-88963128a/", title: "LinkedIn", sub: "rifqy-hazim-h-r" },
         { href: "https://instagram.com/rifqy__hazim._", title: "Instagram", sub: "@rifqy__hazim._" },
       ],
       faqHeading: "FAQ (Cara Saya Bekerja)",
       faq: [
-        { href: "#privacy", title: "Apakah website ini menyimpan data pribadi?", sub: "Tidak. Website ini tidak menampilkan nomor, alamat, atau identitas sensitif." },
-        { href: "#tools", title: "Apa tools utama yang digunakan?", sub: "Astro untuk web statis cepat; GitHub untuk versioning; Vercel untuk deploy. AI tools untuk riset & produksi konten." },
-        { href: "#flow", title: "Seperti apa alur kerja tipikal?", sub: "Brief → definisi tujuan & batasan → prototipe cepat → iterasi singkat → delivery." },
+        {
+          href: "#privacy",
+          title: "Apakah website ini menyimpan data pribadi?",
+          sub: "Tidak. Data sensitif tidak disimpan; kontak ditampilkan hanya untuk komunikasi."
+        },
+        {
+          href: "#workflow",
+          title: "Bagaimana alur kerja proyek?",
+          sub: "Discovery -> definisi nilai -> prototipe -> validasi -> dokumentasi."
+        },
+        {
+          href: "#deliverables",
+          title: "Apa output utama yang dikirim?",
+          sub: "Pipeline AI, SOP, pitch deck, landing page, dan aset kreatif siap pakai."
+        },
       ],
     },
   },
@@ -521,33 +579,33 @@ const dictionaries: Record<Language, Dictionary> = {
     about: {
       title: "About",
       intro:
-        "My focus areas are AI Prompting, Strategy, and Web Development. The mission is simple: deliver digital solutions that are concise, measurable, and production-ready today—while keeping sensitive personal data out of the workflow.",
-      philosophyHeading: "Philosophy & Perspective",
+        "I am an AI Creative Specialist and Prompt Engineer who blends generative production, sales enablement, and modern web delivery into measurable outcomes.",
+      philosophyHeading: "Philosophy & Vision",
       philosophyBody:
-        "Technology matters when it helps people ship better work. My operating principles: clarity (shared goals & boundaries), speed (small iterations), and safety (minimal sensitive data). Motto: Ad Astra Abyssosque—exploring as high and as deep as discipline allows.",
-      workHeading: "What I Work On",
+        "Ad Astra Abyssosque is the compass—dive into complex systems and surface with disciplined creativity. Every project starts with research, aligned value, and explicit privacy protocols; then we iterate quickly and track the impact.",
+      workHeading: "Core Focus",
       workItems: [
         {
           href: "/works",
-          title: "Prompt Engineering",
-          sub: "Video · Image · Text—from idea to high-quality assets.",
+          title: "AI Creative Production",
+          sub: "AI-first DVC pipelines, storytelling, and creative direction.",
         },
         {
           href: "/projects",
-          title: "Web Delivery",
-          sub: "Lightweight landing pages (Astro · GitHub · Vercel).",
+          title: "AI & Web Delivery",
+          sub: "Next.js migrations, agent orchestration, and deploy-ready documentation.",
         },
         {
           href: "/industry",
-          title: "Strategy & Education",
-          sub: "Modular playbooks and repeatable frameworks.",
+          title: "Sales & Strategy Assets",
+          sub: "Pitch decks, SOPs, and structured market analysis.",
         },
       ],
-      learningHeading: "Learning Hub",
+      learningHeading: "Further Reading",
       learningItems: [
-        { href: "/industry", title: "AI Basics", sub: "" },
-        { href: "/industry", title: "Prompt Patterns", sub: "" },
-        { href: "/industry", title: "Tools & Workflow", sub: "" },
+        { href: "/updates/prompt-engineering", title: "Prompt & Context", sub: "" },
+        { href: "/updates/ai-web", title: "Creative Ops", sub: "" },
+        { href: "/industry", title: "Playbooks & Frameworks", sub: "" },
       ],
     },
     updates: {
@@ -842,41 +900,99 @@ const dictionaries: Record<Language, Dictionary> = {
     },
     works: {
       title: "Works",
-      intro: "Curated showcase (manual). For now, the buttons point to Google Drive.",
+      intro: "A collection of generative projects, strategic experiments, and AI showcases. Full demos available on request.",
       buttons: [
-        { href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing", label: "AI Generated Video" },
-        { href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing", label: "AI Generated Image" },
+        { href: "mailto:rifqyhazim22@gmail.com", label: "Request demo via email" },
+        { href: "https://wa.me/6281322963566", label: "Discuss on WhatsApp" },
       ],
       gallery: [
-        { href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing", title: "AI Generated Video (1)", sub: "Prompt & scene direction" },
-        { href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing", title: "AI Generated Image (1)", sub: "Prompt engineering" },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "TSL Landing Page Redesign",
+          sub: "Interactive SPA with router, theme toggle, EN/ID UX, and Node.js backend."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Next.js Portfolio Migration",
+          sub: "Bilingual content system, adaptive UI, and AI concierge navigation."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "AI Digital Video Commercial",
+          sub: "24-second Goldi Skincare DVC powered by the Sora → Runway → Flow pipeline."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Influencer Marketing AI — TSL × Gema",
+          sub: "56-second campaign with consistent characters and accelerated production."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Bak Kwa Halal Research & Strategy",
+          sub: "Market analysis, pricing strategy, and investor-facing pitch deck."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Interactive AI Portfolio Site",
+          sub: "Modern personal site with AI integrations and bilingual modules."
+        },
       ],
     },
     projects: {
       title: "Projects",
-      intro: "Public project list. Both buttons currently point to Google Drive.",
+      intro: "Long-term initiatives bridging AI, sales strategy, and market intelligence.",
       buttons: [
-        { href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing", label: "AI Generated Video" },
-        { href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing", label: "AI Generated Image" },
+        { href: "https://www.linkedin.com/in/rifqy-hazim-h-r-88963128a/", label: "LinkedIn" },
+        { href: "mailto:rifqyhazim22@gmail.com", label: "Request full CV" },
       ],
       gallery: [
-        { href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing", title: "AI Video – Prototype", sub: "Storyboard & direction" },
-        { href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing", title: "AI Image – Prototype", sub: "Prompt style exploration" },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Entropy Inc Initiative",
+          sub: "Blueprint for an innovation ecosystem combining AI, Web3, and automation."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Sales Enablement Playbook",
+          sub: "Value-creation toolkit for automotive and B2B engagements."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Future Mobility Research",
+          sub: "Ride-hailing demand mapping that informs aerial transport concepts."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Learning Modules",
+          sub: "Prompt, agent, and governance playbooks for creative teams."
+        },
       ],
     },
     contact: {
       title: "Contact",
       contacts: [
-        { href: "mailto:rifqyhazimforbs@gmail.com", title: "Email", sub: "rifqyhazimforbs@gmail.com" },
-        { href: "https://wa.me/6282123008601", title: "WhatsApp", sub: "+62 821 2300 8601" },
-        { href: "https://github.com/rifqyhazim22", title: "GitHub", sub: "rifqyhazim22" },
+        { href: "mailto:rifqyhazim22@gmail.com", title: "Email", sub: "rifqyhazim22@gmail.com" },
+        { href: "https://wa.me/6281322963566", title: "WhatsApp", sub: "+62 813-2296-3566" },
+        { href: "https://www.linkedin.com/in/rifqy-hazim-h-r-88963128a/", title: "LinkedIn", sub: "rifqy-hazim-h-r" },
         { href: "https://instagram.com/rifqy__hazim._", title: "Instagram", sub: "@rifqy__hazim._" },
       ],
       faqHeading: "FAQ (How I Work)",
       faq: [
-        { href: "#privacy", title: "Does this site store personal data?", sub: "No. Contact details stay off the site—use the channels above." },
-        { href: "#tools", title: "What tools do you use most?", sub: "Astro for fast static delivery, GitHub for versioning, Vercel for deploys, plus AI tooling for research and production." },
-        { href: "#flow", title: "What does the workflow look like?", sub: "Brief → define goals & constraints → quick prototype → short feedback loops → delivery." },
+        {
+          href: "#privacy",
+          title: "Does this site store personal data?",
+          sub: "No. Sensitive data stays off-platform; contact details are shared purely for outreach."
+        },
+        {
+          href: "#workflow",
+          title: "What does the workflow look like?",
+          sub: "Discovery → value definition → prototype → validation → documentation."
+        },
+        {
+          href: "#deliverables",
+          title: "Which deliverables can I expect?",
+          sub: "AI pipelines, SOPs, pitch decks, landing pages, and production-ready creative assets."
+        },
       ],
     },
   },

@@ -1,79 +1,126 @@
 {
   "hero": {
-    "title": "Tentang",
-    "tagline": "AI Engineer · Prompt Strategist · Web Delivery",
-    "summary": "Saya memadukan eksperimen AI dengan eksekusi produk web. Fokusnya: merancang sistem yang dapat dievaluasi, menjaga privasi, dan memberi ruang iterasi cepat."
+    "title": "Tentang Rifqy",
+    "tagline": "AI Creative Specialist, Prompt Engineer, dan Strategist",
+    "summary": "Saya adalah AI Creative Specialist dan Prompt Engineer dengan pengalaman di sales, marketing digital, dan pengembangan AI generatif. Filosofi Ad Astra Abyssosque mengajak saya menyelami masalah kompleks dan menghadirkan solusi yang menggabungkan kreativitas dan nilai nyata."
   },
   "story": {
-    "heading": "Cerita Personal",
+    "heading": "Filosofi & Visi",
     "paragraphs": [
-      "Mulai dari eksperimen kecil dengan GPT-2, saya melihat bagaimana prompt yang tepat bisa mengubah kualitas output. Pengalaman itu berkembang menjadi strategi untuk mendampingi kreator, founder, dan tim produk dalam memanfaatkan AI secara bertanggung jawab.",
-      "Peran saya adalah penerjemah antara tujuan bisnis dan mesin. Saya merancang kerangka kerja percakapan, agen AI, serta antarmuka yang siap dipakai. Semua dilakukan dengan prinsip: jelas tujuannya, aman datanya, dan singkat iterasinya."
+      "Saya percaya masa depan dimiliki mereka yang berani melangkah duluan sembari menjaga proses tetap disiplin. Setiap kolaborasi dimulai dengan riset mendalam, orientasi nilai, dan bahasa kerja yang transparan.",
+      "Visi saya adalah membangun ekosistem inovasi AI, Web3, dan otomasi digital yang efisien, sambil menjaga pijakan di sektor otomotif, properti, dan transportasi udara."
     ]
   },
   "timeline": {
-    "heading": "Timeline",
+    "heading": "Pengalaman Terpilih",
     "items": [
       {
-        "id": "2021",
-        "period": "2021",
-        "title": "Masuk ke dunia prompt engineering",
-        "description": "Mengotak-atik GPT dan Stable Diffusion untuk produksi konten komunitas, sekaligus menyusun pola prompt reusable."
+        "id": "2025-tsl",
+        "period": "2025 - sekarang",
+        "title": "The Social Linked - AI Creative Specialist & Prompt/Context Engineer",
+        "description": "Mengembangkan kampanye DVC berbasis AI, menyusun pipeline Sora -> Runway -> Flow, dan meningkatkan efisiensi produksi sampai 60%."
       },
       {
-        "id": "2022",
-        "period": "2022",
-        "title": "Membangun playbooks internal",
-        "description": "Merancang kerangka kerja untuk tim kreator dalam menerapkan AI di workflow: riset cepat, penulisan, dan desain visual."
+        "id": "2024-mitsubishi",
+        "period": "2024 - 2025",
+        "title": "Mitsubishi Motors - Sales Consultant",
+        "description": "Menjalankan proses penjualan Xpander, Pajero, dan Xforce dengan pendekatan value creation dan relasi jangka panjang."
       },
       {
-        "id": "2023",
-        "period": "2023",
-        "title": "Ship web delivery ringan",
-        "description": "Menggabungkan eksperimen AI dengan web delivery berbasis Next.js/Astro: situs responsif, konten dinamis, dan integrasi API AI."
-      },
-      {
-        "id": "2024",
+        "id": "2024-tigapilar",
         "period": "2024",
-        "title": "Fokus pada agent dan orkestrasi",
-        "description": "Menyusun agent AI multi-langkah untuk otomasi riset dan pembuatan konten, plus dokumentasi untuk kolaborasi lintas tim."
+        "title": "PT Tiga Pilar UKS - Strategi dan Networking",
+        "description": "Menyusun strategi pemasaran material konstruksi, memperluas penetrasi pasar B2B, dan memimpin proyek pengembangan bisnis baru."
+      },
+      {
+        "id": "2024-gems",
+        "period": "2024",
+        "title": "Gem's Food - Intern Business Owner",
+        "description": "Merancang riset pasar dan SOP operasional dengan dukungan AI untuk merintis bisnis kuliner."
+      },
+      {
+        "id": "2025-transport",
+        "period": "2025",
+        "title": "Gojek & Grab - Transportasi Online",
+        "description": "Memetakan pola permintaan pelanggan sebagai riset layanan transportasi modern dan kendaraan terbang."
+      },
+      {
+        "id": "2019-organisasi",
+        "period": "2019 - 2023",
+        "title": "Organisasi Mahasiswa dan Sosial",
+        "description": "Mengelola konferensi nasional, humas, serta logistik acara untuk komunitas dan kampus."
       }
     ]
   },
   "capabilities": {
-    "heading": "Keahlian & Tools",
+    "heading": "Keahlian Inti",
     "clusters": [
       {
-        "title": "AI Stack",
-        "description": "Prompt design, fine-tuning ringan, orkestrasi agent, serta evaluasi output.",
-        "items": ["OpenAI", "Anthropic", "LangChain", "Vercel AI SDK", "LLM Guardrails"]
+        "title": "Generative AI & Prompt Engineering",
+        "description": "Perancangan prompt, context, dan pipeline produksi AI untuk video, gambar, dan teks.",
+        "items": [
+          "Sora",
+          "Runway",
+          "Flow",
+          "OpenAI",
+          "Context design"
+        ]
       },
       {
-        "title": "Web Delivery",
-        "description": "Pembuatan landing, dashboard ringan, dan integrasi API. Fokus pada performa dan aksesibilitas.",
-        "items": ["Next.js", "Astro", "TypeScript", "Tailwind", "Vercel"]
+        "title": "Strategi Penjualan & Business Development",
+        "description": "Negosiasi, manajemen relasi, dan konstruksi pipeline penjualan berbasis nilai.",
+        "items": [
+          "Value creation",
+          "CRM",
+          "Pitch deck",
+          "Kemitraan B2B"
+        ]
       },
       {
-        "title": "Produktivitas",
-        "description": "Kolaborasi dan otomasi kerja harian.",
-        "items": ["Notion", "Linear", "Figma", "GitHub Actions"]
+        "title": "Digital Marketing & Storytelling",
+        "description": "Perancangan narasi kampanye, konten Gen Z, dan orkestrasi produksi AI.",
+        "items": [
+          "Storyboarding",
+          "Copywriting",
+          "Multilingual",
+          "Creative direction"
+        ]
+      },
+      {
+        "title": "Analisis Tren & Riset Pasar",
+        "description": "Riset pasar transportasi, otomotif, hingga frontier tech untuk strategi jangka panjang.",
+        "items": [
+          "Market scan",
+          "Competitive insight",
+          "Opportunity mapping"
+        ]
+      },
+      {
+        "title": "Komunikasi & Kolaborasi",
+        "description": "Public speaking, fasilitasi workshop, dan dokumentasi operasional yang rapi.",
+        "items": [
+          "Facilitation",
+          "Playbook",
+          "Workshop",
+          "Client education"
+        ]
       }
     ]
   },
   "values": {
-    "heading": "Nilai & Prinsip",
+    "heading": "Prinsip Kerja",
     "items": [
       {
-        "title": "Clarity",
-        "body": "Setiap kolaborasi dimulai dengan tujuan, batasan, dan definisi sukses yang disepakati."
+        "title": "Ad Astra Abyssosque",
+        "body": "Menyelami persoalan sampai ke akar dan membawa solusi yang disiplin tetapi kreatif."
       },
       {
-        "title": "Speed",
-        "body": "Iterasi cepat: prototipe → umpan balik → perbaikan. Fokus pada manfaat yang bisa dirasakan hari ini."
+        "title": "Kreativitas Bernilai",
+        "body": "Setiap eksperimen harus menjaga relevansi bisnis dan dapat diukur dampaknya."
       },
       {
-        "title": "Safety",
-        "body": "Privasi data dijaga; info sensitif dihindari atau dianonimkan; proses terdokumentasi."
+        "title": "Kolaborasi Transparan",
+        "body": "Tujuan, batasan, dan protokol privasi selalu disepakati sejak awal proyek."
       }
     ]
   },
@@ -81,13 +128,13 @@
     "heading": "Testimoni & Kolaborasi",
     "items": [
       {
-        "name": "Nama klien berikutnya",
-        "role": "—",
+        "name": "Kolaborator berikutnya",
+        "role": "-",
         "quote": "Testimoni akan ditambahkan setelah proyek kolaborasi berikutnya."
       }
     ],
     "cta": {
-      "label": "Siap kolaborasi?",
+      "label": "Siap berkolaborasi?",
       "href": "/contact"
     }
   }

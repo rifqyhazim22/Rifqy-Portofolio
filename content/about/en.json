@@ -1,79 +1,126 @@
 {
   "hero": {
-    "title": "About",
-    "tagline": "AI Engineer · Prompt Strategist · Web Delivery",
-    "summary": "I blend AI experimentation with product-ready web delivery. The goal: design systems that can be evaluated, respect privacy, and leave room for rapid iteration."
+    "title": "About Rifqy",
+    "tagline": "AI Creative Specialist, Prompt Engineer, and Strategist",
+    "summary": "I am an AI Creative Specialist, Prompt Engineer, and Web Developer shaped by experience in sales, digital marketing, and generative AI. Ad Astra Abyssosque keeps me diving into complex systems, then resurfacing with creative, measurable outcomes."
   },
   "story": {
-    "heading": "Personal Story",
+    "heading": "Philosophy & Vision",
     "paragraphs": [
-      "It started with small GPT-2 experiments—seeing how precise prompts reshape output quality. That curiosity grew into playbooks for creators, founders, and product teams to use AI responsibly.",
-      "My role is translating between business intent and machines. I design conversational frameworks, AI agents, and interfaces that ship. The core principles stay the same: clear goals, safe data, fast iteration."
+      "I believe future advantages belong to those who move first while keeping processes disciplined. Every collaboration starts with deep research, clarity on value, and transparent workflows.",
+      "My long-term vision is to build an innovation ecosystem that unites generative AI, Web3, and automation, while strengthening roots in automotive, property, and advanced mobility."
     ]
   },
   "timeline": {
-    "heading": "Timeline",
+    "heading": "Selected Experience",
     "items": [
       {
-        "id": "2021",
-        "period": "2021",
-        "title": "Discovering prompt engineering",
-        "description": "Tinkered with GPT and Stable Diffusion for community content; started cataloging reusable prompt patterns."
+        "id": "2025-tsl",
+        "period": "2025 – present",
+        "title": "The Social Linked — AI Creative Specialist & Prompt/Context Engineer",
+        "description": "Develop AI-first DVC campaigns, design the Sora → Runway → Flow pipeline, and lift production efficiency by 60%."
       },
       {
-        "id": "2022",
-        "period": "2022",
-        "title": "Building internal playbooks",
-        "description": "Created frameworks that helped creative teams adopt AI for research, writing, and visual production."
+        "id": "2024-mitsubishi",
+        "period": "2024 – 2025",
+        "title": "Mitsubishi Motors — Sales Consultant",
+        "description": "Lead value-creation sales for Xpander, Pajero, and Xforce while building long-term client relationships."
       },
       {
-        "id": "2023",
-        "period": "2023",
-        "title": "Shipping lightweight web delivery",
-        "description": "Combined AI experiments with Next.js/Astro delivery: responsive sites, dynamic content, and AI API integrations."
-      },
-      {
-        "id": "2024",
+        "id": "2024-tigapilar",
         "period": "2024",
-        "title": "Agent orchestration focus",
-        "description": "Designed multi-step AI agents for research and content ops, plus documentation that scales across teams."
+        "title": "PT Tiga Pilar UKS — Strategy & Networking",
+        "description": "Craft go-to-market plans for construction and geotextile products and expand B2B partnerships."
+      },
+      {
+        "id": "2024-gems",
+        "period": "2024",
+        "title": "Gem's Food — Intern Business Owner",
+        "description": "Run market research and AI-assisted SOPs to launch a culinary venture."
+      },
+      {
+        "id": "2025-transport",
+        "period": "2025",
+        "title": "Ride-hailing Research — Gojek & Grab",
+        "description": "Map demand patterns as groundwork for future mobility and aerial transport concepts."
+      },
+      {
+        "id": "2019-organizations",
+        "period": "2019 – 2023",
+        "title": "Community & Campus Organizations",
+        "description": "Manage national/regional events, public relations, and logistics for student communities."
       }
     ]
   },
   "capabilities": {
-    "heading": "Capabilities & Tools",
+    "heading": "Core Capabilities",
     "clusters": [
       {
-        "title": "AI Stack",
-        "description": "Prompt design, light fine-tuning, agent orchestration, and output evaluation.",
-        "items": ["OpenAI", "Anthropic", "LangChain", "Vercel AI SDK", "LLM Guardrails"]
+        "title": "Generative AI & Prompt Engineering",
+        "description": "Designing prompts, context, and production pipelines for video, image, and text outputs.",
+        "items": [
+          "Sora",
+          "Runway",
+          "Flow",
+          "OpenAI",
+          "Context design"
+        ]
       },
       {
-        "title": "Web Delivery",
-        "description": "Landing pages, lightweight dashboards, and API integrations with performance in mind.",
-        "items": ["Next.js", "Astro", "TypeScript", "Tailwind", "Vercel"]
+        "title": "Sales Strategy & Business Development",
+        "description": "Negotiation, relationship building, and value-based sales pipelines.",
+        "items": [
+          "Value creation",
+          "CRM",
+          "Pitch decks",
+          "B2B partnerships"
+        ]
       },
       {
-        "title": "Productivity",
-        "description": "Collaboration and automation for daily work.",
-        "items": ["Notion", "Linear", "Figma", "GitHub Actions"]
+        "title": "Digital Marketing & Storytelling",
+        "description": "Campaign narratives, Gen Z content, and AI-assisted production orchestration.",
+        "items": [
+          "Storyboarding",
+          "Copywriting",
+          "Multilingual",
+          "Creative direction"
+        ]
+      },
+      {
+        "title": "Trend Insight & Market Research",
+        "description": "Scanning transportation, automotive, and frontier tech for long-term strategy.",
+        "items": [
+          "Market scan",
+          "Competitive insight",
+          "Opportunity mapping"
+        ]
+      },
+      {
+        "title": "Communication & Collaboration",
+        "description": "Public speaking, workshop facilitation, and rigorous operational documentation.",
+        "items": [
+          "Facilitation",
+          "Playbooks",
+          "Workshops",
+          "Client education"
+        ]
       }
     ]
   },
   "values": {
-    "heading": "Values & Principles",
+    "heading": "Operating Principles",
     "items": [
       {
-        "title": "Clarity",
-        "body": "Every collaboration starts with shared goals, boundaries, and success criteria."
+        "title": "Ad Astra Abyssosque",
+        "body": "Dive to the source of the problem and return with disciplined yet creative solutions."
       },
       {
-        "title": "Speed",
-        "body": "Iterate quickly: prototype → feedback → refine. Focus on utility that lands today."
+        "title": "Creative Return on Value",
+        "body": "Every experiment must stay relevant to business goals and be measurable in impact."
       },
       {
-        "title": "Safety",
-        "body": "Safeguard data, anonymize sensitive inputs, and document the process."
+        "title": "Transparent Collaboration",
+        "body": "Goals, boundaries, and privacy protocols are aligned before any project starts."
       }
     ]
   },
@@ -81,13 +128,13 @@
     "heading": "Testimonials & Collaboration",
     "items": [
       {
-        "name": "Next collaborator",
+        "name": "Future collaborator",
         "role": "—",
-        "quote": "Testimonials will be published after the next shipped project."
+        "quote": "Testimonials will be added after the next shipped project."
       }
     ],
     "cta": {
-      "label": "Let’s collaborate",
+      "label": "Ready to collaborate?",
       "href": "/contact"
     }
   }
