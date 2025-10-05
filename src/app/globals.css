@@ -411,13 +411,19 @@ button.pill[disabled] {
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.22);
   box-shadow: 0 22px 44px rgba(11, 18, 32, 0.45);
+  max-width: 360px;
+  width: min(100%, 360px);
+  aspect-ratio: 3 / 4;
+  margin-inline: auto;
 }
 
 .hero__portrait-image {
+  position: absolute !important;
+  inset: 0;
   width: 100%;
-  height: auto;
-  display: block;
+  height: 100%;
   object-fit: cover;
+  object-position: 50% 5%;
 }
 
 .hero__portrait-glow {
@@ -472,10 +478,13 @@ button.pill[disabled] {
   .hero__meta {
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
   }
 
   .hero__portrait {
     flex: 1 1 240px;
+    margin-inline: 0;
   }
 
   .hero__highlights {
@@ -500,10 +509,19 @@ button.pill[disabled] {
 
   .hero__meta {
     flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .hero__info {
+    align-items: center;
+    text-align: center;
+    gap: 18px;
   }
 
   .hero__actions {
     gap: 10px;
+    justify-content: center;
   }
 
   .hero__action {
@@ -512,13 +530,28 @@ button.pill[disabled] {
   }
 
   .hero__portrait {
-    width: min(320px, 80vw);
-    margin-inline: auto;
+    width: min(80vw, 300px);
+    aspect-ratio: 3 / 4;
   }
 
   .hero__portrait-image {
     object-fit: contain;
     background: var(--card);
+    object-position: center;
+  }
+
+  .hero__highlights {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .hero__highlights li {
+    align-items: center;
+    text-align: center;
+    min-width: 120px;
   }
 }
 

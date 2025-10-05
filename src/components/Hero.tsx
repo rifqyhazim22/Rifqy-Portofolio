@@ -62,9 +62,9 @@ export default function Hero({ hero }: HeroProps) {
             <Image
               src={portraitSrc}
               alt={`Potret ${hero.name}`}
-              width={460}
-              height={520}
+              fill
               priority
+              sizes="(max-width: 720px) 70vw, (max-width: 960px) 40vw, 320px"
               className="hero__portrait-image"
             />
             <div className="hero__portrait-glow" aria-hidden="true" />
