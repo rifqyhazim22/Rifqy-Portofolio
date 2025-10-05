@@ -458,7 +458,7 @@ const dictionaries: Record<Language, Dictionary> = {
     },
     works: {
       title: "Karya",
-      intro: "Showcase manual AI systems & generative pipelines. Arsip lengkap tersedia di Google Drive.",
+      intro: "Showcase AI-first: agen multi-langkah, pipeline generatif, dan AI delivery yang siap produksi. Koleksi penuh tetap ada di Google Drive untuk ditelusuri.",
       buttons: [
         {
           href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
@@ -468,23 +468,45 @@ const dictionaries: Record<Language, Dictionary> = {
           href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
           label: "AI Generated Image"
         },
+        { href: "mailto:rifqyhazim22@gmail.com", label: "Minta sesi walkthrough" },
+        { href: "https://wa.me/6281322963566", label: "Diskusi via WhatsApp" },
       ],
       gallery: [
         {
-          href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
-          title: "AI Generated Video (1)",
-          sub: "Prompt, agent orchestration, dan evaluasi."
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "LLM Concierge Next.js 15",
+          sub: "Pair-programming dengan GPT-5 Codex untuk agen memori, toggle bilingual, dan evaluasi otomatis."
         },
         {
-          href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
-          title: "AI Generated Image (1)",
-          sub: "Eksperimen style dan guardrails generatif."
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "TSL AI-first SPA",
+          sub: "Landing page TSL dengan orkestrasi agen untuk kontak, theme switcher, dan telemetry real-time."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Pipeline DVC Goldi",
+          sub: "Sora → Runway → Flow + SOP produksi untuk 24 detik video generatif."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Campaign AI TSL × Gema",
+          sub: "Generative influencer content dengan penjaga konsistensi karakter dan naskah agent-driven."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Bak Kwa Halal Intelligence",
+          sub: "LLM research agent menyusun pricing, positioning, dan pitch deck investor."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Generative Asset Lab",
+          sub: "Eksperimen Runway, Veo, dan Pika untuk library video & image siap deploy."
         },
       ],
     },
     projects: {
       title: "Projects",
-      intro: "Blueprint jangka panjang untuk agen LLM, pipeline generatif, dan eksperimen Web3/crypto.",
+      intro: "Blueprint jangka panjang: orkestrasi agen LLM, pipeline generatif berskala, serta eksplorasi Web2/Web3 dan crypto. Google Drive menyimpan lampiran mendalamnya.",
       buttons: [
         {
           href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
@@ -494,17 +516,29 @@ const dictionaries: Record<Language, Dictionary> = {
           href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
           label: "AI Generated Image"
         },
+        { href: "https://www.linkedin.com/in/rifqy-hazim-h-r-88963128a/", label: "LinkedIn" },
+        { href: "mailto:rifqyhazim22@gmail.com", label: "Minta full CV" },
       ],
       gallery: [
         {
-          href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
-          title: "AI Video – Prototype",
-          sub: "Storyboard, prompt, dan SOP multi-model."
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Entropy Inc",
+          sub: "Rancangan ekosistem AI + Web3 dengan agent governance dan token utility."
         },
         {
-          href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
-          title: "AI Image – Prototype",
-          sub: "Eksperimen style Web3 dan karakter brand."
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Agent Playbooks",
+          sub: "Framework evaluasi prompt, guardrails, dan SOP deployment untuk tim kreator."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Grab Field Intelligence",
+          sub: "Ground-truth rideshare data dimodelkan ulang oleh LLM untuk strategi layanan."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Web3 Experiment Hub",
+          sub: "Prototype wallet UX, tokenomics, dan smart-contract flow dengan audit AI."
         },
       ],
     },
@@ -882,7 +916,7 @@ const dictionaries: Record<Language, Dictionary> = {
     },
     works: {
       title: "Works",
-      intro: "Manually curated AI systems, agent demos, and generative pipelines. Full reels live on Google Drive.",
+      intro: "AI-first delivery: multi-agent workflows, generative pipelines, and production-ready interfaces. Drive links keep the full archive accessible.",
       buttons: [
         {
           href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
@@ -892,23 +926,45 @@ const dictionaries: Record<Language, Dictionary> = {
           href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
           label: "AI Generated Image"
         },
+        { href: "mailto:rifqyhazim22@gmail.com", label: "Request walkthrough" },
+        { href: "https://wa.me/6281322963566", label: "Talk on WhatsApp" },
       ],
       gallery: [
         {
-          href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
-          title: "AI Generated Video (1)",
-          sub: "Prompt craft, agent evaluation, and delivery guardrails."
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Next.js 15 LLM Concierge",
+          sub: "Memory-aware agent pairing with GPT-5 Codex, bilingual UX, and automated evaluation."
         },
         {
-          href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
-          title: "AI Generated Image (1)",
-          sub: "Style experiments for Web3-ready identities."
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "TSL AI-first SPA",
+          sub: "Agent-assisted contact workflows, theming, and telemetry within a single-page app."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Goldi Generative Pipeline",
+          sub: "Sora → Runway → Flow SOP delivering 24-second AI video assets."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "TSL × Gema Influencer AI",
+          sub: "Agent-directed scripts and guardrails for 56-second campaigns."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Bak Kwa Halal Intelligence",
+          sub: "LLM research agents compiling pricing, positioning, and investor decks."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Generative Asset Lab",
+          sub: "Runway, Veo, and Pika explorations for reusable media libraries."
         },
       ],
     },
     projects: {
       title: "Projects",
-      intro: "Long-form blueprints for LLM agents, generative pipelines, and crypto experiments.",
+      intro: "Long-horizon blueprints for LLM agents, scaled generative ops, and Web3/crypto experiments—Drive folders store the deep dives.",
       buttons: [
         {
           href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
@@ -918,17 +974,29 @@ const dictionaries: Record<Language, Dictionary> = {
           href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
           label: "AI Generated Image"
         },
+        { href: "https://www.linkedin.com/in/rifqy-hazim-h-r-88963128a/", label: "LinkedIn" },
+        { href: "mailto:rifqyhazim22@gmail.com", label: "Request full CV" },
       ],
       gallery: [
         {
-          href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
-          title: "AI Video – Prototype",
-          sub: "Multi-model storyboard, scripting, and deployment notes."
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Entropy Inc",
+          sub: "AI + Web3 ecosystem blueprint with agent governance and token utility."
         },
         {
-          href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
-          title: "AI Image – Prototype",
-          sub: "Prompt libraries for branding, metaverse, and NFT drops."
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Agent Playbooks",
+          sub: "Prompt libraries, evaluation harnesses, and deployment SOPs."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Grab Rideshare Intelligence",
+          sub: "Field data modelled with LLMs to shape mobility service strategy."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com",
+          title: "Web3 Experiment Hub",
+          sub: "Wallet UX, tokenomics, and smart-contract prototypes with AI-assisted audits."
         },
       ],
     },
