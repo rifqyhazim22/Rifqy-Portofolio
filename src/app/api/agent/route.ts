@@ -44,7 +44,16 @@ const ROUTE_CONFIG: RouteConfig[] = [
   {
     route: "/updates",
     aliases: ["/news", "/blog"],
-    keywords: ["update", "news", "blog", "insight", "posts"],
+    keywords: [
+      "update",
+      "updates",
+      "news",
+      "blog",
+      "insight",
+      "posts",
+      "ai update",
+      "ai updates",
+    ],
   },
   {
     route: "/playbooks",
@@ -67,7 +76,7 @@ const ROUTE_CONFIG: RouteConfig[] = [
   {
     route: "/industry/ai",
     aliases: ["/playbooks/ai", "/playbooks/agi", "/agi", "/ai-playbook", "/ai"],
-    keywords: ["agi", "ai", "general intelligence", "artificial intelligence", "ai playbook"],
+    keywords: ["agi", "general intelligence", "artificial intelligence", "ai playbook", "strong ai"],
   },
   {
     route: "/industry/crypto",
