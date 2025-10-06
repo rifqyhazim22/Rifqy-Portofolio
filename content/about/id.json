@@ -42,7 +42,7 @@
         "id": "2024-gems",
         "period": "2024",
         "title": "Gem's Food — Business Owner",
-        "description": "Merintis bisnis kuliner berbasis riset data, SOP, dan otomasi ringan dengan tool AI untuk operasional harian."
+        "description": "Merintis bisnis kuliner berbasis riset data, SOP, dan mencari insight dengan AI untuk operasional harian."
       },
       {
         "id": "2019-community",
@@ -61,9 +61,7 @@
         "items": [
           "GPT-5 Codex",
           "ChatGPT",
-          "OpenAI o1",
-          "Guardrails",
-          "Custom evaluators"
+          "Gemini"
         ]
       },
       {

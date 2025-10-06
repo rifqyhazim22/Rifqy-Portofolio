@@ -42,7 +42,7 @@
         "id": "2024-gems",
         "period": "2024",
         "title": "Gem's Food — Business Owner",
-        "description": "Piloted a culinary venture with data-driven research, SOPs, and lightweight AI-assisted operations."
+        "description": "Piloted a culinary venture with data-driven research, SOPs, and AI-powered insight discovery."
       },
       {
         "id": "2019-community",
@@ -61,9 +61,7 @@
         "items": [
           "GPT-5 Codex",
           "ChatGPT",
-          "OpenAI o1",
-          "Guardrails",
-          "Custom evaluators"
+          "Gemini"
         ]
       },
       {
