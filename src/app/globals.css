@@ -1314,6 +1314,18 @@ body::before {
   white-space: nowrap;
 }
 
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pill--compact {
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
 .nav {
   display: flex;
   flex-wrap: wrap;

@@ -15,6 +15,10 @@
         "label": "Explore AI Playbooks ↗",
         "href": "/playbooks",
         "variant": "outline"
+      },
+      {
+        "label": "Get to know me better",
+        "href": "/about"
       }
     ],
     "highlights": [

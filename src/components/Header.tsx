@@ -51,6 +51,7 @@ export default function Header({ language, brand, navLabels, languageToggle }: H
     ? Array.from(servicesItem.children)
     : [];
   const servicesActive = servicesChildren.some((child) => isActive(pathname, child.href));
+  const aboutActive = isActive(pathname, "/about");
 
   // Sync submenu state with current route when menu opens
   useEffect(() => {
@@ -332,9 +333,19 @@ export default function Header({ language, brand, navLabels, languageToggle }: H
   return (
     <header className="sitebar">
       <div className="bar wrap">
-        <Link href="/" className="brand pill">
-          {brand}
-        </Link>
+        <div className="brand-group">
+          <Link href="/" className="brand pill">
+            {brand}
+          </Link>
+          <BaseLink
+            href="/about"
+            className="pill pill--compact brand-about"
+            data-active={aboutActive ? "true" : undefined}
+            aria-current={aboutActive ? "page" : undefined}
+          >
+            {navLabels.about}
+          </BaseLink>
+        </div>
         <div className="cluster" ref={controlsRef}>
           <div className="cluster-controls">
             <LanguageToggle language={language} label={languageToggle.label} options={languageToggle.options} />

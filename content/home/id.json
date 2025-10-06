@@ -15,6 +15,10 @@
         "label": "Eksplor Playbooks AI ↗",
         "href": "/playbooks",
         "variant": "outline"
+      },
+      {
+        "label": "Kenal aku lebih lanjut",
+        "href": "/about"
       }
     ],
     "highlights": [
