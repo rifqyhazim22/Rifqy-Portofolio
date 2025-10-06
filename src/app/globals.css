@@ -347,8 +347,20 @@ button.pill[disabled] {
 
 .hero__actions {
   display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hero__actions-row {
+  display: flex;
   flex-wrap: wrap;
   gap: 12px;
+}
+
+.hero__actions-row--stacked {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
 }
 
 .hero__action {
@@ -365,6 +377,10 @@ button.pill[disabled] {
   letter-spacing: 0.01em;
   box-shadow: 0 10px 28px rgba(11, 18, 32, 0.28);
   transition: transform var(--transition), box-shadow var(--transition), background var(--transition), border-color var(--transition);
+}
+
+.hero__action--stacked {
+  align-self: flex-start;
 }
 
 :root[data-theme="light"] .hero__action {

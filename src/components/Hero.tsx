@@ -20,6 +20,8 @@ function getActionClass(variant: string | undefined) {
 export default function Hero({ hero }: HeroProps) {
   const portraitSrc = hero.portraitSrc ?? "/images/hero.jpg";
   const backgroundSrc = hero.backgroundSrc ?? "/images/hero-background.png";
+  const primaryActions = hero.actions.slice(0, 2);
+  const secondaryActions = hero.actions.slice(2);
 
   return (
     <section className="hero">
@@ -43,15 +45,32 @@ export default function Hero({ hero }: HeroProps) {
           <p className="hero__summary">{hero.summary}</p>
 
           <div className="hero__actions">
-            {hero.actions.map((action) => (
-              <BaseLink
-                key={action.href}
-                href={action.href}
-                className={getActionClass(action.variant)}
-              >
-                {action.label}
-              </BaseLink>
-            ))}
+            {primaryActions.length > 0 ? (
+              <div className="hero__actions-row">
+                {primaryActions.map((action) => (
+                  <BaseLink
+                    key={action.href}
+                    href={action.href}
+                    className={getActionClass(action.variant)}
+                  >
+                    {action.label}
+                  </BaseLink>
+                ))}
+              </div>
+            ) : null}
+            {secondaryActions.length > 0 ? (
+              <div className="hero__actions-row hero__actions-row--stacked">
+                {secondaryActions.map((action) => (
+                  <BaseLink
+                    key={action.href}
+                    href={action.href}
+                    className={`${getActionClass(action.variant)} hero__action--stacked`}
+                  >
+                    {action.label}
+                  </BaseLink>
+                ))}
+              </div>
+            ) : null}
           </div>
 
           <p className="hero__availability">{hero.availability}</p>
