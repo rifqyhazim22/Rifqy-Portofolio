@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import LanguageToggle from "./LanguageToggle";
 import PaletteToggle from "./PaletteToggle";
 import TextScaleToggle from "./TextScaleToggle";
@@ -18,40 +18,45 @@ type FloatingControlsProps = {
 
 export default function FloatingControls({ language, languageToggle }: FloatingControlsProps) {
   const [open, setOpen] = useState(false);
-  const hoverTimer = useRef<NodeJS.Timeout | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const clearHoverTimer = () => {
-    if (hoverTimer.current) {
-      clearTimeout(hoverTimer.current);
-      hoverTimer.current = null;
-    }
+  useEffect(() => {
+    if (!open) return;
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!menuRef.current) return;
+      if (!menuRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+    };
+  }, [open]);
+
+  const handleToggle = () => {
+    setOpen((value) => !value);
   };
 
-  const handleOpen = () => {
-    clearHoverTimer();
+  const handleFocusCapture = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
-    clearHoverTimer();
-    hoverTimer.current = setTimeout(() => {
+  const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
+    if (!menuRef.current) return;
+    if (!menuRef.current.contains(event.relatedTarget as Node)) {
       setOpen(false);
-    }, 140);
-  };
-
-  const handlePointerLeave = () => {
-    handleClose();
+    }
   };
 
   return (
     <div
       className="floating-menu"
       ref={menuRef}
-      onPointerEnter={handleOpen}
-      onPointerLeave={handlePointerLeave}
-      onFocusCapture={handleOpen}
-      onBlur={handleClose}
+      onFocusCapture={handleFocusCapture}
+      onBlur={handleBlur}
     >
       <button
         type="button"
@@ -59,6 +64,7 @@ export default function FloatingControls({ language, languageToggle }: FloatingC
         aria-haspopup="true"
         aria-expanded={open}
         aria-controls="floating-menu-panel"
+        onClick={handleToggle}
       >
         FITUR
       </button>
