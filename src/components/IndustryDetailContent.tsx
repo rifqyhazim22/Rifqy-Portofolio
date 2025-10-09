@@ -1,4 +1,4 @@
-import type { IndustryDetail } from "@/i18n/dictionaries";
+import type { IndustryDetail } from "@/i18n/types";
 import BaseLink from "./BaseLink";
 
 interface IndustryDetailContentProps {
@@ -9,7 +9,7 @@ interface IndustryDetailContentProps {
 
 export default function IndustryDetailContent({ detail, backHref, backLabel }: IndustryDetailContentProps) {
   return (
-    <div>
+    <div className="industry-detail" data-animate>
       <BaseLink className="pill" href={backHref}>
         {backLabel}
       </BaseLink>
@@ -20,34 +20,35 @@ export default function IndustryDetailContent({ detail, backHref, backLabel }: I
         {detail.intro}
       </p>
 
-      <h2 className="h2">{detail.mindsetHeading}</h2>
-      <div className="card">
-        <p className="sub" style={{ margin: 0 }}>{detail.mindsetBody}</p>
+      <div className="grid grid-2" data-animate>
+        <div className="card">
+          <h2 className="h3">{detail.mindsetHeading}</h2>
+          <p className="sub" style={{ margin: 0 }}>{detail.mindsetBody}</p>
+        </div>
+        <div className="card">
+          <h2 className="h3">{detail.examplesHeading}</h2>
+          <div className="industry-detail__list">
+            {detail.examples.map((item) => (
+              <div key={item.title} className="industry-detail__item">
+                <div className="k">{item.title}</div>
+                <div className="sub">{item.sub}</div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <h2 className="h2" style={{ marginTop: "16px" }}>
-        {detail.examplesHeading}
-      </h2>
-      <div className="grid grid-2">
-        {detail.examples.map((item) => (
-          <div className="card" key={item.title}>
-            <div className="k">{item.title}</div>
-            <div className="sub">{item.sub}</div>
-          </div>
-        ))}
-      </div>
-
-      <h2 className="h2" style={{ marginTop: "16px" }}>
-        {detail.actionsHeading}
-      </h2>
-      <div className="grid grid-2">
-        {detail.actions.map((item) => (
-          <div className="card" key={item.title}>
-            <div className="k">{item.title}</div>
-            <div className="sub">{item.sub}</div>
-          </div>
-        ))}
-      </div>
+      <section className="industry-detail__actions" data-animate>
+        <h2 className="h2">{detail.actionsHeading}</h2>
+        <div className="grid grid-2">
+          {detail.actions.map((item) => (
+            <div className="card" key={item.title}>
+              <div className="k">{item.title}</div>
+              <div className="sub">{item.sub}</div>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

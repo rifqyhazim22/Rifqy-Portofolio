@@ -38,6 +38,12 @@
     "portraitSrc": "/images/hero.jpg",
     "backgroundSrc": "/images/hero-background.png"
   },
+  "promo": {
+    "title": "Lunch Stipend Offer",
+    "body": "Visitors checking out this site can claim Rp10,000 for lunch. Tap the button to drop me an auto-filled WhatsApp message.",
+    "buttonLabel": "Claim Rp10K on WhatsApp ↗",
+    "buttonHref": "https://wa.me/6281322963566?text=Hi%20Rifqy%2C%20I%20just%20visited%20your%20portfolio%20and%20would%20love%20to%20claim%20the%20Rp10K%20lunch%20stipend.%20Thanks!"
+  },
   "quote": {
     "label": "Quote",
     "text": "In the beginning there was dark. Until someone set themselves aflame. Only then did the universe know light."
@@ -98,7 +104,7 @@
     "description": "Need a guided path? The Playbooks hub bundles AI Basics, Prompt Patterns, and Tools & Workflow into actionable modules.",
     "cta": {
       "label": "Open Learning Hub →",
-      "href": "/playbooks#learning-hub"
+      "href": "/learning-hub"
     }
   },
   "updates": {

@@ -1,0 +1,93 @@
+{
+  "title": "Updates & Catatan Lapangan",
+  "intro": "Ringkasan eksperimen terbaru di AI, generative storytelling, dan implementasi produk. Cocok jadi bahan briefing kilat sebelum meeting atau kick-off sprint.",
+  "list": [
+    {
+      "href": "/updates/agent-eval",
+      "title": "Evaluasi Agent Lebih Hemat",
+      "summary": "Cara merangkum scoring agent hanya dengan tiga metrik inti." 
+    },
+    {
+      "href": "/updates/token-brief",
+      "title": "Token Brief untuk Komunitas",
+      "summary": "Template tokenomics dan governance checklist 1 halaman." 
+    },
+    {
+      "href": "/updates/biotech-notes",
+      "title": "Notebook Eksperimen Biotech",
+      "summary": "Contoh dokumentasi biomaterial yang siap dibagikan." 
+    },
+    {
+      "href": "/updates/story-kit",
+      "title": "Story Kit untuk Launching",
+      "summary": "Framework cerita untuk konten carousel, video, dan newsletter." 
+    }
+  ],
+  "details": {
+    "agent-eval": {
+      "title": "Evaluasi Agent Hemat Token",
+      "date": "2025-03-01",
+      "intro": "Eksperimen mengurangi biaya evaluasi agent 38% dengan memampatkan observasi ke dalam rubric mikro dan skoring batch.",
+      "sections": [
+        {
+          "heading": "Kenapa penting",
+          "body": "Agent generatif sering memakan biaya tinggi ketika semua jawaban dinilai ulang. Dengan tiga metrik inti—akurasi fakta, nada suara, dan kelincahan tindakan—evaluasi bisa dipadatkan tanpa kehilangan konteks." 
+        },
+        {
+          "heading": "Teknik utama",
+          "body": "Gunakan skor biner untuk fakta, skor 1-3 untuk nada, dan catatan bebas untuk rekomendasi perbaikan. Skor bisa dikagregasi otomatis lewat server actions." 
+        }
+      ],
+      "grids": [
+        {
+          "heading": "Toolkit",
+          "items": [
+            { "href": "https://github.com/rifqyhazim22", "title": "Evaluator starter", "sub": "Repo Next.js + server action" },
+            { "href": "/playbooks", "title": "Prompt rubric", "sub": "Template JSON siap pakai" }
+          ]
+        }
+      ]
+    },
+    "token-brief": {
+      "title": "Token Brief untuk Komunitas",
+      "date": "2025-02-10",
+      "intro": "Format tokenomics 1 halaman untuk proyek komunitas agar onboarding cepat dan diskusi terarah.",
+      "sections": [
+        {
+          "heading": "Isi inti",
+          "body": "Halaman terdiri dari tujuan token, akses utility, rencana unlock, dan taktik community reward. Dilengkapi tabel risiko agar transparan." 
+        },
+        {
+          "heading": "Cara pakai",
+          "body": "Duplikasi template Notion, isi parameter dasar, lalu bagikan ke calon kontributor untuk feedback kilat." 
+        }
+      ]
+    },
+    "biotech-notes": {
+      "title": "Notebook Eksperimen Biotech",
+      "date": "2025-01-22",
+      "intro": "Dokumen contoh untuk proyek biomaterial kecil, lengkap dengan checklist keamanan dan catatan hasil.",
+      "sections": [
+        {
+          "heading": "Struktur",
+          "body": "Berisi ringkasan eksperimen, timeline, kebutuhan alat, hingga log harian. Dilengkapi tautan referensi jurnal dan standar kesehatan." 
+        }
+      ]
+    },
+    "story-kit": {
+      "title": "Story Kit untuk Launching",
+      "date": "2025-01-05",
+      "intro": "Kerangka cerita tiga bab yang membantu founder membuat konten lintas kanal tanpa repetisi.",
+      "sections": [
+        {
+          "heading": "Isi kit",
+          "body": "Catatan voice guide, template hook, dan snippet CTA untuk email, carousel, hingga video pendek." 
+        }
+      ]
+    }
+  },
+  "spotlight": [
+    { "title": "Manifesto Playbooks 2025", "summary": "Kenapa lima industri ini jadi fokus eksplorasi", "href": "/playbooks" },
+    { "title": "Learning Hub Jadi Halaman Mandiri", "summary": "Semua modul punya anchor dan progress tracker", "href": "/learning-hub" }
+  ]
+}

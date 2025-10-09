@@ -1,5 +1,6 @@
 import NextSteps from "@/components/NextSteps";
 import UpdatesList from "@/components/UpdatesList";
+import BaseLink from "@/components/BaseLink";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getCurrentLanguage } from "@/lib/language";
 
@@ -9,15 +10,35 @@ export default async function UpdatesPage() {
   const { updates, home, nextStepsHeading, navLabels } = dictionary;
 
   return (
-    <div>
-      <h1 className="h1">{updates.title}</h1>
-      <p className="sub">{updates.intro}</p>
+    <div className="updates" data-animate>
+      <section className="updates__hero" data-animate>
+        <h1 className="h1">{updates.title}</h1>
+        <p className="sub">{updates.intro}</p>
+      </section>
 
-      <UpdatesList items={updates.list} showAllLink={false} allLinkLabel={home.updates.cta.label} />
+      {updates.spotlight?.length ? (
+        <section className="updates__spotlight" data-animate>
+          <h2 className="h2">Spotlight</h2>
+          <div className="grid grid-2">
+            {updates.spotlight.map((item) => (
+              <BaseLink key={item.href} href={item.href} className="card">
+                <div className="k">{item.title}</div>
+                <div className="sub">{item.summary}</div>
+              </BaseLink>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
-      <hr />
+      <section data-animate>
+        <UpdatesList items={updates.list} showAllLink={false} allLinkLabel={home.updates.cta.label} />
+      </section>
 
-      <NextSteps current="updates" heading={nextStepsHeading} navLabels={navLabels} />
+      <div className="hr" data-animate />
+
+      <div data-animate>
+        <NextSteps current="updates" heading={nextStepsHeading} navLabels={navLabels} />
+      </div>
     </div>
   );
 }

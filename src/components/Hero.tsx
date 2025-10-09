@@ -24,7 +24,7 @@ export default function Hero({ hero }: HeroProps) {
   const secondaryActions = hero.actions.slice(2);
 
   return (
-    <section className="hero">
+    <section className="hero" data-animate>
       <div className="hero__background" aria-hidden="true">
         <Image
           src={backgroundSrc}
@@ -38,7 +38,7 @@ export default function Hero({ hero }: HeroProps) {
       </div>
 
       <div className="hero__grid">
-        <div className="hero__info">
+        <div className="hero__info" data-animate>
           <p className="hero__tagline">{hero.tagline}</p>
           <h1 className="hero__name">{hero.name}</h1>
           <p className="hero__title">{hero.title}</p>
@@ -76,7 +76,7 @@ export default function Hero({ hero }: HeroProps) {
           <p className="hero__availability">{hero.availability}</p>
         </div>
 
-        <div className="hero__meta">
+        <div className="hero__meta" data-animate>
           <div className="hero__portrait">
             <Image
               src={portraitSrc}

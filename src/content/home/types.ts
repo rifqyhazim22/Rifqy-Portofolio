@@ -27,6 +27,13 @@ export interface HomeHeroContent {
   backgroundSrc?: string;
 }
 
+export interface HomePromo {
+  title: string;
+  body: string;
+  buttonLabel: string;
+  buttonHref: string;
+}
+
 export interface HomeSection {
   heading: string;
   items: HomeLinkCard[];
@@ -57,6 +64,7 @@ export interface HomeUpdatesSection {
 
 export interface HomeContent {
   hero: HomeHeroContent;
+  promo?: HomePromo;
   quote: HomeQuote;
   whatIDo: HomeSection;
   playbooks: HomePlaybooksSection;

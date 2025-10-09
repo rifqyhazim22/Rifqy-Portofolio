@@ -90,6 +90,8 @@ body {
   line-height: 1.65;
   background: var(--bg);
   color: var(--fg);
+  position: relative;
+  overflow-x: hidden;
 }
 
 body.scroll-locked {
@@ -98,6 +100,28 @@ body.scroll-locked {
 
 main {
   display: block;
+  position: relative;
+  z-index: 2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("/images/hero-background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.32;
+  filter: saturate(1.08) brightness(1.04);
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 320ms ease, filter 320ms ease;
+}
+
+:root[data-theme="dark"] body::after {
+  opacity: 0.58;
+  filter: saturate(0.95) brightness(0.45) contrast(1.08);
 }
 
 a {
@@ -117,6 +141,25 @@ p {
 img {
   max-width: 100%;
   height: auto;
+}
+
+[data-animate] {
+  opacity: 0;
+  transform: translateY(32px) scale(0.98);
+  transition: opacity 360ms ease, transform 420ms ease;
+}
+
+[data-animate-ready="true"] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-animate] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 .wrap {
@@ -213,26 +256,37 @@ button.pill[disabled] {
 }
 
 .card {
-  background: var(--card);
-  border: 1px solid var(--stroke);
+  background: color-mix(in oklab, rgba(10, 16, 30, 0.8) 55%, var(--card) 45%);
+  border: 1px solid color-mix(in oklab, rgba(255, 255, 255, 0.32) 20%, var(--stroke));
   border-radius: var(--radius);
   padding: 18px 20px;
-  box-shadow: var(--shadow);
+  box-shadow: 0 18px 40px rgba(5, 10, 24, 0.32);
+  backdrop-filter: blur(18px) saturate(1.25);
+  -webkit-backdrop-filter: blur(18px) saturate(1.25);
 }
 
 .tile {
   display: block;
   border-radius: var(--radius);
-  background: var(--card);
+  background: color-mix(in oklab, rgba(10, 18, 30, 0.78) 60%, var(--card) 40%);
   padding: 18px 20px;
-  box-shadow: var(--shadow);
+  box-shadow: 0 14px 32px rgba(5, 10, 24, 0.28);
   transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition), background var(--transition);
-  border: 1px solid var(--stroke);
+  border: 1px solid color-mix(in oklab, rgba(255, 255, 255, 0.25) 15%, var(--stroke));
   color: inherit;
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
 }
 
 .tile:hover {
   transform: translateY(-1px);
+}
+
+:root[data-theme="light"] .card,
+:root[data-theme="light"] .tile {
+  background: color-mix(in oklab, rgba(255, 255, 255, 0.75) 70%, rgba(245, 247, 255, 0.85) 30%);
+  border-color: color-mix(in oklab, rgba(122, 162, 255, 0.6) 40%, var(--stroke));
+  box-shadow: 0 16px 32px rgba(122, 162, 255, 0.18);
 }
 
 .tile:focus-visible {
@@ -348,7 +402,7 @@ button.pill[disabled] {
 .hero__actions {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .hero__actions-row {
@@ -381,6 +435,80 @@ button.pill[disabled] {
 
 .hero__action--stacked {
   align-self: flex-start;
+}
+
+.floating-menu {
+  position: fixed;
+  top: 110px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  z-index: 70;
+}
+
+.floating-menu__trigger {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.floating-menu__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  min-width: 180px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.floating-menu__panel[data-open="true"] {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.floating-menu__panel .pill {
+  width: 100%;
+  justify-content: center;
+}
+
+.tone-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tone-toggle__option {
+  justify-content: flex-start;
+  font-weight: 600;
+  gap: 8px;
+}
+
+.tone-toggle__option[data-active="true"] {
+  background: color-mix(in oklab, var(--accent) 16%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 32%, var(--stroke));
+}
+
+.tone-toggle__hint {
+  display: inline-flex;
+  width: 20px;
+  justify-content: center;
+}
+
+@media (max-width: 720px) {
+  .floating-menu {
+    top: unset;
+    bottom: 24px;
+    right: 24px;
+  }
+
+  .floating-menu__panel {
+    align-items: stretch;
+  }
 }
 
 :root[data-theme="light"] .hero__action {
@@ -432,6 +560,7 @@ button.pill[disabled] {
   width: min(100%, 360px);
   aspect-ratio: 3 / 4;
   margin-inline: auto;
+  transition: transform 260ms ease, box-shadow 280ms ease;
 }
 
 .hero__portrait-image {
@@ -441,6 +570,18 @@ button.pill[disabled] {
   height: 100%;
   object-fit: cover;
   object-position: 50% 5%;
+  transition: transform 260ms ease;
+}
+
+.hero__portrait:hover,
+.hero__portrait:focus-within {
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: 0 26px 54px rgba(9, 14, 28, 0.55);
+}
+
+.hero__portrait:hover .hero__portrait-image,
+.hero__portrait:focus-within .hero__portrait-image {
+  transform: scale(1.04);
 }
 
 .hero__portrait-glow {
@@ -583,6 +724,28 @@ button.pill[disabled] {
   backdrop-filter: blur(12px);
   background: rgba(7, 12, 24, 0.65);
   border-color: rgba(122, 162, 255, 0.2);
+}
+
+.home__promo {
+  margin: 26px 0;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-radius: 24px;
+}
+
+.home__promo-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.home__promo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 :root[data-theme="light"] .home__quote {
@@ -1383,4 +1546,143 @@ section {
 
 .section:first-of-type {
   margin-top: 0;
+}
+
+.playbooks__hero,
+.learning__hero {
+  margin-bottom: 18px;
+}
+
+.playbooks__grid,
+.playbooks__interactive,
+.playbooks__learning,
+.learning__tracks,
+.learning__interactive {
+  margin: 28px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.playbooks__card,
+.playbooks__interactive-card,
+.learning__track,
+.learning__interactive-card {
+  backdrop-filter: blur(16px) saturate(1.18);
+  -webkit-backdrop-filter: blur(16px) saturate(1.18);
+}
+
+.playbooks__interactive-card,
+.learning__interactive-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.playbooks__tag,
+.learning__badge {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--accent) 70%, var(--fg));
+}
+
+.playbooks__wins,
+.learning__wins {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  color: color-mix(in oklab, var(--muted) 60%, var(--fg));
+  list-style: none;
+  padding: 0;
+  margin: 6px 0;
+}
+
+.learning__wins {
+  list-style: disc;
+  padding-left: 20px;
+}
+
+.playbooks__details summary {
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.playbooks__steps {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.playbooks__resources,
+.learning__resources,
+.learning__cta,
+.playbooks__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.learning__track {
+  gap: 10px;
+}
+
+.learning__modules {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.learning__module {
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(7, 12, 24, 0.42);
+}
+
+.learning__module-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.learning__module-duration {
+  font-size: 13px;
+  color: color-mix(in oklab, var(--accent) 70%, var(--fg));
+}
+
+.learning__step {
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(7, 12, 24, 0.38);
+}
+
+@media (max-width: 960px) {
+  .grid.grid-3 {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+.industry-detail__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.industry-detail__item {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.industry-detail__item:last-child {
+  border-bottom: none;
+}
+
+.industry-detail__actions {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }

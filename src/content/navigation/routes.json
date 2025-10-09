@@ -20,6 +20,11 @@
     "description": "Hub AI education & playbooks industri: AGI, Crypto, Biotech, Energy, Space."
   },
   {
+    "route": "/learning-hub",
+    "title": "Learning Hub",
+    "description": "Halaman modul interaktif: Foundations, Industry Maker, dan Launch Lab track."
+  },
+  {
     "route": "/industry/ai",
     "title": "Playbook AGI",
     "description": "Strategi AI → AGI → ASI, prompt lanjutan, orkestrasi agent, dan etika implementasi."

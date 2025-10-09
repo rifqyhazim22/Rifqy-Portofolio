@@ -16,6 +16,12 @@ const SYSTEM_PROMPT = `You are the AI concierge for Rifqy Hazim HR's portfolio w
 - Prefer short paragraphs and bullet lists when useful.
 - Sprinkle in fitting emojis (maximum three per reply) to keep the tone energetic and human.`;
 
+const TONE_PROMPTS: Record<string, string> = {
+  formal: "Use a confident and professional Gen-Z inspired tone—succinct but warm.",
+  santai: "Use a relaxed Gen-Z tone with light Indonesian-English blend; stay respectful and clear.",
+  deep: "Use an elegant and evocative tone that feels thoughtful and inspiring while remaining concise.",
+};
+
 type ChatMessage = {
   role: "user" | "assistant";
   content: string;
@@ -25,6 +31,7 @@ type AgentRequest = {
   messages: ChatMessage[];
   language?: "id" | "en";
   location?: string;
+  tone?: "formal" | "santai" | "deep";
 };
 
 interface RouteConfig {
@@ -82,6 +89,11 @@ const ROUTE_CONFIG: RouteConfig[] = [
       "course",
       "framework",
     ],
+  },
+  {
+    route: "/learning-hub",
+    aliases: ["/learninghub", "/hub"],
+    keywords: ["learning hub", "track", "modul", "course", "curriculum"],
   },
   {
     route: "/industry/ai",
@@ -361,12 +373,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON payload." }, { status: 400 });
   }
 
-  const { messages = [], language = "id", location } = payload;
+  const { messages = [], language = "id", location, tone = "formal" } = payload;
+  const normalizedTone = tone === "santai" || tone === "deep" ? tone : "formal";
 
   const locationDescriptions: Record<string, string> = {
     "/": "the home page (hero introduction, quotes, and latest highlights)",
     "/about": "the About page (story, timeline, capabilities, and testimonials)",
     "/playbooks": "the Playbooks hub (AI education and future-industry frameworks)",
+    "/learning-hub": "the Learning Hub (modular tracks, modules, and interactive playbooks)",
     "/updates": "the Updates page (short-form insights and announcements)",
     "/works": "the Works gallery (selected prompt engineering deliverables)",
     "/projects": "the Projects gallery (web/app builds)",
@@ -376,9 +390,12 @@ export async function POST(request: NextRequest) {
   const locationContext = location
     ? locationDescriptions[location] ?? `the page at ${location}`
     : undefined;
+  const toneDirective = TONE_PROMPTS[normalizedTone] ?? TONE_PROMPTS.formal;
 
   const systemSections = [
     SYSTEM_PROMPT,
+    toneDirective,
+    "Keep answers under 120 words. Use bullet lists only when clarifying multi-step guidance.",
     `Current interface language: ${language === "en" ? "English" : "Indonesian"}. Respond using this language.`,
     locationContext
       ? `Visitor is currently browsing ${locationContext}. Take that into account when crafting your answer and navigation hints.`
@@ -386,22 +403,26 @@ export async function POST(request: NextRequest) {
     `Routes you can navigate to:\n${ROUTE_MENU_TEXT}`,
   ].filter(Boolean) as string[];
 
+  const trimmedMessages = messages.slice(-6);
+
   try {
     const response = await client.chat.completions.create({
       model: "gpt-5-nano",
+      max_tokens: 260,
+      temperature: 0.4,
       messages: [
         {
           role: "system",
           content: systemSections.join("\n"),
         },
-        ...messages,
+        ...trimmedMessages,
       ],
     });
 
     const fullText = response.choices[0]?.message?.content?.trim() ?? "";
     const navigateMatch = fullText.match(/\[\[NAVIGATE:([^\]]+)\]\]/i);
     const rawNavigation = navigateMatch ? navigateMatch[1].trim() : null;
-    const navigation = await resolveNavigationTarget(rawNavigation, messages);
+    const navigation = await resolveNavigationTarget(rawNavigation, trimmedMessages);
     const cleanedText = fullText.replace(/\[\[NAVIGATE:[^\]]+\]\]/gi, "").trim();
 
     return NextResponse.json({ message: cleanedText, navigation });

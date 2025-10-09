@@ -6,15 +6,10 @@ import {
   type HeaderNavItem,
   type NavLabelKey,
 } from "@/data/navLinks";
-import type { Language } from "@/lib/language";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type FocusEvent, type PointerEvent as ReactPointerEvent } from "react";
 import BaseLink from "./BaseLink";
-import LanguageToggle from "./LanguageToggle";
-import PaletteToggle from "./PaletteToggle";
-import TextScaleToggle from "./TextScaleToggle";
-import ThemeToggle from "./ThemeToggle";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") {
@@ -24,18 +19,13 @@ function isActive(pathname: string, href: string) {
 }
 
 interface HeaderProps {
-  language: Language;
   brand: string;
   navLabels: Record<NavLabelKey, string>;
-  languageToggle: {
-    label: string;
-    options: { id: string; en: string };
-  };
 }
 
 const MOBILE_QUERY = "(max-width: 720px)";
 
-export default function Header({ language, brand, navLabels, languageToggle }: HeaderProps) {
+export default function Header({ brand, navLabels }: HeaderProps) {
   const pathname = usePathname() ?? "/";
   const [menuOpen, setMenuOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
@@ -348,10 +338,6 @@ export default function Header({ language, brand, navLabels, languageToggle }: H
         </div>
         <div className="cluster" ref={controlsRef}>
           <div className="cluster-controls">
-            <LanguageToggle language={language} label={languageToggle.label} options={languageToggle.options} />
-            <ThemeToggle />
-            <PaletteToggle />
-            <TextScaleToggle />
             <button
               type="button"
               className="pill menu-button"

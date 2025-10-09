@@ -24,6 +24,12 @@
     "description": "Hub AI education & playbooks industri: AGI, Crypto, Biotech, Energy, Space."
   },
   {
+    "id": "learning-hub",
+    "route": "/learning-hub",
+    "title": "Learning Hub",
+    "description": "Modul interaktif: track foundations, industry maker, dan launch lab dengan resource siap pakai."
+  },
+  {
     "id": "playbook-ai",
     "route": "/industry/ai",
     "title": "Playbook AGI",

@@ -14,14 +14,14 @@ export default async function AboutPage() {
   const { hero, story, timeline, capabilities, values, testimonials } = aboutContent;
 
   return (
-    <div className="about">
-      <section className="about__hero">
+    <div className="about" data-animate>
+      <section className="about__hero" data-animate>
         <h1 className="h1">{hero.title}</h1>
         <p className="about__tagline">{hero.tagline}</p>
         <p className="sub about__summary">{hero.summary}</p>
       </section>
 
-      <section className="about__section">
+      <section className="about__section" data-animate>
         <h2 className="h2">{story.heading}</h2>
         <div className="about__story card">
           {story.paragraphs.map((paragraph, index) => (
@@ -30,17 +30,17 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="about__section">
+      <section className="about__section" data-animate>
         <h2 className="h2">{timeline.heading}</h2>
         <Timeline items={timeline.items} />
       </section>
 
-      <section className="about__section">
+      <section className="about__section" data-animate>
         <h2 className="h2">{capabilities.heading}</h2>
         <CapabilitiesGrid clusters={capabilities.clusters} />
       </section>
 
-      <section className="about__section">
+      <section className="about__section" data-animate>
         <h2 className="h2">{values.heading}</h2>
         <div className="about__values">
           {values.items.map((item) => (
@@ -53,15 +53,17 @@ export default async function AboutPage() {
       </section>
 
       {testimonials.items.length > 0 && testimonials.heading && (
-        <section className="about__section">
+        <section className="about__section" data-animate>
           <h2 className="h2">{testimonials.heading}</h2>
           <TestimonialsDeck items={testimonials.items} cta={testimonials.cta} />
         </section>
       )}
 
-      <div className="hr" />
+      <div className="hr" data-animate />
 
-      <NextSteps current="about" heading={nextStepsHeading} navLabels={navLabels} />
+      <div data-animate>
+        <NextSteps current="about" heading={nextStepsHeading} navLabels={navLabels} />
+      </div>
     </div>
   );
 }

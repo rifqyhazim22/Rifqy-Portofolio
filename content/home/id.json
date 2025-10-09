@@ -17,7 +17,7 @@
         "variant": "outline"
       },
       {
-        "label": "Tahu aku lebih lanjut ↗",
+        "label": "Tahu Aku Lebih Lanjut ↗",
         "href": "/about"
       }
     ],
@@ -37,6 +37,12 @@
     ],
     "portraitSrc": "/images/hero.jpg",
     "backgroundSrc": "/images/hero-background.png"
+  },
+  "promo": {
+    "title": "Promo Lunch 10K",
+    "body": "Pengunjung yang eksplor situs ini boleh klaim Rp10.000 untuk makan siang. Klik tombol di bawah buat kirim pesan otomatis ke WhatsApp-ku.",
+    "buttonLabel": "Klaim Rp10.000 via WhatsApp ↗",
+    "buttonHref": "https://wa.me/6281322963566?text=Halo%20Rifqy%2C%20aku%20baru%20lihat%20web%20portofoliomu%20dan%20mau%20klaim%20uang%20makan%20siang%20Rp10.000.%20Terima%20kasih!"
   },
   "quote": {
     "label": "Quotes",
@@ -98,7 +104,7 @@
     "description": "Semua modul belajar—AI Basics, Prompt Patterns, Tools & Workflow—tersedia terkurasi di Playbooks. Mulai dari konsep hingga praktik siap pakai.",
     "cta": {
       "label": "Buka Learning Hub →",
-      "href": "/playbooks#learning-hub"
+      "href": "/learning-hub"
     }
   },
   "updates": {

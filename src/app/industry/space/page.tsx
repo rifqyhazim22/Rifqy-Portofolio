@@ -14,7 +14,7 @@ export default async function SpaceIndustryPage() {
     <div>
       <IndustryDetailContent
         detail={detail}
-        backHref="/industry"
+        backHref="/playbooks"
         backLabel={dictionary.general.backToIndustry}
       />
 

@@ -13,12 +13,24 @@ export default async function HomePage() {
     <div className="home">
       <Hero hero={home.hero} />
 
+      {home.promo ? (
+        <section className="card home__promo" data-animate>
+          <div className="home__promo-title">{home.promo.title}</div>
+          <p className="sub home__promo-text">{home.promo.body}</p>
+          <div className="home__promo-actions">
+            <BaseLink href={home.promo.buttonHref} className="pill hero__action hero__action--primary">
+              {home.promo.buttonLabel}
+            </BaseLink>
+          </div>
+        </section>
+      ) : null}
+
       <section className="card home__quote">
         <div className="home__quote-label">{home.quote.label}</div>
         <p className="home__quote-text">{home.quote.text}</p>
       </section>
 
-      <section className="home__section">
+      <section className="home__section" data-animate>
         <header className="home__section-header">
           <h2 className="h2">{home.whatIDo.heading}</h2>
         </header>
@@ -32,7 +44,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="home__section">
+      <section className="home__section" data-animate>
         <header className="home__section-header">
           <h2 className="h2">{home.playbooks.heading}</h2>
           <p className="sub home__section-sub">{home.playbooks.description}</p>
@@ -54,7 +66,7 @@ export default async function HomePage() {
         ) : null}
       </section>
 
-      <section className="home__section">
+      <section className="home__section" data-animate>
         <header className="home__section-header">
           <h2 className="h2">{home.learning.heading}</h2>
           <p className="sub home__section-sub">{home.learning.description}</p>
@@ -66,7 +78,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="home__section">
+      <section className="home__section" data-animate>
         <header className="home__section-header">
           <h2 className="h2">{home.updates.heading}</h2>
         </header>
@@ -85,9 +97,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <div className="hr" />
+      <div className="hr" data-animate />
 
-      <NextSteps heading={nextStepsHeading} navLabels={navLabels} />
+      <div data-animate>
+        <NextSteps heading={nextStepsHeading} navLabels={navLabels} />
+      </div>
     </div>
   );
 }

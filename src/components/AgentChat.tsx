@@ -22,6 +22,17 @@ function resolveLanguage(): "id" | "en" {
   return lang === "en" ? "en" : "id";
 }
 
+function resolveTone(): "formal" | "santai" | "deep" {
+  if (typeof document === "undefined") {
+    return "formal";
+  }
+  const tone = document.documentElement.dataset.tone;
+  if (tone === "santai" || tone === "deep") {
+    return tone;
+  }
+  return "formal";
+}
+
 export default function AgentChat() {
   const router = useRouter();
   const pathname = usePathname() ?? "/";
@@ -30,6 +41,7 @@ export default function AgentChat() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [language, setLanguage] = useState<"id" | "en">("id");
+  const [tone, setTone] = useState<"formal" | "santai" | "deep">("formal");
   const [allowHover, setAllowHover] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const hoverTimeout = useRef<number | null>(null);
@@ -44,14 +56,40 @@ export default function AgentChat() {
 
   const greeting = useMemo(
     () => ({
-      id: "Halo! Aku agent AI yang siap membantu kamu menjelajah portofolio Rifqy. Tanyakan apa yang ingin kamu lihat atau butuh, aku bantu arahkan.",
-      en: "Hi! I'm the AI agent ready to guide you around Rifqy's portfolio. Tell me what you want to explore and I'll point you there.",
+      id: {
+        formal: "Halo! Aku agent AI siap bantu kamu jelajahi portofolio Rifqy dengan ringkas.",
+        santai: "Hai! Agent AI santai ini siap nganterin kamu keliling portofolio Rifqy.",
+        deep: "Salam! Agent AI ini bakal nemenin kamu mendalami portofolio Rifqy dengan hangat.",
+      },
+      en: {
+        formal: "Hello! I'm the AI agent ready to guide you through Rifqy's portfolio succinctly.",
+        santai: "Hey! I'm the laid-back AI guide to help you explore Rifqy's portfolio with ease.",
+        deep: "Greetings! I'm the reflective AI guide offering meaningful cues through Rifqy's portfolio.",
+      },
     }),
     []
   );
 
   useEffect(() => {
     setLanguage(resolveLanguage());
+    setTone(resolveTone());
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const handleToneChange = (event: Event) => {
+      const detail = (event as CustomEvent).detail;
+      if (detail?.tone) {
+        setTone(detail.tone);
+      } else {
+        setTone(resolveTone());
+      }
+    };
+
+    window.addEventListener("tonechange", handleToneChange as EventListener);
+    return () => {
+      window.removeEventListener("tonechange", handleToneChange as EventListener);
+    };
   }, []);
 
   useEffect(() => {
@@ -76,9 +114,9 @@ export default function AgentChat() {
 
   useEffect(() => {
     if (open && messages.length === 0) {
-      setMessages([{ role: "assistant", content: greeting[language] }]);
+      setMessages([{ role: "assistant", content: greeting[language][tone] }]);
     }
-  }, [open, greeting, language, messages.length]);
+  }, [open, greeting, language, tone, messages.length]);
 
   useEffect(() => {
     if (!messagesEndRef.current) return;
@@ -107,7 +145,7 @@ export default function AgentChat() {
       const response = await fetch("/api/agent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: history, language, location: pathname }),
+        body: JSON.stringify({ messages: history, language, location: pathname, tone }),
       });
 
       const data = (await response.json()) as AgentResponse;

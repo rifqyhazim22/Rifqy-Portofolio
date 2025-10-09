@@ -1,5 +1,5 @@
 import BaseLink from "./BaseLink";
-import type { UpdateItem } from "@/i18n/dictionaries";
+import type { UpdateItem } from "@/i18n/types";
 
 interface UpdatesListProps {
   items: UpdateItem[];
@@ -10,7 +10,7 @@ interface UpdatesListProps {
 export default function UpdatesList({ items, showAllLink = true, allLinkLabel }: UpdatesListProps) {
   return (
     <>
-      <div className="grid" style={{ marginTop: "14px" }}>
+      <div className="grid" style={{ marginTop: "14px" }} data-animate>
         {items.map((item) => (
           <BaseLink key={item.href} className="card" href={item.href}>
             <div className="k">{item.title}</div>
@@ -19,7 +19,7 @@ export default function UpdatesList({ items, showAllLink = true, allLinkLabel }:
         ))}
       </div>
       {showAllLink && (
-        <div style={{ marginTop: "14px" }}>
+        <div style={{ marginTop: "14px" }} data-animate>
           <BaseLink className="pill" href="/updates">
             {allLinkLabel}
           </BaseLink>

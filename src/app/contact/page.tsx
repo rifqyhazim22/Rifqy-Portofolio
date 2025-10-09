@@ -8,10 +8,10 @@ export default async function ContactPage() {
   const { contact, nextStepsHeading, navLabels } = dictionary;
 
   return (
-    <div>
+    <div className="contact" data-animate>
       <h1 className="h1">{contact.title}</h1>
       {contact.intro && <p className="sub" style={{ marginTop: "8px" }}>{contact.intro}</p>}
-      <div className="grid grid-2" style={{ marginTop: "14px" }}>
+      <div className="grid grid-2" style={{ marginTop: "14px" }} data-animate>
         {contact.contacts.map((item) => (
           <a key={item.title} className="card" href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} rel={item.href.startsWith("http") ? "noopener" : undefined}>
             <div className="k">{item.title}</div>
@@ -20,9 +20,9 @@ export default async function ContactPage() {
         ))}
       </div>
 
-      <hr />
+      <div className="hr" data-animate />
 
-      <section>
+      <section data-animate>
         <h2 className="h2">{contact.faqHeading}</h2>
         <div className="grid" style={{ marginTop: "10px" }}>
           {contact.faq.map((item) => (
@@ -34,9 +34,11 @@ export default async function ContactPage() {
         </div>
       </section>
 
-      <hr />
+      <div className="hr" data-animate />
 
-      <NextSteps current="contact" heading={nextStepsHeading} navLabels={navLabels} />
+      <div data-animate>
+        <NextSteps current="contact" heading={nextStepsHeading} navLabels={navLabels} />
+      </div>
     </div>
   );
 }

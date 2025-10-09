@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0",
+  "updatedAt": "2025-03-01T00:00:00.000Z",
+  "sections": [
+    {
+      "id": "brand",
+      "title": "Rifqy Hazim HR",
+      "summary": "AI Professional & Agent Developer focusing on LLM systems, web delivery, and generative storytelling.",
+      "links": [
+        { "label": "Home", "href": "/" },
+        { "label": "Playbooks", "href": "/playbooks" },
+        { "label": "Learning Hub", "href": "/learning-hub" }
+      ]
+    },
+    {
+      "id": "cta",
+      "title": "Lunch Promo",
+      "summary": "Visitors can claim Rp10.000 for lunch via WhatsApp CTA on the home hero section.",
+      "links": [
+        { "label": "WhatsApp", "href": "https://wa.me/6281322963566" }
+      ]
+    }
+  ]
+}

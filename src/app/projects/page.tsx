@@ -8,11 +8,11 @@ export default async function ProjectsPage() {
   const { projects, nextStepsHeading, navLabels } = dictionary;
 
   return (
-    <div>
+    <div className="projects" data-animate>
       <h1 className="h1">{projects.title}</h1>
       <p className="sub">{projects.intro}</p>
 
-      <div className="nav" style={{ margin: "12px 0 18px 0" }}>
+      <div className="nav" style={{ margin: "12px 0 18px 0" }} data-animate>
         {projects.buttons.map((button) => (
           <a key={button.label} className="pill" href={button.href} target="_blank" rel="noopener">
             {button.label}
@@ -20,7 +20,7 @@ export default async function ProjectsPage() {
         ))}
       </div>
 
-      <div className="grid grid-2" style={{ marginTop: "6px" }}>
+      <div className="grid grid-2" style={{ marginTop: "6px" }} data-animate>
         {projects.gallery.map((item) => (
           <a key={item.title} className="card" href={item.href} target="_blank" rel="noopener">
             <div className="k">{item.title}</div>
@@ -29,9 +29,11 @@ export default async function ProjectsPage() {
         ))}
       </div>
 
-      <hr />
+      <div className="hr" data-animate />
 
-      <NextSteps current="projects" heading={nextStepsHeading} navLabels={navLabels} />
+      <div data-animate>
+        <NextSteps current="projects" heading={nextStepsHeading} navLabels={navLabels} />
+      </div>
     </div>
   );
 }
