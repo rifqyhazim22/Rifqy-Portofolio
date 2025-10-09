@@ -18,6 +18,7 @@ type FloatingControlsProps = {
 
 export default function FloatingControls({ language, languageToggle }: FloatingControlsProps) {
   const [open, setOpen] = useState(false);
+  const [forceClickable, setForceClickable] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -40,6 +41,10 @@ export default function FloatingControls({ language, languageToggle }: FloatingC
     setOpen((value) => !value);
   };
 
+  useEffect(() => {
+    setForceClickable(typeof window !== "undefined" && window.matchMedia?.("(pointer: coarse)").matches);
+  }, []);
+
   const handleFocusCapture = () => {
     setOpen(true);
   };
@@ -57,6 +62,8 @@ export default function FloatingControls({ language, languageToggle }: FloatingC
       ref={menuRef}
       onFocusCapture={handleFocusCapture}
       onBlur={handleBlur}
+      onPointerEnter={forceClickable ? undefined : () => setOpen(true)}
+      onPointerLeave={forceClickable ? undefined : () => setOpen(false)}
     >
       <button
         type="button"
