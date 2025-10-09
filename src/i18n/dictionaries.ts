@@ -65,8 +65,22 @@ export interface Dictionary {
   };
 }
 
-const dictionaries: Record<Language, Dictionary> = {
-  id: {
+const homeCache: Record<Language, HomeContent> = {
+  id: loadHomeContent("id"),
+  en: loadHomeContent("en"),
+};
+
+const industryCache: Record<Language, IndustryContent> = {
+  id: loadIndustryContent("id"),
+  en: loadIndustryContent("en"),
+};
+
+const updatesCache: Record<Language, UpdatesContent> = {
+  id: loadUpdatesContent("id"),
+  en: loadUpdatesContent("en"),
+};
+
+const idDictionary: Dictionary = {
     brand: "Rifqy Hazim HR",
     navLabels: {
       about: "About",
@@ -88,7 +102,7 @@ const dictionaries: Record<Language, Dictionary> = {
       dateLabel: "Tanggal",
       backToIndustry: "← Kembali ke Playbooks",
     },
-    home: loadHomeContent("id"),
+    home: homeCache.id,
     about: {
       title: "About",
       intro:
@@ -236,8 +250,11 @@ const dictionaries: Record<Language, Dictionary> = {
         },
       ],
     },
-  },
-  en: {
+};
+
+
+
+const enDictionary: Dictionary = {
     brand: "Rifqy Hazim HR",
     navLabels: {
       about: "About",
@@ -259,37 +276,37 @@ const dictionaries: Record<Language, Dictionary> = {
       dateLabel: "Date",
       backToIndustry: "← Back to Playbooks",
     },
-    home: loadHomeContent("en"),
+    home: homeCache.en,
     about: {
       title: "About",
       intro:
-        "I architect LLM agents, generative pipelines, and modern web delivery with GPT-5 Codex, ChatGPT, and automation stacks—every engagement mapped, evaluated, and privacy-aware.",
+        "I architect LLM agents, generative pipelines, and production-ready web experiences. Every engagement starts with system mapping, evaluation harnesses, and privacy-first workflows.",
       philosophyHeading: "Philosophy & Vision",
       philosophyBody:
-        "Ad Astra Abyssosque is the compass: dive through complexity, surface with disciplined creativity, document the path. Even outside tech briefs, LLM copilots and generative tooling anchor every decision.",
-      workHeading: "What I Ship",
+        "Ad Astra Abyssosque is the guiding star: dive into complexity, surface with a clearly documented solution. Even in non-tech briefs I deploy LLM copilots, generative tooling, and accessible documentation.",
+      workHeading: "What I Build",
       workItems: [
         {
           href: "/works",
           title: "AI Systems & Agents",
-          sub: "Multi-agent orchestration, evaluation, and guardrails.",
+          sub: "Multi-agent orchestration, evaluation, and safety guardrails.",
         },
         {
           href: "/projects",
           title: "Generative Pipelines",
-          sub: "Video/image synthesis, context design, reproducible SOPs.",
+          sub: "Video/image synthesis, context design, and reproducible SOPs.",
         },
         {
-          href: "/industry",
+          href: "/playbooks",
           title: "Web Delivery & Automation",
-          sub: "Next.js builds, APIs, and automation scaffolding ready to ship.",
+          sub: "Next.js apps, APIs, and automation scaffolding ready to launch.",
         },
       ],
-      learningHeading: "Dive Deeper",
+      learningHeading: "Keep Learning",
       learningItems: [
-        { href: "/updates/prompt-engineering", title: "Prompt & Agent", sub: "" },
-        { href: "/updates/ai-web", title: "AI + Web Delivery", sub: "" },
-        { href: "/industry", title: "Framework Pengiriman", sub: "" },
+        { href: "/updates/prompt-engineering", title: "Prompt & Agents", sub: "" },
+        { href: "/updates/agent-eval", title: "Agent Evaluation", sub: "" },
+        { href: "/learning-hub", title: "Learning Hub", sub: "" },
       ],
     },
     updates: updatesCache.en,
@@ -297,17 +314,17 @@ const dictionaries: Record<Language, Dictionary> = {
     industryInteractive: industryCache.en.interactive,
     industryDetails: industryCache.en.details,
     learningHub: industryCache.en.learningHub,
-
+    works: {
       title: "Works",
       intro: "I use GPT-5 Codex, ChatGPT, and generative toolchains to build agents, automation, and immersive products. Every delivery starts with system mapping, evaluation, and privacy-first workflows.",
       buttons: [
         {
           href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
-          label: "AI Generated Video"
+          label: "AI Generated Video",
         },
         {
           href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
-          label: "AI Generated Image"
+          label: "AI Generated Image",
         },
         { href: "mailto:rifqyhazim22@gmail.com", label: "Request walkthrough" },
         { href: "https://wa.me/6281322963566", label: "Talk on WhatsApp" },
@@ -316,41 +333,41 @@ const dictionaries: Record<Language, Dictionary> = {
         {
           href: "mailto:rifqyhazim22@gmail.com",
           title: "LLM Concierge Lab",
-          sub: "GPT-5 Codex pairing for navigation, memory, and evaluation harnesses in web interfaces."
+          sub: "GPT-5 Codex pairing for navigation, memory, and evaluation harnesses in web interfaces.",
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
           title: "Goldi Generative Pipeline",
-          sub: "Sora → Runway → Flow SOP delivering 24-second AI video assets."
+          sub: "Sora → Runway → Flow SOP delivering 24-second AI video assets.",
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
           title: "TSL AI Campaign",
-          sub: "Generative video content shaped by LLM prompt systems and focused production SOPs."
+          sub: "Generative video content shaped by LLM prompt systems and focused production SOPs.",
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
           title: "Bak Kwa Halal Intelligence",
-          sub: "LLM research agents compiling pricing, positioning, and investor decks."
+          sub: "LLM research agents compiling pricing, positioning, and investor decks.",
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
           title: "Generative Asset Lab",
-          sub: "Runway and Veo explorations for reusable media libraries."
+          sub: "Runway and Veo explorations for reusable media libraries.",
         },
       ],
     },
     projects: {
       title: "Projects",
-      intro: "Long-horizon blueprints for LLM agents, scaled generative operations, and Web2/Web3/crypto research—Drive folders keep the deep dives ready.",
+      intro: "Long-horizon blueprints for LLM agents, scaled generative ops, and Web2/Web3/crypto research. Drive folders store the deep dives.",
       buttons: [
         {
           href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
-          label: "AI Generated Video"
+          label: "AI Generated Video",
         },
         {
           href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
-          label: "AI Generated Image"
+          label: "AI Generated Image",
         },
         { href: "https://www.linkedin.com/in/rifqy-hazim-h-r-88963128a/", label: "LinkedIn" },
         { href: "mailto:rifqyhazim22@gmail.com", label: "Request full CV" },
@@ -359,22 +376,22 @@ const dictionaries: Record<Language, Dictionary> = {
         {
           href: "mailto:rifqyhazim22@gmail.com",
           title: "Entropy Inc",
-          sub: "AI + Web3 ecosystem blueprint with agent governance and token utility models."
+          sub: "AI + Web3 ecosystem blueprint with agent governance and token utility models.",
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
           title: "AI Playbooks",
-          sub: "Prompt evaluation, guardrails, and deployment SOPs for creative teams."
+          sub: "Prompt evaluation, guardrails, and deployment SOPs for creative teams.",
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
           title: "Grab Rideshare Intelligence",
-          sub: "Field data modelled with LLMs to shape mobility service strategy."
+          sub: "Field data modeled with LLMs to shape mobility service strategy.",
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
           title: "Web3 Research Hub",
-          sub: "Wallet UX, tokenomics, and smart-contract studies driven by AI insights."
+          sub: "Wallet UX, tokenomics, and smart-contract studies powered by AI insights.",
         },
       ],
     },
@@ -392,21 +409,25 @@ const dictionaries: Record<Language, Dictionary> = {
         {
           href: "#privacy",
           title: "Does this site store personal data?",
-          sub: "No. Sensitive data stays off-platform; contact details are shared purely for outreach."
+          sub: "No. Sensitive data stays off-platform; contact details are shared purely for outreach.",
         },
         {
           href: "#workflow",
           title: "What does the workflow look like?",
-          sub: "Discovery → system mapping → agent/product prototype → evaluation → documentation."
+          sub: "Discovery → system mapping → agent/product prototype → evaluation → documentation.",
         },
         {
           href: "#deliverables",
           title: "Which deliverables can I expect?",
-          sub: "LLM agents with metrics, generative assets, Next.js apps, and end-to-end deployment guides."
+          sub: "LLM agents with metrics, generative assets, Next.js apps, and end-to-end deployment guides.",
         },
       ],
     },
-  },
+};
+
+const dictionaries: Record<Language, Dictionary> = {
+  id: idDictionary,
+  en: enDictionary,
 };
 
 export function getDictionary(language: Language): Dictionary {

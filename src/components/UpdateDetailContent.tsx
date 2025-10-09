@@ -1,5 +1,5 @@
 import BaseLink from "./BaseLink";
-import type { UpdateDetail } from "@/i18n/dictionaries";
+import type { UpdateDetail } from "@/i18n/types";
 
 interface UpdateDetailContentProps {
   detail: UpdateDetail;
