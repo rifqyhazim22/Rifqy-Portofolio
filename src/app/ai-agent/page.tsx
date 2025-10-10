@@ -7,7 +7,7 @@ export default async function AiAgentPage() {
   const content =
     language === "id"
       ? {
-          title: "Perpustakaan AI",
+          title: "AI Agent",
           subtitle: "Sapa agent yang mengenal CV, portofolio, dan setiap narasi Freedom of Intelligence.",
           description:
             "Agent ini fleksibel—bisa kamu ajak diskusi tentang perjalanan Rifqy, strategi AI, hingga cara membawa kecerdasan ke komunitasmu. Kalau butuh rujukan, dia akan menyebutkan path halaman atau dokumen yang relevan.",
@@ -18,7 +18,7 @@ export default async function AiAgentPage() {
           ],
         }
       : {
-          title: "AI Library",
+          title: "AI Agent",
           subtitle: "Meet the agent who knows the CV, portfolio, and every Freedom of Intelligence narrative.",
           description:
             "This agent is flexible—talk about Rifqy's journey, AI strategies, or how to bring intelligence into your community. When relevant, it references the exact page paths or documents.",

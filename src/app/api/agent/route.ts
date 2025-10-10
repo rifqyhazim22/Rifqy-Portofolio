@@ -413,8 +413,8 @@ export async function POST(request: NextRequest) {
 
   try {
     const response = await client.chat.completions.create({
-      model: "gpt-5-nano",
-      max_tokens: 260,
+      model: "gpt-4.1-mini",
+      max_completion_tokens: 260,
       temperature: 0.4,
       messages: [
         {
