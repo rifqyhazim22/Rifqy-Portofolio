@@ -59,6 +59,12 @@ export interface Dictionary {
   contact: {
     title: string;
     intro: string;
+    promo?: {
+      title: string;
+      body: string;
+      buttonLabel: string;
+      buttonHref: string;
+    };
     contacts: LinkCard[];
     downloadsHeading?: string;
     downloads?: LinkCard[];
@@ -229,6 +235,7 @@ const idDictionary: Dictionary = {
     contact: {
       title: "Contact",
       intro: "Ajak diskusi seputar AI engineering, pengembangan web/app, atau kolaborasi riset.",
+      promo: homeCache.id.promo,
       contacts: [
         { href: "mailto:rifqyhazim22@gmail.com", title: "Email", sub: "rifqyhazim22@gmail.com" },
         { href: "https://wa.me/6281322963566", title: "WhatsApp", sub: "081322963566" },
@@ -422,6 +429,7 @@ const enDictionary: Dictionary = {
     contact: {
       title: "Contact",
       intro: "Reach out for AI engineering, web/app development, or research collaborations.",
+      promo: homeCache.en.promo,
       contacts: [
         { href: "mailto:rifqyhazim22@gmail.com", title: "Email", sub: "rifqyhazim22@gmail.com" },
         { href: "https://wa.me/6281322963566", title: "WhatsApp", sub: "+62 813-2296-3566" },

@@ -11,6 +11,17 @@ export default async function ContactPage() {
     <div className="contact">
       <h1 className="h1">{contact.title}</h1>
       {contact.intro && <p className="sub" style={{ marginTop: "8px" }}>{contact.intro}</p>}
+      {contact.promo ? (
+        <section className="card contact__promo" data-animate>
+          <div className="contact__promo-title">{contact.promo.title}</div>
+          <p className="sub contact__promo-text">{contact.promo.body}</p>
+          <div className="contact__promo-actions">
+            <a className="pill" href={contact.promo.buttonHref} target="_blank" rel="noopener">
+              {contact.promo.buttonLabel}
+            </a>
+          </div>
+        </section>
+      ) : null}
       <div className="grid grid-2" style={{ marginTop: "14px" }} data-animate>
         {contact.contacts.map((item) => (
           <a key={item.title} className="card" href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} rel={item.href.startsWith("http") ? "noopener" : undefined}>
