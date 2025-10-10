@@ -411,21 +411,27 @@ export async function POST(request: NextRequest) {
 
   const trimmedMessages = messages.slice(-6);
 
+  const toResponseInput = (items: ChatMessage[]) =>
+    items.map((message) => ({
+      role: message.role,
+      content: [{ type: "input_text" as const, text: message.content }],
+    }));
+
   try {
-    const response = await client.chat.completions.create({
-      model: "gpt-4.1-mini",
-      max_completion_tokens: 260,
+    const response = await client.responses.create({
+      model: "gpt-5-nano",
+      max_output_tokens: 260,
       temperature: 0.4,
-      messages: [
+      input: [
         {
           role: "system",
-          content: systemSections.join("\n"),
+          content: [{ type: "input_text", text: systemSections.join("\n") }],
         },
-        ...trimmedMessages,
+        ...toResponseInput(trimmedMessages),
       ],
     });
 
-    const fullText = response.choices[0]?.message?.content?.trim() ?? "";
+    const fullText = response.output_text?.trim() ?? "";
     const navigateMatch = fullText.match(/\[\[NAVIGATE:([^\]]+)\]\]/i);
     const rawNavigation = navigateMatch ? navigateMatch[1].trim() : null;
     const navigation = await resolveNavigationTarget(rawNavigation, trimmedMessages);
