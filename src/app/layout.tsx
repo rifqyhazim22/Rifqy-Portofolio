@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import AgentChat from "@/components/AgentChat";
-import FloatingControls from "@/components/FloatingControls";
 import FloatingDate from "@/components/FloatingDate";
 import Header from "@/components/Header";
 import PointerGlow from "@/components/PointerGlow";
@@ -35,8 +34,12 @@ export default async function RootLayout({
       <body>
         <PointerGlow />
         <ScrollOrchestrator />
-        <Header brand={dictionary.brand} navLabels={dictionary.navLabels} />
-        <FloatingControls language={language} languageToggle={dictionary.languageToggle} />
+        <Header
+          brand={dictionary.brand}
+          navLabels={dictionary.navLabels}
+          language={language}
+          languageToggle={dictionary.languageToggle}
+        />
         <main className="wrap">{children}</main>
         <FloatingDate />
         <AgentChat />

@@ -9,8 +9,10 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type FocusEvent, type PointerEvent as ReactPointerEvent } from "react";
+import type { Language } from "@/lib/language";
 import BaseLink from "./BaseLink";
 import AnalogClock from "./AnalogClock";
+import FloatingControls from "./FloatingControls";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") {
@@ -22,11 +24,16 @@ function isActive(pathname: string, href: string) {
 interface HeaderProps {
   brand: string;
   navLabels: Record<NavLabelKey, string>;
+  language: Language;
+  languageToggle: {
+    label: string;
+    options: { id: string; en: string };
+  };
 }
 
 const MOBILE_QUERY = "(max-width: 720px)";
 
-export default function Header({ brand, navLabels }: HeaderProps) {
+export default function Header({ brand, navLabels, language, languageToggle }: HeaderProps) {
   const pathname = usePathname() ?? "/";
   const [menuOpen, setMenuOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
@@ -354,6 +361,7 @@ export default function Header({ brand, navLabels }: HeaderProps) {
             >
               MENU
             </button>
+            <FloatingControls language={language} languageToggle={languageToggle} variant="inline" />
           </div>
           {menuOpen && (
             <div
