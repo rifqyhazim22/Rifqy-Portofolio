@@ -914,24 +914,9 @@ button.pill[disabled] {
   gap: 18px;
 }
 
-.about__philosophy {
+.about__philosophy-stack {
   display: grid;
   gap: 18px;
-}
-
-.about__philosophy-column {
-  display: grid;
-  gap: 12px;
-}
-
-.about__philosophy-column p {
-  margin: 0;
-}
-
-@media (min-width: 820px) {
-  .about__philosophy {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 .about__story {
