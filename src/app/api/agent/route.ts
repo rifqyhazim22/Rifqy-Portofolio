@@ -420,8 +420,7 @@ export async function POST(request: NextRequest) {
   try {
     const response = await client.responses.create({
       model: "gpt-5-nano",
-      max_output_tokens: 260,
-      temperature: 0.4,
+      max_output_tokens: 800,
       input: [
         {
           role: "system",
