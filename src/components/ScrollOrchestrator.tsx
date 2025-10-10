@@ -34,11 +34,14 @@ export default function ScrollOrchestrator() {
 
     const fallback = window.setTimeout(() => {
       targets.forEach((target) => {
-        if (!target.hasAttribute("data-animate-ready")) {
+        if (target.hasAttribute("data-animate-ready")) return;
+        const rect = target.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
           target.setAttribute("data-animate-ready", "true");
+          observer.unobserve(target);
         }
       });
-    }, 320);
+    }, 280);
 
     return () => {
       window.clearTimeout(fallback);
