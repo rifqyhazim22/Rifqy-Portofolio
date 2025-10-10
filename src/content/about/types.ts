@@ -12,6 +12,7 @@ export interface AboutStory {
 export interface AboutPhilosophy {
   heading: string;
   paragraphs: string[];
+  secondary?: string[];
 }
 
 export interface TimelineItem {
