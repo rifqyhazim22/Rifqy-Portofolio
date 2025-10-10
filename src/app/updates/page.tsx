@@ -10,7 +10,7 @@ export default async function UpdatesPage() {
   const { updates, home, nextStepsHeading, navLabels } = dictionary;
 
   return (
-    <div className="updates" data-animate>
+    <div className="updates">
       <section className="updates__hero" data-animate>
         <h1 className="h1">{updates.title}</h1>
         <p className="sub">{updates.intro}</p>

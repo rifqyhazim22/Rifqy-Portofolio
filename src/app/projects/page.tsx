@@ -8,7 +8,7 @@ export default async function ProjectsPage() {
   const { projects, nextStepsHeading, navLabels } = dictionary;
 
   return (
-    <div className="projects" data-animate>
+    <div className="projects">
       <h1 className="h1">{projects.title}</h1>
       <p className="sub">{projects.intro}</p>
 

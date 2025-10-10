@@ -8,7 +8,7 @@ export default async function ContactPage() {
   const { contact, nextStepsHeading, navLabels } = dictionary;
 
   return (
-    <div className="contact" data-animate>
+    <div className="contact">
       <h1 className="h1">{contact.title}</h1>
       {contact.intro && <p className="sub" style={{ marginTop: "8px" }}>{contact.intro}</p>}
       <div className="grid grid-2" style={{ marginTop: "14px" }} data-animate>

@@ -9,7 +9,7 @@ export default async function PlaybooksPage() {
   const { industry, industryInteractive, learningHub, nextStepsHeading, navLabels } = dictionary;
 
   return (
-    <div className="playbooks" data-animate>
+    <div className="playbooks">
       <section className="playbooks__hero" data-animate>
         <h1 className="h1">{industry.title}</h1>
         <p className="sub">{industry.intro}</p>

@@ -8,7 +8,7 @@ export default async function WorksPage() {
   const { works, nextStepsHeading, navLabels } = dictionary;
 
   return (
-    <div className="works" data-animate>
+    <div className="works">
       <h1 className="h1">{works.title}</h1>
       <p className="sub">{works.intro}</p>
 

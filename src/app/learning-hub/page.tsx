@@ -9,7 +9,7 @@ export default async function LearningHubPage() {
   const { learningHub, industryInteractive, nextStepsHeading, navLabels } = dictionary;
 
   return (
-    <div className="learning" data-animate>
+    <div className="learning">
       <section className="learning__hero" data-animate>
         <h1 className="h1">{learningHub.title}</h1>
         <p className="sub">{learningHub.intro}</p>
