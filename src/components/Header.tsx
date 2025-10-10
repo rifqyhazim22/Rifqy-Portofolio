@@ -13,6 +13,7 @@ import type { Language } from "@/lib/language";
 import BaseLink from "./BaseLink";
 import AnalogClock from "./AnalogClock";
 import FloatingControls from "./FloatingControls";
+import FloatingDate from "./FloatingDate";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") {
@@ -367,6 +368,7 @@ export default function Header({ brand, navLabels, language, languageToggle }: H
               variant="inline"
               className="floating-menu--desktop"
             />
+            <FloatingDate variant="inline" />
           </div>
           {menuOpen && (
             <div
