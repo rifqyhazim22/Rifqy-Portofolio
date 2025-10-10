@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 const SELECTOR = "[data-animate]";
 
 export default function ScrollOrchestrator() {
+  const pathname = usePathname();
+
   useEffect(() => {
     if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
       const targets = document.querySelectorAll<HTMLElement>(SELECTOR);
@@ -41,7 +44,7 @@ export default function ScrollOrchestrator() {
       window.clearTimeout(fallback);
       observer.disconnect();
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }
