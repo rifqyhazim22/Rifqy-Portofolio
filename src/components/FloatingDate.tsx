@@ -19,12 +19,7 @@ function formatDate(date: Date, language: Language) {
   });
 }
 
-interface FloatingDateProps {
-  variant?: "floating" | "inline";
-  className?: string;
-}
-
-export default function FloatingDate({ variant = "floating", className }: FloatingDateProps) {
+export default function FloatingDate() {
   const [language, setLanguage] = useState<Language>("id");
   const [now, setNow] = useState(() => new Date());
   const [expanded, setExpanded] = useState(false);
@@ -48,7 +43,7 @@ export default function FloatingDate({ variant = "floating", className }: Floati
 
   return (
     <div
-      className={`floating-date floating-date--${variant}${className ? ` ${className}` : ""}`}
+      className="floating-date"
       data-expanded={expanded ? "true" : undefined}
       onMouseEnter={() => setExpanded(true)}
       onMouseLeave={() => setExpanded(false)}

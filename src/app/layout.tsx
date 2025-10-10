@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import AgentChat from "@/components/AgentChat";
+import FloatingDate from "@/components/FloatingDate";
 import Header from "@/components/Header";
 import PointerGlow from "@/components/PointerGlow";
 import ScrollOrchestrator from "@/components/ScrollOrchestrator";
@@ -40,6 +41,7 @@ export default async function RootLayout({
           languageToggle={dictionary.languageToggle}
         />
         <main className="wrap">{children}</main>
+        <FloatingDate />
         <AgentChat />
       </body>
     </html>

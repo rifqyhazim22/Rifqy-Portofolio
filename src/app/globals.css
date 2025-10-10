@@ -1894,25 +1894,19 @@ nav.pills {
 
 .floating-menu--desktop {
   display: flex;
+  align-items: center;
 }
 
 .floating-date {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.floating-date--floating {
   position: fixed;
   top: 110px;
   right: 24px;
   z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   align-items: flex-end;
   pointer-events: none;
-}
-
-.floating-date--floating .floating-date__button {
-  pointer-events: auto;
 }
 
 .floating-date__button {
@@ -1932,17 +1926,6 @@ nav.pills {
   max-width: 220px;
 }
 
-.floating-date--inline {
-  position: relative;
-  align-items: center;
-  pointer-events: auto;
-}
-
-.floating-date--inline .floating-date__panel {
-  position: absolute;
-  top: calc(100% + 12px);
-  right: 0;
-}
 
 .contact__promo {
   margin: 18px 0;
@@ -1977,22 +1960,13 @@ nav.pills {
 }
 
 @media (max-width: 720px) {
-  .floating-date--floating {
+  .floating-date {
     top: 110px;
     right: 16px;
-    bottom: auto;
-    left: auto;
-    align-items: flex-end;
-  }
-
-  .sitebar .bar {
-    flex-direction: row;
-    align-items: center;
-    gap: 12px;
   }
 
   .brand-group {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: 8px;
   }
 
@@ -2000,16 +1974,28 @@ nav.pills {
     flex-direction: row;
     align-items: center;
     gap: 8px;
+    width: 100%;
   }
 
   .cluster-controls {
-    flex-wrap: nowrap;
-    justify-content: flex-end;
+    width: 100%;
+    display: flex;
     gap: 8px;
+    justify-content: space-between;
   }
 
   .menu-button {
-    flex: 0 0 auto;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .floating-menu--desktop {
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .floating-menu--desktop .floating-menu__trigger {
+    width: 100%;
   }
 }
 
