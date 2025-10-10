@@ -1897,10 +1897,6 @@ nav.pills {
   align-items: center;
 }
 
-.floating-menu--mobile {
-  display: none;
-}
-
 .floating-date {
   position: fixed;
   top: 110px;
@@ -1970,7 +1966,7 @@ nav.pills {
   }
 
   .brand-group {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: 8px;
   }
 
@@ -1994,16 +1990,21 @@ nav.pills {
   }
 
   .floating-menu--desktop {
-    display: none;
-  }
-
-  .floating-menu--mobile {
     display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    align-items: center;
   }
 
-  .floating-menu--mobile {
-    top: 110px;
-    right: 16px;
+  .floating-menu--desktop .floating-menu__trigger {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+  }
+
+  .floating-menu--desktop .floating-menu__panel {
+    min-width: min(220px, 80vw);
+    right: 0;
   }
 }
 

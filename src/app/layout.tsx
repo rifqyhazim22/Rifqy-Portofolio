@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import AgentChat from "@/components/AgentChat";
-import FloatingControls from "@/components/FloatingControls";
 import FloatingDate from "@/components/FloatingDate";
 import Header from "@/components/Header";
 import PointerGlow from "@/components/PointerGlow";
@@ -41,7 +40,6 @@ export default async function RootLayout({
           language={language}
           languageToggle={dictionary.languageToggle}
         />
-        <FloatingControls language={language} languageToggle={dictionary.languageToggle} className="floating-menu--mobile" />
         <main className="wrap">{children}</main>
         <FloatingDate />
         <AgentChat />
