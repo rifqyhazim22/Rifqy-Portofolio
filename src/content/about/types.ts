@@ -9,6 +9,11 @@ export interface AboutStory {
   paragraphs: string[];
 }
 
+export interface AboutPhilosophy {
+  heading: string;
+  paragraphs: string[];
+}
+
 export interface TimelineItem {
   id: string;
   period: string;
@@ -35,6 +40,7 @@ export interface TestimonialItem {
 
 export interface AboutContent {
   hero: AboutHero;
+  philosophy: AboutPhilosophy;
   story: AboutStory;
   timeline: {
     heading: string;

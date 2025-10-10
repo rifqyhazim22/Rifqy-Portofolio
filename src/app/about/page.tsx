@@ -11,7 +11,7 @@ export default async function AboutPage() {
   const dictionary = getDictionary(language);
   const aboutContent = loadAboutContent(language);
   const { nextStepsHeading, navLabels } = dictionary;
-  const { hero, story, timeline, capabilities, values, testimonials } = aboutContent;
+  const { hero, philosophy, story, timeline, capabilities, values, testimonials } = aboutContent;
 
   return (
     <div className="about" data-animate>
@@ -19,6 +19,15 @@ export default async function AboutPage() {
         <h1 className="h1">{hero.title}</h1>
         <p className="about__tagline">{hero.tagline}</p>
         <p className="sub about__summary">{hero.summary}</p>
+      </section>
+
+      <section className="about__section" data-animate>
+        <h2 className="h2">{philosophy.heading}</h2>
+        <div className="about__story card">
+          {philosophy.paragraphs.map((paragraph, index) => (
+            <p key={index}>{paragraph}</p>
+          ))}
+        </div>
       </section>
 
       <section className="about__section" data-animate>
