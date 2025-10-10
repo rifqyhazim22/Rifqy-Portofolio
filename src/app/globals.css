@@ -914,11 +914,6 @@ button.pill[disabled] {
   gap: 18px;
 }
 
-.about__philosophy-stack {
-  display: grid;
-  gap: 18px;
-}
-
 .about__story {
   display: grid;
   gap: 12px;

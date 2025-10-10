@@ -23,19 +23,10 @@ export default async function AboutPage() {
 
       <section className="about__section" data-animate>
         <h2 className="h2">{philosophy.heading}</h2>
-        <div className="about__philosophy-stack">
-          <div className="about__story card">
-            {philosophy.paragraphs.map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
-          </div>
-          {philosophy.secondary?.length ? (
-            <div className="about__story card">
-              {philosophy.secondary.map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
-            </div>
-          ) : null}
+        <div className="about__story card">
+          {[...philosophy.paragraphs, ...(philosophy.secondary ?? [])].map((paragraph, index) => (
+            <p key={index}>{paragraph}</p>
+          ))}
         </div>
       </section>
 
