@@ -1991,11 +1991,20 @@ nav.pills {
 
   .floating-menu--desktop {
     flex: 1;
+    display: flex;
     justify-content: flex-end;
+    align-items: center;
   }
 
   .floating-menu--desktop .floating-menu__trigger {
-    width: 100%;
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+  }
+
+  .floating-menu--desktop .floating-menu__panel {
+    min-width: min(220px, 80vw);
+    right: 0;
   }
 }
 
