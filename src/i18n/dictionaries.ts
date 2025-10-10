@@ -60,6 +60,9 @@ export interface Dictionary {
     title: string;
     intro: string;
     contacts: LinkCard[];
+    downloadsHeading?: string;
+    downloads?: LinkCard[];
+    downloadsNote?: string;
     faqHeading: string;
     faq: LinkCard[];
   };
@@ -89,6 +92,7 @@ const idDictionary: Dictionary = {
       learning: "Learning Hub",
       works: "Works",
       projects: "Projects",
+      librarian: "AI Chat",
       contact: "Contact",
       services: "Layanan",
     },
@@ -106,26 +110,26 @@ const idDictionary: Dictionary = {
     about: {
       title: "About",
       intro:
-        "Saya memimpin orkestrasi LLM, agen, dan pipeline generatif untuk menghadirkan produk siap produksi. Semua project dimulai dengan pemetaan sistem, evaluasi otomatis, dan alur kerja yang menjaga privasi.",
-      philosophyHeading: "Filosofi & Visi",
+        "Aku mengundangmu masuk ke perpustakaan pribadiku—orkestrasi LLM, agen, pipeline generatif, dan pengalaman web yang kubangun dengan empati dari briefing sampai rilis.",
+      philosophyHeading: "Misi & Narasi",
       philosophyBody:
-        "Ad Astra Abyssosque adalah penuntun: menyelami kompleksitas, kembali dengan solusi kreatif yang terdokumentasi. Bahkan project non-AI saya topang dengan co-pilot LLM, tool generatif, dan otomasi yang saya kuasai.",
-      workHeading: "Apa yang Saya Bangun",
+        "Freedom of Intelligence memandu langkahku. \"Ad astra abyssosque\" menjaga ritme: selami kompleksitas, terbangkan kecerdasan, lalu kembali dengan solusi terdokumentasi yang bisa dirawat siapa saja.",
+      workHeading: "Apa yang Aku Bangun",
       workItems: [
         {
           href: "/works",
           title: "AI Systems & Agents",
-          sub: "Multi-agent orchestration, evaluasi, dan guardrails.",
+          sub: "Aku mengorkestrasi multi-agent, memori, evaluasi, dan guardrails biar keputusan tetap tajam dan manusiawi.",
         },
         {
           href: "/projects",
           title: "Generative Pipelines",
-          sub: "Video/gambar berbasis Sora, Runway, Veo dengan SOP reproducible.",
+          sub: "Pipeline video/gambar berbasis Sora, Runway, Veo dengan SOP yang bisa kamu ulang dan ajarkan.",
         },
         {
           href: "/industry",
           title: "Web Delivery & Automasi",
-          sub: "Next.js, API, dan orchestrasi otomasi untuk ship lebih cepat.",
+          sub: "Next.js, API, dan orkestrasi otomasi supaya produkmu terasa hidup sejak hari pertama.",
         },
       ],
       learningHeading: "Eksplorasi Lanjutan",
@@ -143,7 +147,7 @@ const idDictionary: Dictionary = {
 
     works: {
       title: "Karya",
-      intro: "Saya menggunakan GPT-5 Codex, ChatGPT, dan toolchain generatif untuk membangun agen, otomasi, dan produk imersif. Setiap pengerjaan dimulai dengan pemetaan sistem, evaluasi, dan alur kerja yang menjaga privasi.",
+      intro: "Aku memanfaatkan GPT-5 Codex, ChatGPT, dan toolchain generatif buat membangun agen, otomasi, dan produk imersif. Setiap pengerjaan kurajut dari empati, pemetaan sistem, evaluasi, dan workflow yang menjaga privasi.",
       buttons: [
         {
           href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
@@ -231,7 +235,26 @@ const idDictionary: Dictionary = {
         { href: "https://www.linkedin.com/in/rifqy-hazim-h-r-88963128a/", title: "LinkedIn", sub: "rifqy-hazim-h-r" },
         { href: "https://instagram.com/rifqy__hazim._", title: "Instagram", sub: "@rifqy__hazim._" },
       ],
-      faqHeading: "FAQ (Cara Saya Bekerja)",
+      downloadsHeading: "Download Dokumen & Artefak",
+      downloadsNote: "File docx tersimpan di perpustakaan ini. Kalau kamu butuh format lain atau versi app, tinggal hubungi aku.",
+      downloads: [
+        {
+          href: "/cv-dan-portofolio/CV Rifqy by agent mode.docx",
+          title: "Download CV (docx)",
+          sub: "CV terbaru yang dirapikan oleh agent—siap kamu baca atau adaptasi."
+        },
+        {
+          href: "/cv-dan-portofolio/Portofolio Rifqy by agent mode.docx",
+          title: "Download Portofolio (docx)",
+          sub: "Studi kasus, deliverables, dan highlight proyek generatif."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com?subject=Request%20Access%20to%20Rifqy%20App%20Build",
+          title: "Request Download App",
+          sub: "Prototype web app sedang disiapkan—kamu bisa minta akses beta lewat email."
+        }
+      ],
+      faqHeading: "FAQ (Cara Aku Bekerja)",
       faq: [
         {
           href: "#privacy",
@@ -263,6 +286,7 @@ const enDictionary: Dictionary = {
       learning: "Learning Hub",
       works: "Works",
       projects: "Projects",
+      librarian: "AI Chat",
       contact: "Contact",
       services: "Services",
     },
@@ -280,29 +304,29 @@ const enDictionary: Dictionary = {
     about: {
       title: "About",
       intro:
-        "I architect LLM agents, generative pipelines, and production-ready web experiences. Every engagement starts with system mapping, evaluation harnesses, and privacy-first workflows.",
-      philosophyHeading: "Philosophy & Vision",
+        "I invite you into my personal library—LLM agents, generative pipelines, and web experiences crafted with empathy from briefing to launch.",
+      philosophyHeading: "Story & Mission",
       philosophyBody:
-        "Ad Astra Abyssosque is the guiding star: dive into complexity, surface with a clearly documented solution. Even in non-tech briefs I deploy LLM copilots, generative tooling, and accessible documentation.",
+        "Freedom of Intelligence guides each step. \"Ad astra abyssosque\" keeps the rhythm: dive deep into complexity, let intelligence travel far, then return with documented solutions anyone can maintain.",
       workHeading: "What I Build",
       workItems: [
         {
           href: "/works",
           title: "AI Systems & Agents",
-          sub: "Multi-agent orchestration, evaluation, and safety guardrails.",
+          sub: "I orchestrate multi-agent systems, memory, evaluation, and guardrails so decisions stay sharp and human.",
         },
         {
           href: "/projects",
           title: "Generative Pipelines",
-          sub: "Video/image synthesis, context design, and reproducible SOPs.",
+          sub: "Video/image pipelines with reproducible SOPs so stories stay alive and shareable.",
         },
         {
           href: "/playbooks",
           title: "Web Delivery & Automation",
-          sub: "Next.js apps, APIs, and automation scaffolding ready to launch.",
+          sub: "Next.js apps, APIs, and automation scaffolding that make products feel alive from day one.",
         },
       ],
-      learningHeading: "Keep Learning",
+      learningHeading: "Keep Exploring",
       learningItems: [
         { href: "/updates/prompt-engineering", title: "Prompt & Agents", sub: "" },
         { href: "/updates/agent-eval", title: "Agent Evaluation", sub: "" },
@@ -316,7 +340,7 @@ const enDictionary: Dictionary = {
     learningHub: industryCache.en.learningHub,
     works: {
       title: "Works",
-      intro: "I use GPT-5 Codex, ChatGPT, and generative toolchains to build agents, automation, and immersive products. Every delivery starts with system mapping, evaluation, and privacy-first workflows.",
+      intro: "I lean on GPT-5 Codex, ChatGPT, and generative toolchains to build agents, automation, and immersive products. Every delivery is woven from empathy, system mapping, evaluation, and privacy-first workflows.",
       buttons: [
         {
           href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
@@ -403,6 +427,25 @@ const enDictionary: Dictionary = {
         { href: "https://wa.me/6281322963566", title: "WhatsApp", sub: "+62 813-2296-3566" },
         { href: "https://www.linkedin.com/in/rifqy-hazim-h-r-88963128a/", title: "LinkedIn", sub: "rifqy-hazim-h-r" },
         { href: "https://instagram.com/rifqy__hazim._", title: "Instagram", sub: "@rifqy__hazim._" },
+      ],
+      downloadsHeading: "Download Docs & Artifacts",
+      downloadsNote: "Docs live inside this library. Need another format or the app build? Ping me and I'll prepare it.",
+      downloads: [
+        {
+          href: "/cv-dan-portofolio/CV Rifqy by agent mode.docx",
+          title: "Download CV (.docx)",
+          sub: "Latest CV curated with the agent—ready for review or remix."
+        },
+        {
+          href: "/cv-dan-portofolio/Portofolio Rifqy by agent mode.docx",
+          title: "Download Portfolio (.docx)",
+          sub: "Case studies, deliverables, and generative highlights."
+        },
+        {
+          href: "mailto:rifqyhazim22@gmail.com?subject=Request%20Access%20to%20Rifqy%20App%20Build",
+          title: "Request App Download",
+          sub: "Web app prototype is in progress—email me to join the beta list."
+        }
       ],
       faqHeading: "FAQ (How I Work)",
       faq: [

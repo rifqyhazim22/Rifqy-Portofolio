@@ -5,6 +5,7 @@ export const navLinks = [
   { href: "/learning-hub", key: "learning" },
   { href: "/works", key: "works" },
   { href: "/projects", key: "projects" },
+  { href: "/ai-agent", key: "librarian" },
   { href: "/contact", key: "contact" },
 ] as const;
 
@@ -21,6 +22,7 @@ export const headerNav = [
   { type: "link", href: "/playbooks", key: "industry" },
   { type: "link", href: "/learning-hub", key: "learning" },
   { type: "link", href: "/updates", key: "updates" },
+  { type: "link", href: "/ai-agent", key: "librarian" },
   { type: "link", href: "/contact", key: "contact" },
 ] as const;
 

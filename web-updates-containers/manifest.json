@@ -1,0 +1,94 @@
+[
+  {
+    "id": "mission-freedom-of-intelligence",
+    "title": "Freedom of Intelligence Mission",
+    "summary": "Rifqy Hazim HR memaknai perjalanan profesionalnya sebagai upaya membawa kecerdasan ke seluruh umat manusia dan semesta.",
+    "details": [
+      "Narasi inti: Freedom of Intelligence dan motto \"ad astra abyssosque\"—selami sedalam mungkin, terbang setinggi mungkin, dan pulang dengan inovasi yang manusiawi.",
+      "Fokus empati: setiap kolaborasi dimulai dari mendengar konteks, menyusun sistem evaluasi, dan memastikan privasi terjaga.",
+      "Tujuan utama: membangun produk, edukasi, dan pengalaman yang membuat kecerdasan terasa dekat dan bermanfaat."
+    ],
+    "source": {
+      "type": "page",
+      "paths": ["/", "/about"]
+    },
+    "keywords": [
+      "freedom of intelligence",
+      "misi",
+      "mission",
+      "ad astra abyssosque",
+      "empathy",
+      "narasi"
+    ]
+  },
+  {
+    "id": "profile-and-focus",
+    "title": "Profile & Focus Areas",
+    "summary": "Rifqy adalah AI engineer, Gen AI engineer, dan web app developer yang memimpin orkestrasi agen LLM, pipeline generatif, dan aplikasi Next.js.",
+    "details": [
+      "Fokus utama: multi-agent orchestration, memori, evaluasi, guardrails, serta pipeline generatif untuk video, gambar, dan audio.",
+      "Pengalaman web: membangun aplikasi Next.js, otomasi data, API, dan delivery Web/App yang adaptif.",
+      "Basis kerja: Jabodetabek, Indonesia dengan kolaborasi lintas sektor."
+    ],
+    "source": {
+      "type": "page",
+      "paths": ["/", "/works", "/projects"]
+    },
+    "keywords": [
+      "profil",
+      "profile",
+      "focus",
+      "ai engineer",
+      "gen ai engineer",
+      "web app developer",
+      "skill"
+    ]
+  },
+  {
+    "id": "education-and-impact",
+    "title": "Education & Impact Narrative",
+    "summary": "Pekerjaan Rifqy selalu dimulai dari empati mendalam agar edukasi dan inovasi terasa berdampak.",
+    "details": [
+      "Misi edukasi: menciptakan modul, playbook, dan pendampingan yang mudah dirasakan hingga level implementasi.",
+      "Impact: menghubungkan AI, otomasi, dan web agar tim bisa bertumbuh dengan rasa aman dan dokumentasi lengkap.",
+      "Pendekatan: memadukan riset, design sprint, dan evaluasi untuk menjaga kualitas setiap iterasi."
+    ],
+    "source": {
+      "type": "page",
+      "paths": ["/playbooks", "/learning-hub", "/updates"]
+    },
+    "keywords": [
+      "edukasi",
+      "education",
+      "impact",
+      "learning",
+      "playbooks",
+      "learning hub"
+    ]
+  },
+  {
+    "id": "documents-and-artifacts",
+    "title": "Documents & Artifacts",
+    "summary": "Dokumen CV dan portofolio dapat diunduh langsung dari situs ini.",
+    "details": [
+      "CV Rifqy by agent mode.docx dan Portofolio Rifqy by agent mode.docx tersimpan di direktori publik cv-dan-portofolio.",
+      "Dokumen memuat rekam pengalaman kerja, studi kasus, serta referensi proyek generatif.",
+      "Untuk versi terbaru atau permintaan khusus, pengunjung dapat menghubungi Rifqy via email atau WhatsApp."
+    ],
+    "source": {
+      "type": "documents",
+      "paths": [
+        "/cv-dan-portofolio/CV%20Rifqy%20by%20agent%20mode.docx",
+        "/cv-dan-portofolio/Portofolio%20Rifqy%20by%20agent%20mode.docx"
+      ]
+    },
+    "keywords": [
+      "cv",
+      "curriculum vitae",
+      "portofolio",
+      "portfolio",
+      "download",
+      "document"
+    ]
+  }
+]

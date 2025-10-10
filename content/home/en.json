@@ -2,9 +2,9 @@
   "hero": {
     "name": "Rifqy Hazim Haidar Ramadhan",
     "title": "AI Professional & Agent Developer",
-    "tagline": "AI Engineer · Prompt Strategist · Web Developer",
-    "summary": "LLM-first maker building AI agents, generative pipelines, and production-ready web apps. Every engagement starts with system design, evaluation harnesses, and privacy-first workflows.",
-    "availability": "Open to collaborations on LLM agent deployments, generative storytelling, and Web2/Web3 delivery.",
+    "tagline": "AI Engineer · Gen AI Engineer · Web App Developer",
+    "summary": "I build LLM agents, generative pipelines, and web experiences that feel human-first. Every partnership starts with empathy, system mapping, and evaluation loops so intelligence can travel responsibly.",
+    "availability": "Mission: Freedom of Intelligence—bringing intelligence to every human and corner of the universe. Open for collaborations on LLM agents, generative storytelling, and impactful web delivery.",
     "actions": [
       {
         "label": "View AI Case Studies ↗",
@@ -40,13 +40,13 @@
   },
   "promo": {
     "title": "Lunch Stipend Offer",
-    "body": "Visitors checking out this site can claim Rp10,000 for lunch. Tap the button to drop me an auto-filled WhatsApp message.",
+    "body": "Visitors who explore this site can claim Rp10,000 for lunch. Tap the button to send me a warm WhatsApp intro and let the conversation flow.",
     "buttonLabel": "Claim Rp10K on WhatsApp ↗",
     "buttonHref": "https://wa.me/6281322963566?text=Hi%20Rifqy%2C%20I%20just%20visited%20your%20portfolio%20and%20would%20love%20to%20claim%20the%20Rp10K%20lunch%20stipend.%20Thanks!"
   },
   "quote": {
-    "label": "Quote",
-    "text": "In the beginning there was dark. Until someone set themselves aflame. Only then did the universe know light."
+    "label": "Guiding Narrative",
+    "text": "\"Ad astra abyssosque\" is the compass—dive deep, fly far, and return with intelligence that uplifts people."
   },
   "whatIDo": {
     "heading": "What I Do",
@@ -54,23 +54,23 @@
       {
         "href": "/works",
         "title": "AI Systems & Agents",
-        "sub": "Multi-agent orchestration, evaluation, and guardrails."
+        "sub": "Multi-agent orchestration, memory, and evaluation designed to stay empathetic to the teams using it."
       },
       {
         "href": "/projects",
         "title": "Generative Pipelines",
-        "sub": "Video/image synthesis, context design, and tooling."
+        "sub": "Video, image, and audio pipelines that craft living stories and remain reproducible."
       },
       {
         "href": "/playbooks",
-        "title": "Web2 + Web3 Delivery",
-        "sub": "Next.js apps, crypto experiments, and launch frameworks."
+        "title": "Web & App Delivery",
+        "sub": "Next.js applications, automation, and adaptive web experiences ready to ship."
       }
     ]
   },
   "playbooks": {
     "heading": "Playbooks",
-    "description": "Practical frameworks for five future industries—AI→AGI/ASI, Crypto, Biotechnology, Renewables, and Space.",
+    "description": "Practical frameworks for anyone bringing intelligence to their industry—AI→AGI/ASI, Crypto, Biotechnology, Renewables, and Space.",
     "items": [
       {
         "href": "/industry/ai",
@@ -101,14 +101,14 @@
   },
   "learning": {
     "heading": "Learning Hub",
-    "description": "Need a guided path? The Playbooks hub bundles AI Basics, Prompt Patterns, and Tools & Workflow into actionable modules.",
+    "description": "Need a guided path? The hub curates AI Basics, Prompt Patterns, and Tools & Workflow with human warmth so you can start where you are.",
     "cta": {
       "label": "Open Learning Hub →",
       "href": "/learning-hub"
     }
   },
   "updates": {
-    "heading": "Updates",
+    "heading": "Latest Updates",
     "cta": {
       "label": "See all updates →",
       "href": "/updates"

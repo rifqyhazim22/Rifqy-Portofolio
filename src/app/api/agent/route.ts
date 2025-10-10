@@ -2,6 +2,7 @@ import OpenAI from "openai";
 import { NextRequest, NextResponse } from "next/server";
 import navigationEmbeddings from "@/content/navigation/embeddings.json";
 import navigationConfig from "@/content/navigation/config.json";
+import { findKnowledgeSnippets, knowledgeToContext } from "@/lib/knowledge";
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -392,11 +393,16 @@ export async function POST(request: NextRequest) {
     : undefined;
   const toneDirective = TONE_PROMPTS[normalizedTone] ?? TONE_PROMPTS.formal;
 
+  const lastUserMessage = [...messages].reverse().find((message) => message.role === "user");
+  const knowledgeEntries = findKnowledgeSnippets(lastUserMessage?.content, 3);
+  const knowledgeContext = knowledgeToContext(knowledgeEntries);
+
   const systemSections = [
     SYSTEM_PROMPT,
     toneDirective,
     "Keep answers under 120 words. Use bullet lists only when clarifying multi-step guidance.",
     `Current interface language: ${language === "en" ? "English" : "Indonesian"}. Respond using this language.`,
+    `Knowledge base snippets:\n${knowledgeContext}`,
     locationContext
       ? `Visitor is currently browsing ${locationContext}. Take that into account when crafting your answer and navigation hints.`
       : null,

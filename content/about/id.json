@@ -1,14 +1,15 @@
 {
   "hero": {
     "title": "Tentang Rifqy",
-    "tagline": "AI Engineer · Prompt Strategist · Web Developer",
-    "summary": "Saya merancang sistem AI, strategi prompt, dan pengalaman web yang terukur namun tetap manusiawi. Fokusnya menerjemahkan tujuan founder dan tim menjadi perangkat lunak serta otomasi yang nyata."
+    "tagline": "AI Engineer · Gen AI Engineer · Web App Developer",
+    "summary": "Aku menulis sendiri perjalanan ini: seorang AI engineer yang menggabungkan agen LLM, strategi generatif, dan pengalaman web yang terasa akrab. Semua dimulai dengan mendengar—berusaha memahami rasa ingin tahu, keresahan, dan potensi tumbuh bersama."
   },
   "story": {
-    "heading": "Filosofi & Misi",
+    "heading": "Cerita & Misi",
     "paragraphs": [
-      "Saya percaya masa depan dimiliki mereka yang berani melangkah duluan sembari menjaga proses tetap disiplin. Setiap kolaborasi dimulai dengan riset mendalam, orientasi nilai, dan bahasa kerja yang transparan. Fokus saya ada pada rekayasa AI dan pengembangan web yang dirancang bertahap, diuji, dan terdokumentasi supaya tim merasa aman saat bereksperimen.",
-      "Visi saya adalah membangun ekosistem inovasi AI dan otomasi digital yang efisien, sambil menjaga pijakan di sektor otomotif, properti, dan transportasi udara. Saya ingin AI membantu bisnis ship produk, membangun otomasi yang bertanggung jawab, dan mengangkat solusi software serta web buatan lokal."
+      "Aku tumbuh sebagai anak yang jatuh cinta pada pengetahuan. Freedom of Intelligence adalah janji pribadiku—kecerdasan yang bebas menembus batas, menyentuh manusia, komunitas, dan semesta. Kalimat 'ad astra abyssosque' jadi pengingat: selami sedalam mungkin, terbang setinggi mungkin, lalu bawakan kembali inovasi yang bermanfaat.",
+      "Setiap kolaborasi kumulai dari empati. Aku memetakan cerita orang, mendengar konteks tim, lalu menyusun agen LLM, pipeline generatif, dan aplikasi web yang menjaga privasi. Jika ada ruang kosong, aku coba isi dengan dokumentasi rapi, evaluasi otomatis, dan ritme kerja yang bikin semua merasa ditemani.",
+      "Perjalananku berputar pada edukasi yang berdampak. Aku ingin menyampaikan ilmu dan alat yang bisa dipahami siapa saja—dari founder yang mau berinovasi, hingga murid yang mencari jalan baru. Dengan membawa kecerdasan ke ranah AI, web, hingga eksplorasi masa depan, aku berharap personal branding ini menjadi perpustakaan hidup yang bisa kamu singgahi kapan pun."
     ]
   },
   "timeline": {
@@ -92,15 +93,15 @@
     "items": [
       {
         "title": "Deep Systems Thinking",
-        "body": "Memetakan sistem end-to-end lalu membiarkan AI ikut merancang solusi dengan checkpoint terukur."
+        "body": "Aku memetakan sistem end-to-end lalu mengajak AI ikut merancang solusi dengan checkpoint yang bisa kita ukur bareng."
       },
       {
         "title": "AI-Augmented Delivery",
-        "body": "Setiap domain—even di luar tech—disokong co-pilot LLM, tool generatif, dan otomasi."
+        "body": "Setiap domain—even di luar tech—kuberi co-pilot LLM, tool generatif, dan otomasi supaya tim bisa fokus pada rasa ingin tahu."
       },
       {
         "title": "Kolaborasi Transparan",
-        "body": "Sejak hari pertama, tujuan, aturan privasi, dan rencana iterasi disepakati bersama."
+        "body": "Sejak hari pertama, kita sepakati tujuan, aturan privasi, dan ritme iterasi agar perjalanan ini terasa aman dan terbuka."
       }
     ]
   },

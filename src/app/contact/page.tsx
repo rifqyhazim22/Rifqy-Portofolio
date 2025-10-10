@@ -22,6 +22,25 @@ export default async function ContactPage() {
 
       <div className="hr" data-animate />
 
+      {contact.downloads && contact.downloads.length > 0 ? (
+        <>
+          <section data-animate>
+            <h2 className="h2">{contact.downloadsHeading}</h2>
+            {contact.downloadsNote ? <p className="sub">{contact.downloadsNote}</p> : null}
+            <div className="grid grid-3" style={{ marginTop: "12px" }}>
+              {contact.downloads.map((item) => (
+                <a key={item.title} className="card" href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} rel={item.href.startsWith("http") ? "noopener" : undefined}>
+                  <div className="k">{item.title}</div>
+                  <div className="sub">{item.sub}</div>
+                </a>
+              ))}
+            </div>
+          </section>
+
+          <div className="hr" data-animate />
+        </>
+      ) : null}
+
       <section data-animate>
         <h2 className="h2">{contact.faqHeading}</h2>
         <div className="grid" style={{ marginTop: "10px" }}>

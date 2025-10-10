@@ -10,6 +10,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type FocusEvent, type PointerEvent as ReactPointerEvent } from "react";
 import BaseLink from "./BaseLink";
+import AnalogClock from "./AnalogClock";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") {
@@ -324,6 +325,7 @@ export default function Header({ brand, navLabels }: HeaderProps) {
     <header className="sitebar">
       <div className="bar wrap">
         <div className="brand-group">
+          <AnalogClock />
           <Link href="/" className="brand pill">
             {brand}
           </Link>

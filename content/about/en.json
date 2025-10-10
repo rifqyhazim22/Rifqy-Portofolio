@@ -1,14 +1,15 @@
 {
   "hero": {
     "title": "About Rifqy",
-    "tagline": "AI Engineer · Prompt Strategist · Web Developer",
-    "summary": "I design AI systems, prompt strategies, and web products that stay measurable yet human. The goal is to translate intent into dependable software and automation."
+    "tagline": "AI Engineer · Gen AI Engineer · Web App Developer",
+    "summary": "I write this story myself: an AI engineer weaving LLM agents, generative strategy, and web experiences that stay human. Everything starts by listening—understanding the wonder, the tension, and the room to grow together."
   },
   "story": {
-    "heading": "Philosophy & Mission",
+    "heading": "Story & Mission",
     "paragraphs": [
-      "I believe the future rewards those who move first while staying disciplined. Every collaboration begins with deep research, clear value intent, and transparent communication. My focus is on AI engineering and web development executed in disciplined, well-documented iterations so teams can experiment safely.",
-      "My vision is to build an innovation ecosystem across AI and digital automation while staying grounded in real operations and partnerships. I want AI to help ship software, power responsible automation, and lift locally-built web products."
+      "I grew up obsessed with knowledge. Freedom of Intelligence became my personal mantra—intelligence that can travel freely, touch people, communities, and the universe. \"Ad astra abyssosque\" reminds me to dive deep, fly far, and return with creations that matter.",
+      "I start every collaboration with empathy. I listen to the story, map the system, and craft LLM agents, generative pipelines, and web apps that protect privacy. When there are gaps, I fill them with documentation, evaluation, and warm guidance so everyone feels supported.",
+      "Education with real impact fuels this journey. I want to share tools and narratives that anyone can understand—founders experimenting with AI, students who need a bridge, teams searching for clarity. By bringing intelligence into AI, web, and frontier explorations, this personal brand becomes a living library you can revisit anytime."
     ]
   },
   "timeline": {
@@ -92,15 +93,15 @@
     "items": [
       {
         "title": "Deep Systems Thinking",
-        "body": "Map the end-to-end system, then let AI co-design solutions with measurable checkpoints."
+        "body": "I map the end-to-end system, then invite AI to co-design solutions with measurable checkpoints."
       },
       {
         "title": "AI-Augmented Delivery",
-        "body": "Every domain—even outside tech—is backed by LLM copilots, generative tooling, and automation."
+        "body": "Every domain—even outside tech—gets LLM copilots, generative tooling, and automation so curiosity stays front and center."
       },
       {
         "title": "Transparent Collaboration",
-        "body": "Share constraints, privacy rules, and iteration plans from day one to keep teams aligned."
+        "body": "We align on constraints, privacy rules, and iteration rhythms from day one so the journey feels safe and transparent."
       }
     ]
   },
