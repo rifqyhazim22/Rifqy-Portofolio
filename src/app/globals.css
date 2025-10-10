@@ -1961,7 +1961,7 @@ nav.pills {
 
 @media (max-width: 720px) {
   .floating-date {
-    top: calc(var(--floating-date-mobile-top, 150px));
+    top: calc(var(--floating-date-mobile-top, 190px));
     right: 16px;
   }
 
