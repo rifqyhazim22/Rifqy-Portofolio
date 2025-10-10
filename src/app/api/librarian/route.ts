@@ -140,17 +140,39 @@ export async function POST(request: NextRequest) {
       ...history,
     ];
 
-    const response = await client.responses.create({
-      model: "gpt-5-nano",
-      max_output_tokens: 3200,
-      input: input as any,
-    });
+    const runModel = async (model: string) => {
+      try {
+        const resp = await client.responses.create({
+          model,
+          max_output_tokens: 3200,
+          input: input as any,
+        });
+        if (resp.status !== "completed" || !resp.output_text?.trim()) {
+          console.warn("librarian model incomplete", {
+            model,
+            status: resp.status,
+            reason: resp.incomplete_details,
+          });
+          return null;
+        }
+        return resp;
+      } catch (error) {
+        console.error(`librarian model ${model} failed`, error);
+        return null;
+      }
+    };
 
-    const message = response.output_text?.trim();
+    let response = await runModel("gpt-5-nano");
+    if (!response) {
+      console.warn("Falling back to gpt-4.1-mini for librarian agent.");
+      response = await runModel("gpt-4.1-mini");
+    }
 
-    if (!message) {
+    if (!response?.output_text) {
       throw new Error("Empty response from model");
     }
+
+    const message = response.output_text.trim();
 
     return NextResponse.json({
       message,

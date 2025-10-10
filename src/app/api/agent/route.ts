@@ -433,13 +433,64 @@ export async function POST(request: NextRequest) {
       ...toResponseInput(trimmedMessages),
     ];
 
-    const response = await client.responses.create({
-      model: "gpt-5-nano",
-      max_output_tokens: MAX_OUTPUT_TOKENS,
-      input: responseInput as any,
-    });
+    const runNano = async () => {
+      try {
+        const resp = await client.responses.create({
+          model: "gpt-5-nano",
+          max_output_tokens: MAX_OUTPUT_TOKENS,
+          input: responseInput as any,
+        });
+        if (resp.status !== "completed" || !resp.output_text?.trim()) {
+          console.warn("gpt-5-nano incomplete", {
+            status: resp.status,
+            reason: resp.incomplete_details,
+          });
+          return null;
+        }
+        return resp;
+      } catch (error) {
+        console.error("gpt-5-nano call failed", error);
+        return null;
+      }
+    };
 
-    const fullText = response.output_text?.trim() ?? "";
+    const runFallback = async () => {
+      const completion = await client.chat.completions.create({
+        model: "gpt-4.1-mini",
+        max_tokens: 700,
+        temperature: 0.4,
+        messages: [
+          {
+            role: "system",
+            content: systemSections.join("\n"),
+          },
+          ...trimmedMessages,
+        ],
+      });
+
+      const text = completion.choices[0]?.message?.content?.trim() ?? "";
+      if (!text) {
+        throw new Error("Fallback model returned empty content.");
+      }
+      return text;
+    };
+
+    let fullText: string | null = null;
+
+    const nanoResponse = await runNano();
+    if (nanoResponse?.output_text) {
+      fullText = nanoResponse.output_text.trim();
+    }
+
+    if (!fullText) {
+      console.warn("Falling back to gpt-4.1-mini for AI agent.");
+      fullText = await runFallback();
+    }
+
+    if (!fullText) {
+      throw new Error("No response text produced.");
+    }
+
     const navigateMatch = fullText.match(/\[\[NAVIGATE:([^\]]+)\]\]/i);
     const rawNavigation = navigateMatch ? navigateMatch[1].trim() : null;
     const navigation = await resolveNavigationTarget(rawNavigation, trimmedMessages);
