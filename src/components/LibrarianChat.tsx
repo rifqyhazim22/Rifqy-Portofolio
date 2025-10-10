@@ -237,82 +237,69 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
   };
 
   return (
-    <div className="agent agent--embedded">
-      <div className="agent__panel card agent__panel--open">
-        <div className="agent__header">
-          <div>
-            <div className="agent__title">{language === "id" ? "AI Agent" : "AI Agent"}</div>
-            <div className="agent__subtitle">
-              {language === "id"
-                ? "Tanya apa pun, unggah gambar, dan aku akan jawab tanpa navigasi."
-                : "Ask anything, share an image, and I’ll answer right here—no navigation."}
-            </div>
+    <div className="librarian card">
+      <div className="librarian__messages">
+        {messages.map((message, index) => (
+          <div key={index} className={`librarian__bubble librarian__bubble--${message.role}`}>
+            <div className="librarian__text">{message.content}</div>
+            {message.knowledge && message.knowledge.length ? (
+              <div className="librarian__knowledge">
+                <span>{language === "id" ? "Referensi:" : "References:"}</span>
+                <ul>
+                  {message.knowledge.map((item) => (
+                    <li key={item.id}>
+                      <strong>{item.title}</strong>{" "}
+                      <span>{item.paths.map((path) => `(${path})`).join(" ")}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
           </div>
-        </div>
-
-        <div className="agent__messages">
-          {messages.map((message, index) => (
-            <div key={index} className={`agent__message agent__message--${message.role}`}>
-              <div>{message.content}</div>
-              {message.knowledge && message.knowledge.length ? (
-                <div className="agent__knowledge">
-                  <span>{language === "id" ? "Referensi:" : "References:"}</span>
-                  <ul>
-                    {message.knowledge.map((item) => (
-                      <li key={item.id}>
-                        <strong>{item.title}</strong>{" "}
-                        <span>{item.paths.map((path) => `(${path})`).join(" ")}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
+        ))}
+        {loading ? (
+          <div className="librarian__bubble librarian__bubble--assistant">
+            <div className="librarian__typing">
+              <span />
+              <span />
+              <span />
             </div>
-          ))}
-          {loading && (
-            <div className="agent__message agent__message--assistant">
-              <div className="agent__typing">
-                <span />
-                <span />
-                <span />
-              </div>
-            </div>
-          )}
-          <div ref={messagesEndRef} />
-        </div>
-
-        {pendingImages.length ? (
-          <div className="agent__attachments">
-            {pendingImages.map((image, index) => (
-              <div key={image.name + index} className="agent__attachment">
-                <img src={image.preview} alt={image.name} />
-                <button type="button" className="pill agent__remove" onClick={() => removeImage(index)}>
-                  {language === "id" ? "Hapus" : "Remove"}
-                </button>
-              </div>
-            ))}
           </div>
         ) : null}
+        <div ref={messagesEndRef} />
+      </div>
 
-        {error ? <div className="agent__error">{error}</div> : null}
+      {pendingImages.length ? (
+        <div className="librarian__attachments">
+          {pendingImages.map((image, index) => (
+            <div key={image.name + index} className="librarian__attachment">
+              <img src={image.preview} alt={image.name} />
+              <button type="button" className="pill librarian__remove" onClick={() => removeImage(index)}>
+                {language === "id" ? "Hapus" : "Remove"}
+              </button>
+            </div>
+          ))}
+        </div>
+      ) : null}
 
-        <div className="agent__composer agent__composer--media">
-          <textarea
-            rows={4}
-            value={input}
-            placeholder={placeholders[language]}
-            onChange={(event) => setInput(event.target.value)}
-            onKeyDown={handleKeyDown}
-          />
-          <div className="agent__actions">
-            <label className="pill agent__upload">
-              <input type="file" accept="image/*" multiple onChange={handleFileChange} />
-              {language === "id" ? "Unggah Gambar" : "Upload Images"}
-            </label>
-            <button type="button" className="pill agent__send" onClick={handleSubmit} disabled={loading}>
-              {language === "id" ? "Kirim" : "Send"}
-            </button>
-          </div>
+      {error ? <div className="librarian__error">{error}</div> : null}
+
+      <div className="librarian__composer">
+        <textarea
+          rows={4}
+          value={input}
+          placeholder={placeholders[language]}
+          onChange={(event) => setInput(event.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+        <div className="librarian__actions">
+          <label className="pill librarian__upload">
+            <input type="file" accept="image/*" multiple onChange={handleFileChange} />
+            {language === "id" ? "Unggah Gambar" : "Upload Images"}
+          </label>
+          <button type="button" className="pill librarian__send" onClick={handleSubmit} disabled={loading}>
+            {language === "id" ? "Kirim" : "Send"}
+          </button>
         </div>
       </div>
     </div>

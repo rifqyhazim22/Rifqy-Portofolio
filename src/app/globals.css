@@ -1729,80 +1729,143 @@ nav.pills {
   -webkit-backdrop-filter: blur(16px) saturate(1.1);
 }
 
-.agent--embedded {
-  position: relative;
-  width: 100%;
+.librarian__messages {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 8px;
 }
 
-.agent--embedded .agent__panel {
-  position: static;
-  width: 100%;
-  max-height: none;
-  box-shadow: 0 40px 90px rgba(11, 18, 32, 0.5);
-  gap: 18px;
+.librarian__bubble {
+  align-self: flex-start;
+  background: rgba(11, 20, 36, 0.65);
+  border-radius: 20px;
+  padding: 12px 16px;
+  border: 1px solid rgba(122, 162, 255, 0.25);
+  box-shadow: 0 16px 34px rgba(5, 10, 24, 0.28);
+  max-width: 80%;
 }
 
-.agent--embedded .agent__messages {
-  max-height: 520px;
+.librarian__bubble--assistant {
+  align-self: flex-start;
+  background: rgba(10, 26, 48, 0.72);
 }
 
-.agent__knowledge {
-  margin-top: 8px;
+.librarian__bubble--user {
+  align-self: flex-end;
+  background: linear-gradient(180deg, rgba(122, 162, 255, 0.35), rgba(122, 162, 255, 0.15));
+  border-color: rgba(122, 162, 255, 0.45);
+}
+
+.librarian__knowledge {
+  margin-top: 10px;
   font-size: 13px;
   color: var(--muted);
 }
 
-.agent__knowledge ul {
+.librarian__knowledge ul {
   margin: 6px 0 0;
   padding-left: 18px;
 }
 
-.agent__attachments {
+.librarian__typing {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.librarian__typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.8;
+  animation: librarian-bounce 900ms ease-in-out infinite;
+}
+
+.librarian__typing span:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.librarian__typing span:nth-child(3) {
+  animation-delay: 240ms;
+}
+
+@keyframes librarian-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.librarian__attachments {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
 
-.agent__attachment {
+.librarian__attachment {
   position: relative;
   border-radius: 16px;
   overflow: hidden;
-  border: 1px solid rgba(122, 162, 255, 0.32);
-  box-shadow: 0 18px 32px rgba(5, 10, 24, 0.3);
+  border: 1px solid rgba(122, 162, 255, 0.3);
+  box-shadow: 0 12px 24px rgba(5, 10, 24, 0.25);
 }
 
-.agent__attachment img {
+.librarian__attachment img {
   display: block;
   width: 120px;
   height: 80px;
   object-fit: cover;
 }
 
-.agent__remove {
+.librarian__remove {
   position: absolute;
   bottom: 8px;
   right: 8px;
   font-size: 12px;
   padding: 4px 10px;
-  background: rgba(11, 20, 36, 0.82);
+  background: rgba(11, 20, 36, 0.8);
 }
 
-.agent__composer--media {
+.librarian__composer {
+  display: grid;
   gap: 12px;
 }
 
-.agent__actions {
+.librarian__composer textarea {
+  width: 100%;
+  border-radius: 18px;
+  border: 1px solid rgba(122, 162, 255, 0.22);
+  background: rgba(9, 16, 30, 0.6);
+  color: var(--fg);
+  padding: 12px 14px;
+  font: inherit;
+  resize: vertical;
+  min-height: 110px;
+}
+
+.librarian__composer textarea:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--accent) 70%, transparent);
+  outline-offset: 2px;
+}
+
+.librarian__actions {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  justify-content: flex-end;
 }
 
-.agent__upload input {
+.librarian__upload input {
   display: none;
 }
 
-.agent__error {
+.librarian__error {
   color: #ff8a8a;
   font-size: 13px;
 }
@@ -1856,12 +1919,12 @@ nav.pills {
   background: color-mix(in oklab, rgba(122, 162, 255, 0.24) 60%, rgba(9, 18, 36, 0.72) 40%);
 }
 
-:is(a[href], button, .menu-link, .submenu-link, .brand, .brand-about, .agent__launcher, .agent__send, .agent__close, .agent__remove, .agent__upload, .floating-date__button) {
+:is(a[href], button, .menu-link, .submenu-link, .brand, .brand-about, .agent__launcher, .agent__send, .agent__close, .librarian__remove, .librarian__send, .librarian__upload, .floating-date__button) {
   transition: transform var(--transition), box-shadow var(--transition);
 }
 
-:is(a[href], button, .menu-link, .submenu-link, .brand, .brand-about, .agent__launcher, .agent__send, .agent__close, .agent__remove, .agent__upload, .floating-date__button):hover,
-:is(a[href], button, .menu-link, .submenu-link, .brand, .brand-about, .agent__launcher, .agent__send, .agent__close, .agent__remove, .agent__upload, .floating-date__button):focus-visible {
+:is(a[href], button, .menu-link, .submenu-link, .brand, .brand-about, .agent__launcher, .agent__send, .agent__close, .librarian__remove, .librarian__send, .librarian__upload, .floating-date__button):hover,
+:is(a[href], button, .menu-link, .submenu-link, .brand, .brand-about, .agent__launcher, .agent__send, .agent__close, .librarian__remove, .librarian__send, .librarian__upload, .floating-date__button):focus-visible {
   transform: translateY(var(--pull-translate)) scale(var(--pull-scale));
 }
 
