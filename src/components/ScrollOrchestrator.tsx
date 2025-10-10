@@ -29,7 +29,16 @@ export default function ScrollOrchestrator() {
     const targets = document.querySelectorAll<HTMLElement>(SELECTOR);
     targets.forEach((target) => observer.observe(target));
 
+    const fallback = window.setTimeout(() => {
+      targets.forEach((target) => {
+        if (!target.hasAttribute("data-animate-ready")) {
+          target.setAttribute("data-animate-ready", "true");
+        }
+      });
+    }, 320);
+
     return () => {
+      window.clearTimeout(fallback);
       observer.disconnect();
     };
   }, []);
