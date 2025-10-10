@@ -361,7 +361,12 @@ export default function Header({ brand, navLabels, language, languageToggle }: H
             >
               MENU
             </button>
-            <FloatingControls language={language} languageToggle={languageToggle} variant="inline" />
+            <FloatingControls
+              language={language}
+              languageToggle={languageToggle}
+              variant="inline"
+              className="floating-menu--desktop"
+            />
           </div>
           {menuOpen && (
             <div

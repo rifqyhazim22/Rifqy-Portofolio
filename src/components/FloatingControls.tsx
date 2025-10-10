@@ -15,9 +15,10 @@ type FloatingControlsProps = {
     options: { id: string; en: string };
   };
   variant?: "floating" | "inline";
+  className?: string;
 };
 
-export default function FloatingControls({ language, languageToggle, variant = "floating" }: FloatingControlsProps) {
+export default function FloatingControls({ language, languageToggle, variant = "floating", className }: FloatingControlsProps) {
   const [open, setOpen] = useState(false);
   const [forceClickable, setForceClickable] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -59,7 +60,7 @@ export default function FloatingControls({ language, languageToggle, variant = "
 
   return (
     <div
-      className={`floating-menu${variant === "inline" ? " floating-menu--inline" : ""}`}
+      className={`floating-menu${variant === "inline" ? " floating-menu--inline" : ""}${className ? ` ${className}` : ""}`}
       ref={menuRef}
       onFocusCapture={handleFocusCapture}
       onBlur={handleBlur}

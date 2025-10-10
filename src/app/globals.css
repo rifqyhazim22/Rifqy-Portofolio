@@ -1616,6 +1616,7 @@ body::before {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .analog-clock {
@@ -1891,6 +1892,14 @@ nav.pills {
   font-size: 13px;
 }
 
+.floating-menu--desktop {
+  display: flex;
+}
+
+.floating-menu--mobile {
+  display: none;
+}
+
 .floating-date {
   position: fixed;
   top: 110px;
@@ -1950,6 +1959,35 @@ nav.pills {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+}
+
+@media (max-width: 720px) {
+  .floating-menu--desktop {
+    display: none;
+  }
+
+  .floating-menu--mobile {
+    display: flex;
+    top: auto;
+    right: auto;
+    left: 24px;
+    bottom: 96px;
+    align-items: flex-start;
+  }
+
+  .floating-date {
+    top: auto;
+    right: auto;
+    bottom: 22px;
+    left: 22px;
+    align-items: flex-start;
+  }
+}
+
+@media (min-width: 721px) {
+  .floating-menu--mobile {
+    display: none;
+  }
 }
 
 .floating-date__panel p {
