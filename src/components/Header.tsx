@@ -109,7 +109,7 @@ export default function Header({ brand, navLabels, language, languageToggle }: H
         media.removeListener(update);
       }
     };
-  }, [menuOpen, featuresOpen, closeMenu, closeFeatures]);
+  }, [menuOpen, featuresOpen]);
 
   // Clear hover timers on unmount
   useEffect(() => () => {
