@@ -1966,7 +1966,7 @@ nav.pills {
   }
 
   .brand-group {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 8px;
   }
 
@@ -1974,32 +1974,30 @@ nav.pills {
     flex-direction: row;
     align-items: center;
     gap: 8px;
-    width: 100%;
+    width: auto;
   }
 
   .cluster-controls {
-    width: 100%;
+    width: auto;
     display: flex;
     gap: 8px;
-    justify-content: space-between;
+    justify-content: flex-end;
   }
 
   .menu-button {
-    flex: 1;
+    flex: 0 0 auto;
     min-width: 0;
   }
 
   .floating-menu--desktop {
-    flex: 1;
+    flex: 0 0 auto;
     display: flex;
     justify-content: flex-end;
     align-items: center;
   }
 
   .floating-menu--desktop .floating-menu__trigger {
-    flex: 1;
-    min-width: 0;
-    text-align: center;
+    width: auto;
   }
 
   .floating-menu--desktop .floating-menu__panel {
