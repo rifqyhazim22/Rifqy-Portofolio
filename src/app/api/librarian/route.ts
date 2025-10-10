@@ -83,7 +83,12 @@ function buildSystemPrompt(language: "id" | "en", tone: "formal" | "santai" | "d
 
 function prepareMessages(messages: Message[], images: ImageAttachment[] | undefined) {
   const prepared = messages.map((message, index) => {
-    const baseContent = [{ type: "input_text" as const, text: message.content }];
+    const baseContent = [
+      {
+        type: message.role === "assistant" ? ("output_text" as const) : ("input_text" as const),
+        text: message.content,
+      },
+    ];
 
     if (index === messages.length - 1 && images?.length && message.role === "user") {
       const imageContent = images.slice(0, 3).map((image) => ({
@@ -126,18 +131,19 @@ export async function POST(request: NextRequest) {
 
     const systemPrompt = buildSystemPrompt(language, body.tone, knowledgeContext);
 
+    const history = prepareMessages(body.messages, body.images);
     const input = [
       {
         role: "system" as const,
         content: [{ type: "input_text" as const, text: systemPrompt }],
       },
-      ...prepareMessages(body.messages, body.images),
+      ...history,
     ];
 
     const response = await client.responses.create({
       model: "gpt-5-nano",
       max_output_tokens: 800,
-      input,
+      input: input as any,
     });
 
     const message = response.output_text?.trim();

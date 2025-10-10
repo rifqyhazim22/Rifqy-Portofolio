@@ -414,20 +414,27 @@ export async function POST(request: NextRequest) {
   const toResponseInput = (items: ChatMessage[]) =>
     items.map((message) => ({
       role: message.role,
-      content: [{ type: "input_text" as const, text: message.content }],
+      content: [
+        {
+          type: message.role === "assistant" ? ("output_text" as const) : ("input_text" as const),
+          text: message.content,
+        },
+      ],
     }));
 
   try {
+    const responseInput = [
+      {
+        role: "system",
+        content: [{ type: "input_text", text: systemSections.join("\n") }],
+      },
+      ...toResponseInput(trimmedMessages),
+    ];
+
     const response = await client.responses.create({
       model: "gpt-5-nano",
       max_output_tokens: 800,
-      input: [
-        {
-          role: "system",
-          content: [{ type: "input_text", text: systemSections.join("\n") }],
-        },
-        ...toResponseInput(trimmedMessages),
-      ],
+      input: responseInput as any,
     });
 
     const fullText = response.output_text?.trim() ?? "";
