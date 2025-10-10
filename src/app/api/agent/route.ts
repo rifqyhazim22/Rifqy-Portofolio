@@ -4,6 +4,8 @@ import navigationEmbeddings from "@/content/navigation/embeddings.json";
 import navigationConfig from "@/content/navigation/config.json";
 import { findKnowledgeSnippets, knowledgeToContext } from "@/lib/knowledge";
 
+const MAX_OUTPUT_TOKENS = 3200;
+
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const SYSTEM_PROMPT = `You are the AI concierge for Rifqy Hazim HR's portfolio website.
@@ -433,7 +435,7 @@ export async function POST(request: NextRequest) {
 
     const response = await client.responses.create({
       model: "gpt-5-nano",
-      max_output_tokens: 800,
+      max_output_tokens: MAX_OUTPUT_TOKENS,
       input: responseInput as any,
     });
 
