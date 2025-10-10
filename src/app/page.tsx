@@ -30,6 +30,13 @@ export default async function HomePage() {
         <p className="home__quote-text">{home.quote.text}</p>
       </section>
 
+      {home.journey ? (
+        <section className="card home__journey" data-animate>
+          <div className="home__journey-label">{home.journey.label}</div>
+          <p className="home__journey-text">{home.journey.text}</p>
+        </section>
+      ) : null}
+
       <section className="home__section" data-animate>
         <header className="home__section-header">
           <h2 className="h2">{home.whatIDo.heading}</h2>

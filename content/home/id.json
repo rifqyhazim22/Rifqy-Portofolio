@@ -45,8 +45,12 @@
     "buttonHref": "https://wa.me/6281322963566?text=Halo%20Rifqy%2C%20aku%20baru%20lihat%20web%20portofoliomu%20dan%20mau%20klaim%20uang%20makan%20siang%20Rp10.000.%20Terima%20kasih!"
   },
   "quote": {
-    "label": "Narasi Perjalanan",
+    "label": "Quote",
     "text": "In the beginning there was dark. Until someone set themselves aflame. Only then did the universe know light."
+  },
+  "journey": {
+    "label": "Narasi Perjalanan",
+    "text": "\"Ad astra abyssosque\" selalu jadi kompas: menyelam sedalam mungkin, naik setinggi mungkin, lalu membawa kembali inovasi yang manusiawi."
   },
   "whatIDo": {
     "heading": "Apa yang Aku Lakukan",

@@ -45,8 +45,12 @@
     "buttonHref": "https://wa.me/6281322963566?text=Hi%20Rifqy%2C%20I%20just%20visited%20your%20portfolio%20and%20would%20love%20to%20claim%20the%20Rp10K%20lunch%20stipend.%20Thanks!"
   },
   "quote": {
-    "label": "Guiding Narrative",
+    "label": "Quote",
     "text": "In the beginning there was dark. Until someone set themselves aflame. Only then did the universe know light."
+  },
+  "journey": {
+    "label": "Guiding Narrative",
+    "text": "\"Ad astra abyssosque\" is the compass—dive deep, fly far, and return with intelligence that uplifts people."
   },
   "whatIDo": {
     "heading": "What I Do",

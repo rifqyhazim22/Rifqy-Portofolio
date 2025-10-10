@@ -66,6 +66,7 @@ export interface HomeContent {
   hero: HomeHeroContent;
   promo?: HomePromo;
   quote: HomeQuote;
+  journey: HomeQuote;
   whatIDo: HomeSection;
   playbooks: HomePlaybooksSection;
   learning: HomeLearningSection;

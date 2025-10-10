@@ -781,7 +781,8 @@ button.pill[disabled] {
   gap: 36px;
 }
 
-.home__quote {
+.home__quote,
+.home__journey {
   position: relative;
   backdrop-filter: blur(12px);
   background: rgba(7, 12, 24, 0.65);
@@ -810,12 +811,14 @@ button.pill[disabled] {
   gap: 12px;
 }
 
-:root[data-theme="light"] .home__quote {
+:root[data-theme="light"] .home__quote,
+:root[data-theme="light"] .home__journey {
   background: rgba(246, 248, 255, 0.9);
   border-color: rgba(45, 91, 255, 0.18);
 }
 
-.home__quote-label {
+.home__quote-label,
+.home__journey-label {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -824,7 +827,8 @@ button.pill[disabled] {
   margin-bottom: 10px;
 }
 
-.home__quote-text {
+.home__quote-text,
+.home__journey-text {
   margin: 0;
   font-size: 18px;
   line-height: 1.6;
