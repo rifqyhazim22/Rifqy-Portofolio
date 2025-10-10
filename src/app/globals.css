@@ -1478,6 +1478,23 @@ body::before {
   }
 }
 
+.features-overlay {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.features-overlay__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.features-overlay .pill {
+  width: 100%;
+  justify-content: flex-start;
+}
+
 .menu-list {
   list-style: none;
   display: flex;
@@ -1584,12 +1601,30 @@ body::before {
 }
 
 @media (max-width: 720px) {
-  .cluster {
+  .sitebar .bar {
+    flex-wrap: wrap;
     align-items: stretch;
+    gap: 12px;
+  }
+
+  .cluster {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
   }
 
   .cluster-controls {
+    width: 100%;
     justify-content: stretch;
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+
+  .menu-button {
+    width: 100%;
+    min-width: 0;
   }
 
   .menu-overlay {

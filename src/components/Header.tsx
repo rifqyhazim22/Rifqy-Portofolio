@@ -12,7 +12,11 @@ import { useEffect, useRef, useState, type FocusEvent, type PointerEvent as Reac
 import type { Language } from "@/lib/language";
 import BaseLink from "./BaseLink";
 import AnalogClock from "./AnalogClock";
-import FloatingControls from "./FloatingControls";
+import LanguageToggle from "./LanguageToggle";
+import PaletteToggle from "./PaletteToggle";
+import TextScaleToggle from "./TextScaleToggle";
+import ThemeToggle from "./ThemeToggle";
+import ToneToggle from "./ToneToggle";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") {
@@ -36,6 +40,7 @@ const MOBILE_QUERY = "(max-width: 720px)";
 export default function Header({ brand, navLabels, language, languageToggle }: HeaderProps) {
   const pathname = usePathname() ?? "/";
   const [menuOpen, setMenuOpen] = useState(false);
+  const [featuresOpen, setFeaturesOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const controlsRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -43,6 +48,7 @@ export default function Header({ brand, navLabels, language, languageToggle }: H
   const submenuTimer = useRef<number | undefined>(undefined);
   const [controlsWidth, setControlsWidth] = useState(0);
   const menuHoverTimer = useRef<number | undefined>(undefined);
+  const featuresHoverTimer = useRef<number | undefined>(undefined);
 
   const servicesItem = headerNav.find((item) => item.type === "menu");
   const servicesChildren: HeaderNavChild[] = servicesItem?.type === "menu"
@@ -74,44 +80,13 @@ export default function Header({ brand, navLabels, language, languageToggle }: H
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
-  // Close menu on pointer down outside the cluster
-  useEffect(() => {
-    if (!menuOpen) return;
-
-    const handlePointerDown = (event: PointerEvent) => {
-      const target = event.target as Node;
-      if (!overlayRef.current?.contains(target) && !controlsRef.current?.contains(target)) {
-        setMenuOpen(false);
-        setSubmenuOpen(false);
-      }
-    };
-
-    document.addEventListener("pointerdown", handlePointerDown);
-    return () => document.removeEventListener("pointerdown", handlePointerDown);
-  }, [menuOpen]);
-
-  // Close on Escape
-  useEffect(() => {
-    if (!menuOpen) return;
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setMenuOpen(false);
-        setSubmenuOpen(false);
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [menuOpen]);
-
   // Lock body scroll for mobile overlays
   useEffect(() => {
     const body = document.body;
     const media = window.matchMedia(MOBILE_QUERY);
 
     const update = () => {
-      if (menuOpen && media.matches) {
+      if ((menuOpen || featuresOpen) && media.matches) {
         body.classList.add("scroll-locked");
       } else {
         body.classList.remove("scroll-locked");
@@ -134,7 +109,7 @@ export default function Header({ brand, navLabels, language, languageToggle }: H
         media.removeListener(update);
       }
     };
-  }, [menuOpen]);
+  }, [menuOpen, featuresOpen, closeMenu, closeFeatures]);
 
   // Clear hover timers on unmount
   useEffect(() => () => {
@@ -143,6 +118,9 @@ export default function Header({ brand, navLabels, language, languageToggle }: H
     }
     if (menuHoverTimer.current) {
       window.clearTimeout(menuHoverTimer.current);
+    }
+    if (featuresHoverTimer.current) {
+      window.clearTimeout(featuresHoverTimer.current);
     }
   }, []);
 
@@ -153,8 +131,21 @@ export default function Header({ brand, navLabels, language, languageToggle }: H
     }
   };
 
+  const clearFeaturesHoverTimer = () => {
+    if (featuresHoverTimer.current) {
+      window.clearTimeout(featuresHoverTimer.current);
+      featuresHoverTimer.current = undefined;
+    }
+  };
+
+  const closeFeatures = () => {
+    clearFeaturesHoverTimer();
+    setFeaturesOpen(false);
+  };
+
   const openMenu = () => {
     clearMenuHoverTimer();
+    closeFeatures();
     setMenuOpen(true);
   };
 
@@ -181,6 +172,28 @@ export default function Header({ brand, navLabels, language, languageToggle }: H
 
   const handleNavigate = () => {
     closeMenu();
+    closeFeatures();
+  };
+
+  const openFeatures = () => {
+    clearFeaturesHoverTimer();
+    closeMenu();
+    setFeaturesOpen(true);
+  };
+
+  const toggleFeatures = () => {
+    if (featuresOpen) {
+      closeFeatures();
+    } else {
+      openFeatures();
+    }
+  };
+
+  const scheduleCloseFeatures = () => {
+    clearFeaturesHoverTimer();
+    featuresHoverTimer.current = window.setTimeout(() => {
+      closeFeatures();
+    }, 160);
   };
 
   const openSubmenu = () => {
@@ -223,6 +236,44 @@ export default function Header({ brand, navLabels, language, languageToggle }: H
     }, 0);
   };
 
+  useEffect(() => {
+    if (!menuOpen && !featuresOpen) return;
+
+    const closeAll = () => {
+      if (menuHoverTimer.current) {
+        window.clearTimeout(menuHoverTimer.current);
+        menuHoverTimer.current = undefined;
+      }
+      if (featuresHoverTimer.current) {
+        window.clearTimeout(featuresHoverTimer.current);
+        featuresHoverTimer.current = undefined;
+      }
+      setMenuOpen(false);
+      setSubmenuOpen(false);
+      setFeaturesOpen(false);
+    };
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target as Node;
+      if (!controlsRef.current?.contains(target)) {
+        closeAll();
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeAll();
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [menuOpen, featuresOpen]);
+
   const shouldHandleHover = (event: ReactPointerEvent<HTMLElement>) => {
     if (event.pointerType === "touch") {
       return false;
@@ -253,6 +304,30 @@ export default function Header({ brand, navLabels, language, languageToggle }: H
       const active = document.activeElement;
       if (!active || !controlsRef.current?.contains(active)) {
         closeMenu();
+      }
+    }, 0);
+  };
+
+  const handleFeaturesPointerEnter = (event: ReactPointerEvent<HTMLElement>) => {
+    if (!shouldHandleHover(event)) return;
+    openFeatures();
+  };
+
+  const handleFeaturesPointerLeave = (event: ReactPointerEvent<HTMLElement>) => {
+    if (!shouldHandleHover(event)) return;
+    scheduleCloseFeatures();
+  };
+
+  const handleFeaturesBlur = (event: FocusEvent<HTMLElement>) => {
+    const related = event.relatedTarget as Node | null;
+    if (related && controlsRef.current?.contains(related)) {
+      return;
+    }
+
+    window.setTimeout(() => {
+      const active = document.activeElement;
+      if (!active || !controlsRef.current?.contains(active)) {
+        closeFeatures();
       }
     }, 0);
   };
@@ -361,13 +436,46 @@ export default function Header({ brand, navLabels, language, languageToggle }: H
             >
               MENU
             </button>
-            <FloatingControls
-              language={language}
-              languageToggle={languageToggle}
-              variant="inline"
-              className="floating-menu--desktop"
-            />
+            <button
+              type="button"
+              className="pill menu-button"
+              aria-haspopup="true"
+              aria-expanded={featuresOpen}
+              aria-controls="feature-menu"
+              onClick={toggleFeatures}
+              onPointerEnter={handleFeaturesPointerEnter}
+              onPointerLeave={handleFeaturesPointerLeave}
+              onFocus={openFeatures}
+              onBlur={handleFeaturesBlur}
+            >
+              FITUR
+            </button>
           </div>
+          {featuresOpen && (
+            <div
+              id="feature-menu"
+              className="menu-overlay card features-overlay"
+              style={controlsWidth ? { width: controlsWidth } : undefined}
+              role="region"
+              aria-label="Pengaturan tampilan"
+              onPointerEnter={handleFeaturesPointerEnter}
+              onPointerLeave={handleFeaturesPointerLeave}
+              onFocusCapture={openFeatures}
+              onBlur={handleFeaturesBlur}
+            >
+              <div className="features-overlay__list">
+                <ThemeToggle />
+                <PaletteToggle />
+                <TextScaleToggle />
+                <ToneToggle />
+                <LanguageToggle
+                  language={language}
+                  label={languageToggle.label}
+                  options={languageToggle.options}
+                />
+              </div>
+            </div>
+          )}
           {menuOpen && (
             <div
               id="site-menu"
