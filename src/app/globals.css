@@ -1982,6 +1982,33 @@ nav.pills {
     left: 22px;
     align-items: flex-start;
   }
+
+  .sitebar .bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .brand-group {
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .cluster {
+    width: 100%;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .cluster-controls {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .menu-button {
+    flex: 1;
+  }
 }
 
 @media (min-width: 721px) {
