@@ -14,7 +14,7 @@ export default async function AboutPage() {
   const { hero, philosophy, story, timeline, capabilities, values, testimonials } = aboutContent;
 
   return (
-    <div className="about" data-animate>
+    <div className="about">
       <section className="about__hero" data-animate>
         <h1 className="h1">{hero.title}</h1>
         <p className="about__tagline">{hero.tagline}</p>
