@@ -156,15 +156,23 @@ const idDictionary: Dictionary = {
       intro: "Aku memanfaatkan GPT-5 Codex, ChatGPT, dan toolchain generatif buat membangun agen, otomasi, dan produk imersif. Setiap pengerjaan kurajut dari empati, pemetaan sistem, evaluasi, dan workflow yang menjaga privasi.",
       buttons: [
         {
-          href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
+          href: "https://drive.google.com/drive/folders/17f6zsRc_Ytk9Ze99MluKoaXbnzZdkZCF?usp=sharing",
           label: "AI Generated Video"
         },
         {
-          href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
+          href: "https://drive.google.com/drive/folders/12lEuQOq2aZMnf_2W94gWzTG2nmQcZ4os?usp=sharing",
           label: "AI Generated Image"
         },
         { href: "mailto:rifqyhazim22@gmail.com", label: "Minta sesi walkthrough" },
         { href: "https://wa.me/6281322963566", label: "Diskusi via WhatsApp" },
+        {
+          href: "https://drive.google.com/drive/folders/1nvjPb1-6gjuK04GvveY0exOzdihm6g1N?usp=sharing",
+          label: "hasil kolaborasi"
+        },
+        {
+          href: "https://drive.google.com/drive/folders/1KTEm_wNE38dG3LT-DpFzLSjt-dOLumdy?usp=sharing",
+          label: "hasil kolaborasi"
+        },
       ],
       gallery: [
         {
@@ -199,15 +207,23 @@ const idDictionary: Dictionary = {
       intro: "Proyek jangka panjang untuk mengorkestrasi agen LLM, memperbesar pipeline generatif, dan meneliti peluang Web2/Web3 & crypto. Detail mendalam tersimpan di Google Drive.",
       buttons: [
         {
-          href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
+          href: "https://drive.google.com/drive/folders/17f6zsRc_Ytk9Ze99MluKoaXbnzZdkZCF?usp=sharing",
           label: "AI Generated Video"
         },
         {
-          href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
+          href: "https://drive.google.com/drive/folders/12lEuQOq2aZMnf_2W94gWzTG2nmQcZ4os?usp=sharing",
           label: "AI Generated Image"
         },
         { href: "https://www.linkedin.com/in/rifqy-hazim-h-r-88963128a/", label: "LinkedIn" },
         { href: "mailto:rifqyhazim22@gmail.com", label: "Minta full CV" },
+        {
+          href: "https://drive.google.com/drive/folders/1nvjPb1-6gjuK04GvveY0exOzdihm6g1N?usp=sharing",
+          label: "hasil kolaborasi"
+        },
+        {
+          href: "https://drive.google.com/drive/folders/1KTEm_wNE38dG3LT-DpFzLSjt-dOLumdy?usp=sharing",
+          label: "hasil kolaborasi"
+        },
       ],
       gallery: [
         {
@@ -350,15 +366,23 @@ const enDictionary: Dictionary = {
       intro: "I lean on GPT-5 Codex, ChatGPT, and generative toolchains to build agents, automation, and immersive products. Every delivery is woven from empathy, system mapping, evaluation, and privacy-first workflows.",
       buttons: [
         {
-          href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
+          href: "https://drive.google.com/drive/folders/17f6zsRc_Ytk9Ze99MluKoaXbnzZdkZCF?usp=sharing",
           label: "AI Generated Video",
         },
         {
-          href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
+          href: "https://drive.google.com/drive/folders/12lEuQOq2aZMnf_2W94gWzTG2nmQcZ4os?usp=sharing",
           label: "AI Generated Image",
         },
         { href: "mailto:rifqyhazim22@gmail.com", label: "Request walkthrough" },
         { href: "https://wa.me/6281322963566", label: "Talk on WhatsApp" },
+        {
+          href: "https://drive.google.com/drive/folders/1nvjPb1-6gjuK04GvveY0exOzdihm6g1N?usp=sharing",
+          label: "hasil kolaborasi",
+        },
+        {
+          href: "https://drive.google.com/drive/folders/1KTEm_wNE38dG3LT-DpFzLSjt-dOLumdy?usp=sharing",
+          label: "hasil kolaborasi",
+        },
       ],
       gallery: [
         {
@@ -393,15 +417,23 @@ const enDictionary: Dictionary = {
       intro: "Long-horizon blueprints for LLM agents, scaled generative ops, and Web2/Web3/crypto research. Drive folders store the deep dives.",
       buttons: [
         {
-          href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
+          href: "https://drive.google.com/drive/folders/17f6zsRc_Ytk9Ze99MluKoaXbnzZdkZCF?usp=sharing",
           label: "AI Generated Video",
         },
         {
-          href: "https://drive.google.com/drive/folders/1uYdeERkYw8nyMBfwkTa2Qn6J8M0UBROO?usp=sharing",
+          href: "https://drive.google.com/drive/folders/12lEuQOq2aZMnf_2W94gWzTG2nmQcZ4os?usp=sharing",
           label: "AI Generated Image",
         },
         { href: "https://www.linkedin.com/in/rifqy-hazim-h-r-88963128a/", label: "LinkedIn" },
         { href: "mailto:rifqyhazim22@gmail.com", label: "Request full CV" },
+        {
+          href: "https://drive.google.com/drive/folders/1nvjPb1-6gjuK04GvveY0exOzdihm6g1N?usp=sharing",
+          label: "hasil kolaborasi",
+        },
+        {
+          href: "https://drive.google.com/drive/folders/1KTEm_wNE38dG3LT-DpFzLSjt-dOLumdy?usp=sharing",
+          label: "hasil kolaborasi",
+        },
       ],
       gallery: [
         {
