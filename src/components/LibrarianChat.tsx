@@ -178,13 +178,17 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
         : "Sharing a few images—help me reflect on them.");
 
     const attachments = [...pendingImages];
+    const mediaBlock =
+      attachments.length > 0
+        ? attachments.map((image) => ({
+            src: image.preview,
+            alt: image.name,
+          }))
+        : [];
     const userMessage: ChatMessage = {
       role: "user",
       content: userContent,
-      images: attachments.map((image) => ({
-        src: image.preview,
-        alt: image.name,
-      })),
+      images: mediaBlock,
     };
     const history = [...messages, userMessage];
 
@@ -261,15 +265,8 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
   return (
     <div className="librarian card">
       <div className="librarian__messages">
-        {messages.map((message, index) => {
-          const hasMedia = Boolean(message.images && message.images.length);
-          return (
-            <div
-              key={index}
-              className={`librarian__bubble librarian__bubble--${message.role}${
-                hasMedia ? " librarian__bubble--with-media" : ""
-              }`}
-            >
+        {messages.map((message, index) => (
+          <div key={index} className={`librarian__message ${message.role === "user" ? "librarian__message--user" : ""}`}>
             {message.images && message.images.length ? (
               <div className="librarian__bubble-media">
                 {message.images.map((image, imageIndex) => (
@@ -279,23 +276,24 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
                 ))}
               </div>
             ) : null}
-            <div className="librarian__text">{message.content}</div>
-            {message.knowledge && message.knowledge.length ? (
-              <div className="librarian__knowledge">
-                <span>{language === "id" ? "Referensi:" : "References:"}</span>
-                <ul>
-                  {message.knowledge.map((item) => (
-                    <li key={item.id}>
-                      <strong>{item.title}</strong>{" "}
-                      <span>{item.paths.map((path) => `(${path})`).join(" ")}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
+            <div className={`librarian__bubble librarian__bubble--${message.role}`}>
+              <div className="librarian__text">{message.content}</div>
+              {message.knowledge && message.knowledge.length ? (
+                <div className="librarian__knowledge">
+                  <span>{language === "id" ? "Referensi:" : "References:"}</span>
+                  <ul>
+                    {message.knowledge.map((item) => (
+                      <li key={item.id}>
+                        <strong>{item.title}</strong>{" "}
+                        <span>{item.paths.map((path) => `(${path})`).join(" ")}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
             </div>
-          );
-        })}
+          </div>
+        ))}
         {loading ? (
           <div className="librarian__bubble librarian__bubble--assistant">
             <div className="librarian__typing">
