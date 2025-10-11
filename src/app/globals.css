@@ -1817,6 +1817,23 @@ nav.pills {
   border-color: rgba(122, 162, 255, 0.45);
 }
 
+.librarian__bubble-media {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.librarian__bubble-media img {
+  display: block;
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid rgba(122, 162, 255, 0.35);
+  box-shadow: 0 12px 24px rgba(5, 10, 24, 0.25);
+}
+
 .librarian__knowledge {
   margin-top: 10px;
   font-size: 13px;

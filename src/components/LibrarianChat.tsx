@@ -17,6 +17,10 @@ type ChatRole = "user" | "assistant";
 interface ChatMessage {
   role: ChatRole;
   content: string;
+  images?: Array<{
+    src: string;
+    alt: string;
+  }>;
   knowledge?: Array<{
     id: string;
     title: string;
@@ -172,11 +176,20 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
         ? "Aku mengunggah beberapa gambar supaya kamu bisa bantu jelasin."
         : "Sharing a few images—help me reflect on them.");
 
-    const userMessage: ChatMessage = { role: "user", content: userContent };
+    const attachments = [...pendingImages];
+    const userMessage: ChatMessage = {
+      role: "user",
+      content: userContent,
+      images: attachments.map((image) => ({
+        src: image.preview,
+        alt: image.name,
+      })),
+    };
     const history = [...messages, userMessage];
 
     setMessages(history);
     setInput("");
+    setPendingImages([]);
     setLoading(true);
 
     try {
@@ -187,7 +200,7 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
           messages: history.map(({ role, content }) => ({ role, content })),
           language,
           tone,
-          images: pendingImages.map((image) => ({
+          images: attachments.map((image) => ({
             data: image.data,
             mimeType: image.mimeType,
             name: image.name,
@@ -217,8 +230,6 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
           knowledge: data.knowledge,
         },
       ]);
-
-      setPendingImages([]);
     } catch (agentError) {
       console.error(agentError);
       const fallbackMessage =
@@ -251,6 +262,13 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
       <div className="librarian__messages">
         {messages.map((message, index) => (
           <div key={index} className={`librarian__bubble librarian__bubble--${message.role}`}>
+            {message.images && message.images.length ? (
+              <div className="librarian__bubble-media">
+                {message.images.map((image, imageIndex) => (
+                  <img key={`${image.alt}-${imageIndex}`} src={image.src} alt={image.alt} />
+                ))}
+              </div>
+            ) : null}
             <div className="librarian__text">{message.content}</div>
             {message.knowledge && message.knowledge.length ? (
               <div className="librarian__knowledge">
