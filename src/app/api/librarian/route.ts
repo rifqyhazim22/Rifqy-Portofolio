@@ -167,10 +167,25 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error("Librarian agent error", error);
-    const message =
+
+    if (error instanceof OpenAI.APIError) {
+      const isImageIssue = typeof error.param === "string" && error.param.includes("image");
+      const friendly =
+        language === "id"
+          ? isImageIssue
+            ? "Gambar tidak bisa diproses. Pastikan formatnya PNG atau JPEG dan coba unggah ulang."
+            : "Agent OpenAI menolak permintaan ini. Coba lagi sebentar lagi."
+          : isImageIssue
+            ? "The image could not be processed. Please ensure it is a PNG or JPEG and try uploading again."
+            : "The OpenAI service rejected this request. Please try again in a moment.";
+      const status = error.status ?? 400;
+      return NextResponse.json({ error: friendly }, { status: status >= 500 ? status : 400 });
+    }
+
+    const fallback =
       language === "id"
         ? "Agent tidak bisa dihubungi sekarang. Coba lagi beberapa saat."
         : "The agent is temporarily unavailable. Please try again shortly.";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ error: fallback }, { status: 500 });
   }
 }

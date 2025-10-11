@@ -73,7 +73,7 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
   );
 
   const imageLimit = 3;
-  const maxImageSize = 6 * 1024 * 1024;
+  const maxImageSize = 10 * 1024 * 1024;
 
   useEffect(() => {
     setLanguage(resolveLanguage());
@@ -119,8 +119,8 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
         if (file.size > maxImageSize) {
           rejectedMessage =
             language === "id"
-              ? "Ukuran gambar terlalu besar. Maksimal 6MB."
-              : "Image size is too large. Maximum is 6MB.";
+              ? "Ukuran gambar terlalu besar. Maksimal 10MB."
+              : "Image size is too large. Maximum is 10MB.";
           return;
         }
 
@@ -128,7 +128,7 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
         reader.onload = () => {
           const result = reader.result;
           if (typeof result === "string") {
-            const base64 = result.split(",")[1] ?? "";
+            const base64 = (result.split(",")[1] ?? "").replace(/\s/g, "");
             const draft: ImageDraft = {
               name: file.name,
               mimeType: file.type,
@@ -195,11 +195,19 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Agent error");
-      }
+      const data = (await response.json().catch(() => null)) as
+        | { message: string; knowledge?: ChatMessage["knowledge"]; error?: string }
+        | null;
 
-      const data = (await response.json()) as { message: string; knowledge: ChatMessage["knowledge"] };
+      if (!response.ok || !data || data.error) {
+        throw new Error(
+          typeof data?.error === "string"
+            ? data.error
+            : language === "id"
+              ? "Maaf, agent perpustakaan tidak bisa memproses permintaan ini."
+              : "Sorry, the library agent cannot process this request.",
+        );
+      }
 
       setMessages((prev) => [
         ...prev,
@@ -213,14 +221,17 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
       setPendingImages([]);
     } catch (agentError) {
       console.error(agentError);
+      const fallbackMessage =
+        agentError instanceof Error && agentError.message
+          ? agentError.message
+          : language === "id"
+            ? "Maaf, agent perpustakaan lagi tidak bisa merespons. Coba lagi sebentar lagi ya."
+            : "Sorry, the library agent is unavailable right now. Please try again in a moment.";
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content:
-            language === "id"
-              ? "Maaf, agent perpustakaan lagi tidak bisa merespons. Coba lagi sebentar lagi ya."
-              : "Sorry, the library agent is unavailable right now. Please try again in a moment.",
+          content: fallbackMessage,
         },
       ]);
     } finally {
