@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import type { Language } from "./language";
 
 export interface KnowledgeSource {
   type: "page" | "documents" | "note";
@@ -78,21 +79,26 @@ export function findKnowledgeSnippets(query: string | undefined, limit = 4): Kno
   return unique;
 }
 
-export function knowledgeToContext(entries: KnowledgeEntry[]): string {
+export function knowledgeToContext(entries: KnowledgeEntry[], language: Language = "id"): string {
   if (!entries.length) {
-    return "Tidak ada konteks tambahan.";
+    return language === "en" ? "No additional context." : "Tidak ada konteks tambahan.";
   }
+
+  const summaryLabel = language === "en" ? "Summary" : "Ringkasan";
+  const pageReference = language === "en" ? "Page references" : "Referensi halaman";
+  const documentReference = language === "en" ? "Document references" : "Referensi dokumen";
+  const noteReference = language === "en" ? "Internal note" : "Catatan internal";
 
   return entries
     .map((entry) => {
       const source =
         entry.source.type === "page"
-          ? `Referensi halaman: ${entry.source.paths.join(", ")}`
+          ? `${pageReference}: ${entry.source.paths.join(", ")}`
           : entry.source.type === "documents"
-            ? `Referensi dokumen: ${entry.source.paths.join(", ")}`
-            : `Catatan internal (${entry.source.paths.join(", ")})`;
+            ? `${documentReference}: ${entry.source.paths.join(", ")}`
+            : `${noteReference} (${entry.source.paths.join(", ")})`;
       const bullets = entry.details.map((detail) => `- ${detail}`).join("\n");
-      return `### ${entry.title}\nRingkasan: ${entry.summary}\n${bullets ? `${bullets}\n` : ""}${source}`;
+      return `### ${entry.title}\n${summaryLabel}: ${entry.summary}\n${bullets ? `${bullets}\n` : ""}${source}`;
     })
     .join("\n\n");
 }

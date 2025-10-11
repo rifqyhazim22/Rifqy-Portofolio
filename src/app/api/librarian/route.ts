@@ -124,10 +124,18 @@ export async function POST(request: NextRequest) {
 
   const language = body.language ?? DEFAULT_LANGUAGE;
 
+  if (!client.apiKey) {
+    const message =
+      language === "id"
+        ? "Konfigurasi OpenAI API key belum tersedia."
+        : "OpenAI API key is not configured.";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+
   try {
     const lastUserMessage = [...body.messages].reverse().find((message) => message.role === "user");
     const knowledgeEntries = findKnowledgeSnippets(lastUserMessage?.content, 4);
-    const knowledgeContext = knowledgeToContext(knowledgeEntries);
+    const knowledgeContext = knowledgeToContext(knowledgeEntries, language);
 
     const systemPrompt = buildSystemPrompt(language, body.tone, knowledgeContext);
 

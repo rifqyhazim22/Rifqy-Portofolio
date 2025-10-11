@@ -14,6 +14,8 @@ interface AgentResponse {
   error?: string;
 }
 
+const STORAGE_KEY = "rh-agent-chat-session";
+
 function resolveLanguage(): "id" | "en" {
   if (typeof document === "undefined") {
     return "id";
@@ -94,6 +96,23 @@ export default function AgentChat() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    try {
+      const raw = window.sessionStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const stored = JSON.parse(raw) as { messages?: Message[]; open?: boolean };
+      if (Array.isArray(stored.messages) && stored.messages.length) {
+        setMessages(stored.messages);
+      }
+      if (typeof stored.open === "boolean") {
+        setOpen(stored.open);
+      }
+    } catch (error) {
+      console.warn("Failed to restore agent chat session", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
     const media = window.matchMedia("(pointer: fine)");
     const update = () => setAllowHover(media.matches);
     update();
@@ -117,6 +136,19 @@ export default function AgentChat() {
       setMessages([{ role: "assistant", content: greeting[language][tone] }]);
     }
   }, [open, greeting, language, tone, messages.length]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const payload = {
+      messages: messages.slice(-12),
+      open,
+    };
+    try {
+      window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    } catch (error) {
+      console.warn("Failed to persist agent chat session", error);
+    }
+  }, [messages, open]);
 
   useEffect(() => {
     if (!messagesEndRef.current) return;

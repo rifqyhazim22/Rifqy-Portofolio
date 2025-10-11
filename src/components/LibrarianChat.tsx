@@ -104,7 +104,6 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
     if (!files || !files.length) return;
 
     const current = pendingImages.length;
-    const accepted: ImageDraft[] = [];
     let rejectedMessage: string | null = null;
 
     Array.from(files)
@@ -130,14 +129,14 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
           const result = reader.result;
           if (typeof result === "string") {
             const base64 = result.split(",")[1] ?? "";
-            accepted.push({
+            const draft: ImageDraft = {
               name: file.name,
               mimeType: file.type,
               preview: result,
               data: base64,
               size: file.size,
-            });
-            setPendingImages((prev) => [...prev, ...accepted]);
+            };
+            setPendingImages((prev) => [...prev, draft]);
           }
         };
         reader.readAsDataURL(file);

@@ -397,7 +397,7 @@ export async function POST(request: NextRequest) {
 
   const lastUserMessage = [...messages].reverse().find((message) => message.role === "user");
   const knowledgeEntries = findKnowledgeSnippets(lastUserMessage?.content, 3);
-  const knowledgeContext = knowledgeToContext(knowledgeEntries);
+  const knowledgeContext = knowledgeToContext(knowledgeEntries, language);
 
   const systemSections = [
     SYSTEM_PROMPT,
