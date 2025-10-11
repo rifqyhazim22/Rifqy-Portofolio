@@ -1818,20 +1818,35 @@ nav.pills {
 }
 
 .librarian__bubble-media {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 10px;
   margin-bottom: 10px;
 }
 
-.librarian__bubble-media img {
-  display: block;
-  width: 120px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 16px;
-  border: 1px solid rgba(122, 162, 255, 0.35);
+.librarian__thumb {
+  border: none;
+  padding: 0;
+  background: transparent;
+  border-radius: 18px;
+  width: 100%;
+  overflow: hidden;
   box-shadow: 0 12px 24px rgba(5, 10, 24, 0.25);
+  border: 1px solid rgba(122, 162, 255, 0.35);
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.librarian__thumb:hover,
+.librarian__thumb:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(5, 10, 24, 0.28);
+}
+
+.librarian__thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .librarian__knowledge {
@@ -1878,24 +1893,14 @@ nav.pills {
 }
 
 .librarian__attachments {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
 }
 
 .librarian__attachment {
   position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid rgba(122, 162, 255, 0.3);
-  box-shadow: 0 12px 24px rgba(5, 10, 24, 0.25);
-}
-
-.librarian__attachment img {
-  display: block;
-  width: 120px;
-  height: 80px;
-  object-fit: cover;
+  border-radius: 18px;
 }
 
 .librarian__remove {
@@ -1905,6 +1910,38 @@ nav.pills {
   font-size: 12px;
   padding: 4px 10px;
   background: rgba(11, 20, 36, 0.8);
+}
+
+.librarian__preview {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 6, 12, 0.72);
+  display: grid;
+  place-items: center;
+  z-index: 1200;
+  padding: 32px;
+}
+
+.librarian__preview-content {
+  max-width: min(680px, 90vw);
+  max-height: 80vh;
+  display: grid;
+  gap: 18px;
+  background: rgba(8, 14, 28, 0.92);
+  border-radius: 24px;
+  padding: 24px;
+  border: 1px solid rgba(122, 162, 255, 0.35);
+  box-shadow: 0 24px 48px rgba(5, 10, 24, 0.55);
+}
+
+.librarian__preview-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+}
+
+.librarian__close-preview {
+  justify-self: end;
 }
 
 .librarian__composer {

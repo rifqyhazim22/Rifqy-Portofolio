@@ -66,6 +66,7 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
   const [loading, setLoading] = useState(false);
   const [pendingImages, setPendingImages] = useState<ImageDraft[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [previewImage, setPreviewImage] = useState<{ src: string; alt: string } | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const placeholders = useMemo(
@@ -102,6 +103,17 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
     if (!messagesEndRef.current) return;
     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
+
+  useEffect(() => {
+    if (!previewImage) return;
+    const handler = (event: globalThis.KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setPreviewImage(null);
+      }
+    };
+    window.addEventListener("keydown", handler as EventListener);
+    return () => window.removeEventListener("keydown", handler as EventListener);
+  }, [previewImage]);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -265,7 +277,15 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
             {message.images && message.images.length ? (
               <div className="librarian__bubble-media">
                 {message.images.map((image, imageIndex) => (
-                  <img key={`${image.alt}-${imageIndex}`} src={image.src} alt={image.alt} />
+                  <button
+                    type="button"
+                    key={`${image.alt}-${imageIndex}`}
+                    className="librarian__thumb"
+                    onClick={() => setPreviewImage({ src: image.src, alt: image.alt })}
+                    aria-label={language === "id" ? "Tampilkan pratinjau gambar" : "Open image preview"}
+                  >
+                    <img src={image.src} alt={image.alt} />
+                  </button>
                 ))}
               </div>
             ) : null}
@@ -301,7 +321,14 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
         <div className="librarian__attachments">
           {pendingImages.map((image, index) => (
             <div key={image.name + index} className="librarian__attachment">
-              <img src={image.preview} alt={image.name} />
+              <button
+                type="button"
+                className="librarian__thumb"
+                onClick={() => setPreviewImage({ src: image.preview, alt: image.name })}
+                aria-label={language === "id" ? "Pratinjau gambar" : "Preview image"}
+              >
+                <img src={image.preview} alt={image.name} />
+              </button>
               <button type="button" className="pill librarian__remove" onClick={() => removeImage(index)}>
                 {language === "id" ? "Hapus" : "Remove"}
               </button>
@@ -330,6 +357,21 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
           </button>
         </div>
       </div>
+
+      {previewImage ? (
+        <div className="librarian__preview" role="dialog" aria-modal="true" onClick={() => setPreviewImage(null)}>
+          <div className="librarian__preview-content" onClick={(event) => event.stopPropagation()}>
+            <img src={previewImage.src} alt={previewImage.alt} />
+            <button
+              type="button"
+              className="pill librarian__close-preview"
+              onClick={() => setPreviewImage(null)}
+            >
+              {language === "id" ? "Tutup" : "Close"}
+            </button>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
