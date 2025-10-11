@@ -8,21 +8,21 @@ const MAX_OUTPUT_TOKENS = 3200;
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-const SYSTEM_PROMPT = `You are the AI concierge for Rifqy Hazim HR's portfolio website.
-- "HR" in the brand stands for Haidar Ramadhan (part of his full name), not Human Resources.
-- Rifqy Hazim HR is an AI engineer focused on prompt engineering, agent orchestration, and web delivery; reflect that positioning when users ask who he is.
-- Answer questions concisely and helpfully in the language specified by the client.
-- Suggest relevant sections (About, Works, Projects, Playbooks/Industry, Updates, Contact) based on the user's intent.
-- If the user explicitly wants to navigate somewhere, append a directive at the end of your reply using the format [[NAVIGATE:/path]].
-- Pick the closest destination from the official menu list and use its exact route when producing [[NAVIGATE:/path]]. If unsure, ask for clarification first.
-- Keep the directive separate from the natural language reply. Only include one directive per reply when appropriate.
-- Prefer short paragraphs and bullet lists when useful.
-- Sprinkle in fitting emojis (maximum three per reply) to keep the tone energetic and human.`;
+const SYSTEM_PROMPT = `You are the AI agent for Rifqy Hazim HR's portfolio website.
+- “HR” in the brand stands for Haidar Ramadhan (part of his full name), not Human Resources.
+- Rifqy Hazim HR is an AI engineer focused on prompt engineering, agent orchestration, and web delivery—keep that positioning clear.
+- Reply in the visitor’s language with high-signal guidance only.
+- Hard limit: 3 sentences or 90 words. Lead with the direct answer and keep paragraphs tight.
+- Use a short bullet list only when it clearly improves clarity (e.g., multiple options).
+- When helpful, mention at most one section to explore using the format "Explore: /path".
+- If the visitor explicitly wants to navigate, append [[NAVIGATE:/path]] using the closest official route. Ask for clarification if uncertain.
+- Be transparent when information is missing and offer a brief follow-up suggestion.
+- Use at most one emoji, only when it adds warmth.`;
 
 const TONE_PROMPTS: Record<string, string> = {
-  formal: "Use a confident and professional Gen-Z inspired tone—succinct but warm.",
-  santai: "Use a relaxed Gen-Z tone with light Indonesian-English blend; stay respectful and clear.",
-  deep: "Use an elegant and evocative tone that feels thoughtful and inspiring while remaining concise.",
+  formal: "Stay confident and warm but keep sentences short and purposeful.",
+  santai: "Keep it light and friendly with brief Indonesian-English phrases; avoid rambling.",
+  deep: "Sound reflective yet concise—choose vivid words without adding extra length.",
 };
 
 type ChatMessage = {
@@ -152,6 +152,16 @@ const intentMemory = new Map<string, Map<string, number>>();
 const ROUTE_MENU_TEXT = (navigationConfig as Array<{ title: string; route: string }> )
   .map((item) => `- ${item.title} (${item.route})`)
   .join("\n");
+
+function clampWords(text: string, maxWords: number): string {
+  const trimmed = text.trim();
+  if (!trimmed) return trimmed;
+  const words = trimmed.split(/\s+/);
+  if (words.length <= maxWords) {
+    return trimmed;
+  }
+  return `${words.slice(0, maxWords).join(" ")}…`;
+}
 
 function normalizePath(value: string | null): string | null {
   if (!value) return null;
@@ -396,13 +406,13 @@ export async function POST(request: NextRequest) {
   const toneDirective = TONE_PROMPTS[normalizedTone] ?? TONE_PROMPTS.formal;
 
   const lastUserMessage = [...messages].reverse().find((message) => message.role === "user");
-  const knowledgeEntries = findKnowledgeSnippets(lastUserMessage?.content, 3);
+  const knowledgeEntries = findKnowledgeSnippets(lastUserMessage?.content, 2);
   const knowledgeContext = knowledgeToContext(knowledgeEntries, language);
 
   const systemSections = [
     SYSTEM_PROMPT,
     toneDirective,
-    "Keep answers under 120 words. Use bullet lists only when clarifying multi-step guidance.",
+    "Remember: cap the reply at 3 sentences or 90 words. Skip emoji unless one truly fits.",
     `Current interface language: ${language === "en" ? "English" : "Indonesian"}. Respond using this language.`,
     `Knowledge base snippets:\n${knowledgeContext}`,
     locationContext
@@ -449,8 +459,9 @@ export async function POST(request: NextRequest) {
     const rawNavigation = navigateMatch ? navigateMatch[1].trim() : null;
     const navigation = await resolveNavigationTarget(rawNavigation, trimmedMessages);
     const cleanedText = fullText.replace(/\[\[NAVIGATE:[^\]]+\]\]/gi, "").trim();
+    const trimmedText = clampWords(cleanedText, 100);
 
-    return NextResponse.json({ message: cleanedText, navigation });
+    return NextResponse.json({ message: trimmedText, navigation });
   } catch (error) {
     console.error("Agent error", error);
     return NextResponse.json({ error: "Failed to contact AI agent." }, { status: 500 });

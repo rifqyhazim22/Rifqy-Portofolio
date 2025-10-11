@@ -84,21 +84,22 @@ export function knowledgeToContext(entries: KnowledgeEntry[], language: Language
     return language === "en" ? "No additional context." : "Tidak ada konteks tambahan.";
   }
 
-  const summaryLabel = language === "en" ? "Summary" : "Ringkasan";
-  const pageReference = language === "en" ? "Page references" : "Referensi halaman";
-  const documentReference = language === "en" ? "Document references" : "Referensi dokumen";
-  const noteReference = language === "en" ? "Internal note" : "Catatan internal";
+  const highlightLabel = language === "en" ? "Highlights" : "Sorotan";
+  const pathsLabel = language === "en" ? "Paths" : "Path";
 
   return entries
     .map((entry) => {
-      const source =
-        entry.source.type === "page"
-          ? `${pageReference}: ${entry.source.paths.join(", ")}`
-          : entry.source.type === "documents"
-            ? `${documentReference}: ${entry.source.paths.join(", ")}`
-            : `${noteReference} (${entry.source.paths.join(", ")})`;
-      const bullets = entry.details.map((detail) => `- ${detail}`).join("\n");
-      return `### ${entry.title}\n${summaryLabel}: ${entry.summary}\n${bullets ? `${bullets}\n` : ""}${source}`;
+      const highlights = entry.details.slice(0, 2).join(" • ");
+      const paths = entry.source.paths.join(", ");
+      const extras = [];
+      if (highlights) {
+        extras.push(`${highlightLabel}: ${highlights}`);
+      }
+      if (paths) {
+        extras.push(`${pathsLabel}: ${paths}`);
+      }
+      const extraText = extras.length ? ` (${extras.join(" | ")})` : "";
+      return `${entry.title} — ${entry.summary}${extraText}`;
     })
-    .join("\n\n");
+    .join("\n");
 }

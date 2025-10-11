@@ -115,7 +115,7 @@
       "mindsetBody": "Ship small, measure often, and keep human review optional but ready. Reliable evaluation unlocks faster releases.",
       "examplesHeading": "Use Cases",
       "examples": [
-        { "href": "#", "title": "Knowledge concierge", "sub": "Agent that summarizes research docs and drafts FAQs." },
+        { "href": "#", "title": "Knowledge agent", "sub": "Agent that summarizes research docs and drafts FAQs." },
         { "href": "#", "title": "Campaign copilot", "sub": "Multi-format content agent with tone checking." }
       ],
       "actionsHeading": "Action Steps",

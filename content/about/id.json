@@ -33,9 +33,9 @@
         "description": "Memimpin kampanye AI-first, menyusun pipeline Sora → Runway → Flow, serta merancang workflow agen LLM untuk produksi konten."
       },
       {
-        "id": "2025-ai-concierge",
+        "id": "2025-ai-agent-lab",
         "period": "2025 – sekarang",
-        "title": "AI Concierge Lab",
+        "title": "AI Agent Lab",
         "description": "Eksperimen agen GPT-5 Codex untuk navigasi konten, dokumentasi proses, dan integrasi ke produk web."
       },
       {

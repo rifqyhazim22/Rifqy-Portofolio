@@ -50,8 +50,8 @@ export default function AgentChat() {
 
   const placeholders = useMemo(
     () => ({
-      id: "Tanya apa saja tentang portofolio, proyek, atau arah belajar…",
-      en: "Ask anything about the portfolio, projects, or learning paths…",
+      id: "Butuh info tentang Rifqy atau mau lompat ke halaman tertentu?",
+      en: "Need a quick pointer about Rifqy or a section jump?",
     }),
     []
   );
@@ -59,14 +59,14 @@ export default function AgentChat() {
   const greeting = useMemo(
     () => ({
       id: {
-        formal: "Halo! Aku agent AI siap bantu kamu jelajahi portofolio Rifqy dengan ringkas.",
-        santai: "Hai! Agent AI santai ini siap nganterin kamu keliling portofolio Rifqy.",
-        deep: "Salam! Agent AI ini bakal nemenin kamu mendalami portofolio Rifqy dengan hangat.",
+        formal: "Halo! Aku agent AI Rifqy—sebut saja apa yang kamu butuhkan, aku jawab singkat.",
+        santai: "Hai! Agent AI Rifqy siap bantu, tinggal tanya aja ya.",
+        deep: "Salam hangat! Aku agent AI Rifqy, siap beri arah dengan cepat.",
       },
       en: {
-        formal: "Hello! I'm the AI agent ready to guide you through Rifqy's portfolio succinctly.",
-        santai: "Hey! I'm the laid-back AI guide to help you explore Rifqy's portfolio with ease.",
-        deep: "Greetings! I'm the reflective AI guide offering meaningful cues through Rifqy's portfolio.",
+        formal: "Hello! I'm Rifqy's AI agent—ask what you need and I'll keep it tight.",
+        santai: "Hey! I'm Rifqy's AI guide, ready to answer fast.",
+        deep: "Greetings! I'm Rifqy's AI agent, here to give focused pointers.",
       },
     }),
     []

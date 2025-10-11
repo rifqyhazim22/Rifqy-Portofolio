@@ -32,15 +32,21 @@ interface LibrarianRequest {
 
 const DEFAULT_LANGUAGE: "id" | "en" = "id";
 
+function clampWords(text: string, maxWords: number): string {
+  const trimmed = text.trim();
+  if (!trimmed) return trimmed;
+  const words = trimmed.split(/\s+/);
+  if (words.length <= maxWords) {
+    return trimmed;
+  }
+  return `${words.slice(0, maxWords).join(" ")}…`;
+}
+
 function buildSystemPrompt(language: "id" | "en", tone: "formal" | "santai" | "deep" | undefined, knowledge: string) {
   const pronounInstruction =
     language === "id"
       ? 'Gunakan kata ganti "aku" saat bicara sebagai Rifqy dan "kamu" saat menyapa pengunjung.'
       : 'Use first-person “I” when representing Rifqy and address the visitor as “you”.';
-  const completeness =
-    language === "id"
-      ? "Jawabanmu harus lebih lengkap dibanding agent mengambang di pojok kanan bawah."
-      : "Your replies must be more comprehensive than the floating agent on the lower-right corner.";
   const toneHint =
     tone === "santai"
       ? language === "id"
@@ -65,8 +71,13 @@ function buildSystemPrompt(language: "id" | "en", tone: "formal" | "santai" | "d
 
   const imageGuidance =
     language === "id"
-      ? "Kalau pengunjung mengunggah gambar, jelaskan apa yang bisa kamu amati atau tanyakan klarifikasi jika konteksnya belum jelas."
-      : "If the visitor shares an image, describe what you can observe or ask for clarification if the context is unclear.";
+      ? "Kalau pengunjung mengunggah gambar, sampaikan observasi utama dalam maksimal tiga kalimat. Jika konteks belum jelas, ajukan pertanyaan singkat."
+      : "If the visitor shares an image, describe the key observations in no more than three sentences. Ask for clarification briefly when needed.";
+
+  const lengthRule =
+    language === "id"
+      ? "Batasi jawaban maksimal 120 kata atau empat kalimat. Mulai dengan jawaban inti, lanjutkan insight ringkas, dan tawarkan bantuan lanjutan seperlunya."
+      : "Keep the reply under 120 words or four sentences. Lead with the core answer, add concise insight, and offer a follow-up only if useful.";
 
   return [
     language === "id"
@@ -74,8 +85,8 @@ function buildSystemPrompt(language: "id" | "en", tone: "formal" | "santai" | "d
       : "You are the digital librarian for Rifqy Hazim HR—you know his CV, portfolio, and all narratives on the website.",
     "Jagalah empati, sambut pengunjung layaknya tamu istimewa, dan bantu mereka memahami misi Freedom of Intelligence.",
     pronounInstruction,
-    completeness,
     toneHint,
+    lengthRule,
     knowledgeInstruction,
     fallback,
     imageGuidance,
@@ -139,7 +150,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const lastUserMessage = [...body.messages].reverse().find((message) => message.role === "user");
-    const knowledgeEntries = findKnowledgeSnippets(lastUserMessage?.content, 4);
+    const knowledgeEntries = findKnowledgeSnippets(lastUserMessage?.content, 3);
     const knowledgeContext = knowledgeToContext(knowledgeEntries, language);
 
     const systemPrompt = buildSystemPrompt(language, body.tone, knowledgeContext);
@@ -163,7 +174,7 @@ export async function POST(request: NextRequest) {
       throw new Error(`librarian model incomplete: ${response.incomplete_details?.reason ?? "unknown reason"}`);
     }
 
-    const message = response.output_text.trim();
+    const message = clampWords(response.output_text.trim(), 140);
 
     return NextResponse.json({
       message,
