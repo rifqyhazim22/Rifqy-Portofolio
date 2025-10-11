@@ -93,10 +93,7 @@ function prepareMessages(messages: Message[], images: ImageAttachment[] | undefi
     if (index === messages.length - 1 && images?.length && message.role === "user") {
       const imageContent = images.slice(0, 3).map((image) => ({
         type: "input_image" as const,
-        image: {
-          b64_json: image.data,
-          mime_type: image.mimeType ?? "image/png",
-        },
+        image_url: `data:${image.mimeType ?? "image/png"};base64,${image.data}`,
         detail: "auto" as const,
       }));
 
@@ -148,36 +145,14 @@ export async function POST(request: NextRequest) {
       ...history,
     ];
 
-    const runModel = async (model: string) => {
-      try {
-        const resp = await client.responses.create({
-          model,
-          max_output_tokens: 3200,
-          input: input as any,
-        });
-        if (resp.status !== "completed" || !resp.output_text?.trim()) {
-          console.warn("librarian model incomplete", {
-            model,
-            status: resp.status,
-            reason: resp.incomplete_details,
-          });
-          return null;
-        }
-        return resp;
-      } catch (error) {
-        console.error(`librarian model ${model} failed`, error);
-        return null;
-      }
-    };
+    const response = await client.responses.create({
+      model: "gpt-5-nano",
+      max_output_tokens: 3200,
+      input: input as any,
+    });
 
-    let response = await runModel("gpt-5-nano");
-    if (!response) {
-      console.warn("Falling back to gpt-4.1-mini for librarian agent.");
-      response = await runModel("gpt-4.1-mini");
-    }
-
-    if (!response?.output_text) {
-      throw new Error("Empty response from model");
+    if (response.status !== "completed" || !response.output_text?.trim()) {
+      throw new Error(`librarian model incomplete: ${response.incomplete_details?.reason ?? "unknown reason"}`);
     }
 
     const message = response.output_text.trim();

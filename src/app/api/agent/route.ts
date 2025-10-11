@@ -433,63 +433,17 @@ export async function POST(request: NextRequest) {
       ...toResponseInput(trimmedMessages),
     ];
 
-    const runNano = async () => {
-      try {
-        const resp = await client.responses.create({
-          model: "gpt-5-nano",
-          max_output_tokens: MAX_OUTPUT_TOKENS,
-          input: responseInput as any,
-        });
-        if (resp.status !== "completed" || !resp.output_text?.trim()) {
-          console.warn("gpt-5-nano incomplete", {
-            status: resp.status,
-            reason: resp.incomplete_details,
-          });
-          return null;
-        }
-        return resp;
-      } catch (error) {
-        console.error("gpt-5-nano call failed", error);
-        return null;
-      }
-    };
+    const nanoResponse = await client.responses.create({
+      model: "gpt-5-nano",
+      max_output_tokens: MAX_OUTPUT_TOKENS,
+      input: responseInput as any,
+    });
 
-    const runFallback = async () => {
-      const completion = await client.chat.completions.create({
-        model: "gpt-4.1-mini",
-        max_tokens: 700,
-        temperature: 0.4,
-        messages: [
-          {
-            role: "system",
-            content: systemSections.join("\n"),
-          },
-          ...trimmedMessages,
-        ],
-      });
-
-      const text = completion.choices[0]?.message?.content?.trim() ?? "";
-      if (!text) {
-        throw new Error("Fallback model returned empty content.");
-      }
-      return text;
-    };
-
-    let fullText: string | null = null;
-
-    const nanoResponse = await runNano();
-    if (nanoResponse?.output_text) {
-      fullText = nanoResponse.output_text.trim();
+    if (nanoResponse.status !== "completed" || !nanoResponse.output_text?.trim()) {
+      throw new Error(`gpt-5-nano incomplete: ${nanoResponse.incomplete_details?.reason ?? "unknown reason"}`);
     }
 
-    if (!fullText) {
-      console.warn("Falling back to gpt-4.1-mini for AI agent.");
-      fullText = await runFallback();
-    }
-
-    if (!fullText) {
-      throw new Error("No response text produced.");
-    }
+    const fullText = nanoResponse.output_text.trim();
 
     const navigateMatch = fullText.match(/\[\[NAVIGATE:([^\]]+)\]\]/i);
     const rawNavigation = navigateMatch ? navigateMatch[1].trim() : null;
