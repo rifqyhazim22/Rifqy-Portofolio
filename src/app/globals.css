@@ -1825,22 +1825,11 @@ nav.pills {
 }
 
 .librarian__thumb {
-  border: none;
-  padding: 0;
-  background: transparent;
   border-radius: 18px;
-  width: 100%;
   overflow: hidden;
-  box-shadow: 0 12px 24px rgba(5, 10, 24, 0.25);
   border: 1px solid rgba(122, 162, 255, 0.35);
-  cursor: pointer;
-  transition: transform 160ms ease, box-shadow 160ms ease;
-}
-
-.librarian__thumb:hover,
-.librarian__thumb:focus-visible {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 30px rgba(5, 10, 24, 0.28);
+  box-shadow: 0 12px 24px rgba(5, 10, 24, 0.25);
+  overflow: hidden;
 }
 
 .librarian__thumb img {
