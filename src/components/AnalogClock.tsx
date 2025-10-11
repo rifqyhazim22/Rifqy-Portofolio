@@ -15,25 +15,30 @@ function getAngles(date: Date) {
 }
 
 export default function AnalogClock() {
-  const [time, setTime] = useState(() => new Date());
+  const [time, setTime] = useState<Date | null>(null);
 
   useEffect(() => {
+    setTime(new Date());
     const interval = window.setInterval(() => {
       setTime(new Date());
     }, 1000);
     return () => window.clearInterval(interval);
   }, []);
 
-  const { hourAngle, minuteAngle, secondAngle } = useMemo(() => getAngles(time), [time]);
+  const { hourAngle, minuteAngle, secondAngle } = useMemo(() => {
+    const current = time ?? new Date();
+    return getAngles(current);
+  }, [time]);
 
-  const ariaLabel = time.toLocaleTimeString("id-ID", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
+  const ariaLabel =
+    time?.toLocaleTimeString("id-ID", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }) ?? undefined;
 
   return (
-    <div className="analog-clock" aria-label={ariaLabel} role="img">
+    <div className="analog-clock" aria-label={ariaLabel} role="img" suppressHydrationWarning>
       <div className="analog-clock__dial">
         <div className="analog-clock__hand analog-clock__hand--hour" style={{ transform: `rotate(${hourAngle}deg)` }} />
         <div
