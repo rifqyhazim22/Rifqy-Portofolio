@@ -1817,11 +1817,22 @@ nav.pills {
   border-color: rgba(122, 162, 255, 0.45);
 }
 
+.librarian__bubble--with-media {
+  align-self: stretch;
+  max-width: 100%;
+  width: 100%;
+  padding: 16px 18px 16px;
+}
+
+.librarian__bubble--with-media.librarian__bubble--user {
+  background: linear-gradient(180deg, rgba(122, 162, 255, 0.28), rgba(122, 162, 255, 0.12));
+}
+
 .librarian__bubble-media {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 12px;
-  margin: -12px -16px 12px;
+  margin-bottom: 12px;
 }
 
 .librarian__thumb {

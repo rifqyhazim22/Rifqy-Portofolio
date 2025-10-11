@@ -261,8 +261,15 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
   return (
     <div className="librarian card">
       <div className="librarian__messages">
-        {messages.map((message, index) => (
-          <div key={index} className={`librarian__bubble librarian__bubble--${message.role}`}>
+        {messages.map((message, index) => {
+          const hasMedia = Boolean(message.images && message.images.length);
+          return (
+            <div
+              key={index}
+              className={`librarian__bubble librarian__bubble--${message.role}${
+                hasMedia ? " librarian__bubble--with-media" : ""
+              }`}
+            >
             {message.images && message.images.length ? (
               <div className="librarian__bubble-media">
                 {message.images.map((image, imageIndex) => (
@@ -286,8 +293,9 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
                 </ul>
               </div>
             ) : null}
-          </div>
-        ))}
+            </div>
+          );
+        })}
         {loading ? (
           <div className="librarian__bubble librarian__bubble--assistant">
             <div className="librarian__typing">
