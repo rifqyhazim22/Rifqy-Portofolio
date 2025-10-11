@@ -76,8 +76,8 @@ function buildSystemPrompt(language: "id" | "en", tone: "formal" | "santai" | "d
 
   const lengthRule =
     language === "id"
-      ? "Batasi jawaban maksimal 120 kata atau empat kalimat. Mulai dengan jawaban inti, lanjutkan insight ringkas, dan tawarkan bantuan lanjutan seperlunya."
-      : "Keep the reply under 120 words or four sentences. Lead with the core answer, add concise insight, and offer a follow-up only if useful.";
+      ? "Batasi jawaban maksimal 120 kata atau empat kalimat. Mulai dengan jawaban inti, lanjutkan insight ringkas, tawarkan bantuan lanjutan seperlunya, dan akhiri dengan satu emoji yang pas."
+      : "Keep the reply under 120 words or four sentences. Lead with the core answer, add concise insight, offer follow-up only if useful, and close with one fitting emoji.";
 
   return [
     language === "id"
