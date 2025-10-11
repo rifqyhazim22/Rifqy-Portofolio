@@ -228,11 +228,6 @@ const idDictionary: Dictionary = {
       gallery: [
         {
           href: "mailto:rifqyhazim22@gmail.com",
-          title: "Entropy Inc",
-          sub: "Rancangan ekosistem AI + Web3 dengan tata kelola agen dan utilitas token."
-        },
-        {
-          href: "mailto:rifqyhazim22@gmail.com",
           title: "AI Playbooks",
           sub: "Framework evaluasi prompt, guardrails, dan SOP deployment untuk tim kreator."
         },
@@ -251,7 +246,6 @@ const idDictionary: Dictionary = {
     contact: {
       title: "Contact",
       intro: "Ajak diskusi seputar AI engineering, pengembangan web/app, atau kolaborasi riset.",
-      promo: homeCache.id.promo,
       contacts: [
         { href: "mailto:rifqyhazim22@gmail.com", title: "Email", sub: "rifqyhazim22@gmail.com" },
         { href: "https://wa.me/6281322963566", title: "WhatsApp", sub: "081322963566" },
@@ -438,11 +432,6 @@ const enDictionary: Dictionary = {
       gallery: [
         {
           href: "mailto:rifqyhazim22@gmail.com",
-          title: "Entropy Inc",
-          sub: "AI + Web3 ecosystem blueprint with agent governance and token utility models.",
-        },
-        {
-          href: "mailto:rifqyhazim22@gmail.com",
           title: "AI Playbooks",
           sub: "Prompt evaluation, guardrails, and deployment SOPs for creative teams.",
         },
@@ -461,7 +450,6 @@ const enDictionary: Dictionary = {
     contact: {
       title: "Contact",
       intro: "Reach out for AI engineering, web/app development, or research collaborations.",
-      promo: homeCache.en.promo,
       contacts: [
         { href: "mailto:rifqyhazim22@gmail.com", title: "Email", sub: "rifqyhazim22@gmail.com" },
         { href: "https://wa.me/6281322963566", title: "WhatsApp", sub: "+62 813-2296-3566" },

@@ -38,12 +38,6 @@
     "portraitSrc": "/images/hero.jpg",
     "backgroundSrc": "/images/hero-background.png"
   },
-  "promo": {
-    "title": "Promo Lunch 10K",
-    "body": "Pengunjung yang eksplor situs ini boleh klaim Rp10.000 untuk makan siang. Klik tombol di bawah untuk kirim pesan otomatis ke WhatsApp-ku—biar obrolan kita dimulai dengan sesuatu yang hangat.",
-    "buttonLabel": "Klaim Rp10.000 via WhatsApp ↗",
-    "buttonHref": "https://wa.me/6281322963566?text=Halo%20Rifqy%2C%20aku%20baru%20lihat%20web%20portofoliomu%20dan%20mau%20klaim%20uang%20makan%20siang%20Rp10.000.%20Terima%20kasih!"
-  },
   "quote": {
     "label": "Quote",
     "text": "In the beginning there was dark. Until someone set themselves aflame. Only then did the universe know light."

@@ -11,14 +11,6 @@
         { "label": "Playbooks", "href": "/playbooks" },
         { "label": "Learning Hub", "href": "/learning-hub" }
       ]
-    },
-    {
-      "id": "cta",
-      "title": "Lunch Promo",
-      "summary": "Visitors can claim Rp10.000 for lunch via WhatsApp CTA on the home hero section.",
-      "links": [
-        { "label": "WhatsApp", "href": "https://wa.me/6281322963566" }
-      ]
     }
   ]
 }
