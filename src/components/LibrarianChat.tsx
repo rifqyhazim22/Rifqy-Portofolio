@@ -73,7 +73,7 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
   );
 
   const imageLimit = 3;
-  const maxImageSize = 10 * 1024 * 1024;
+  const maxImageSize = 4 * 1024 * 1024;
 
   useEffect(() => {
     setLanguage(resolveLanguage());
@@ -119,8 +119,8 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
         if (file.size > maxImageSize) {
           rejectedMessage =
             language === "id"
-              ? "Ukuran gambar terlalu besar. Maksimal 10MB."
-              : "Image size is too large. Maximum is 10MB.";
+              ? "Ukuran gambar terlalu besar. Maksimal 4MB."
+              : "Image size is too large. Maximum is 4MB.";
           return;
         }
 
