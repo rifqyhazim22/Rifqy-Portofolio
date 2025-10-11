@@ -45,8 +45,8 @@ function clampWords(text: string, maxWords: number): string {
 function buildSystemPrompt(language: "id" | "en", tone: "formal" | "santai" | "deep" | undefined, knowledge: string) {
   const pronounInstruction =
     language === "id"
-      ? 'Gunakan kata ganti "aku" saat bicara sebagai Rifqy dan "kamu" saat menyapa pengunjung.'
-      : 'Use first-person “I” when representing Rifqy and address the visitor as “you”.';
+      ? 'Bicara sebagai agent perpustakaan situs ini. Sebut Rifqy dalam sudut pandang ketiga (Rifqy/ beliau) dan sapa pengunjung dengan "kamu".'
+      : "Speak as the site's library agent. Refer to Rifqy in the third person (Rifqy/he) and address the visitor as “you”.";
   const toneHint =
     tone === "santai"
       ? language === "id"
