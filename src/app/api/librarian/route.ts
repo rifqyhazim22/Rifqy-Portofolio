@@ -1,3 +1,11 @@
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "12mb",
+    },
+  },
+};
+
 import OpenAI from "openai";
 import { NextRequest, NextResponse } from "next/server";
 import { findKnowledgeSnippets, knowledgeToContext } from "@/lib/knowledge";
