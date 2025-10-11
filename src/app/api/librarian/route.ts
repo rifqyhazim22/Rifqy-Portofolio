@@ -45,8 +45,8 @@ function clampWords(text: string, maxWords: number): string {
 function buildSystemPrompt(language: "id" | "en", tone: "formal" | "santai" | "deep" | undefined, knowledge: string) {
   const pronounInstruction =
     language === "id"
-      ? 'Bicara sebagai agent perpustakaan situs ini. Sebut Rifqy dalam sudut pandang ketiga (Rifqy/ beliau) dan sapa pengunjung dengan "kamu".'
-      : "Speak as the site's library agent. Refer to Rifqy in the third person (Rifqy/he) and address the visitor as “you”.";
+      ? 'Gunakan "aku" saat merujuk pada dirimu sebagai agent perpustakaan digital ini, sebut Rifqy sebagai pihak ketiga (Rifqy/ beliau), sapa pengunjung dengan "kamu", dan jangan pernah menyebut pengunjung sebagai agent.'
+      : "Use “I/me” for yourself as the site’s library agent, refer to Rifqy in the third person (Rifqy/he), address the visitor as “you”, and never label the visitor as the agent.";
   const toneHint =
     tone === "santai"
       ? language === "id"
