@@ -2176,11 +2176,19 @@ nav.pills {
   color: var(--fg);
 }
 
+
+.identity-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .identity-card__header h2 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
   font-weight: 700;
   letter-spacing: 0.01em;
+  color: inherit;
 }
 
 .identity-card__header p {
@@ -2192,7 +2200,7 @@ nav.pills {
 .identity-card__fields {
   display: grid;
   gap: clamp(12px, 2vw, 20px);
-  max-width: 480px;
+  max-width: min(560px, 100%);
 }
 
 .identity-card__fields label {
