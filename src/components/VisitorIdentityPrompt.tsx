@@ -24,17 +24,15 @@ export const VisitorIdentityPrompt = ({
     language === "id"
       ? {
           title: "Sebelum mulai, kenalan dulu yuk?",
-          nameLabel: "Nama kamu",
-          sourceLabel: "Kamu tahu website ini dari mana?",
+          nameLabel: "1. Nama kamu?",
+          sourceLabel: "2. Kamu tahu website ini dari mana?",
           cta: "Mulai ngobrol",
-          hint: "Data ini kami simpan agar Rifqy tahu siapa saja yang berkunjung. Tidak akan dibagikan ke pihak lain.",
         }
       : {
           title: "Quick check-in before we start",
-          nameLabel: "Your name",
-          sourceLabel: "How did you find this site?",
+          nameLabel: "1. What's your name?",
+          sourceLabel: "2. Where did you discover this site?",
           cta: "Start chatting",
-          hint: "We store this so Rifqy knows who is visiting. We will not share it externally.",
         };
 
   return (
@@ -43,34 +41,31 @@ export const VisitorIdentityPrompt = ({
         event.preventDefault();
         onSubmit();
       }}
-      className="flex h-full flex-col items-center justify-center gap-6 rounded-3xl border border-white/10 bg-slate-950/80 p-8 text-center text-white shadow-xl"
+      className="identity-card"
     >
-      <div>
-        <h2 className="text-2xl font-semibold text-white">{copy.title}</h2>
-        <p className="mt-2 text-sm text-white/70">{copy.hint}</p>
+      <div className="identity-card__header">
+        <h2>{copy.title}</h2>
       </div>
-      <div className="w-full space-y-4">
-        <label className="block text-left text-sm font-medium text-white/70">
-          {copy.nameLabel}
+      <div className="identity-card__fields">
+        <label>
+          <span>{copy.nameLabel}</span>
           <input
             value={identity.name}
             onChange={(event) =>
               onChange({ ...identity, name: event.target.value })
             }
-            className="mt-1 w-full rounded-md border border-white/10 bg-slate-900 px-3 py-2 text-sm text-white focus:border-accent focus:outline-none"
             placeholder={language === "id" ? "Nama lengkap atau panggilan" : "Full name or nickname"}
             autoComplete="name"
             required
           />
         </label>
-        <label className="block text-left text-sm font-medium text-white/70">
-          {copy.sourceLabel}
+        <label>
+          <span>{copy.sourceLabel}</span>
           <input
             value={identity.source}
             onChange={(event) =>
               onChange({ ...identity, source: event.target.value })
             }
-            className="mt-1 w-full rounded-md border border-white/10 bg-slate-900 px-3 py-2 text-sm text-white focus:border-accent focus:outline-none"
             placeholder={
               language === "id"
                 ? "Misal: Instagram, teman, event, dsb."
@@ -81,17 +76,11 @@ export const VisitorIdentityPrompt = ({
         </label>
       </div>
       {error && (
-        <div className="w-full rounded-xl border border-orange-300/40 bg-orange-500/10 px-4 py-3 text-sm text-orange-100">
-          {error}
-        </div>
+        <div className="identity-card__error">{error}</div>
       )}
-      <button
-        type="submit"
-        className="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-slate-900 transition hover:opacity-80"
-      >
+      <button type="submit" className="identity-card__submit">
         {copy.cta}
       </button>
     </form>
   );
 };
-
