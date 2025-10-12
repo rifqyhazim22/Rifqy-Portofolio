@@ -5,6 +5,7 @@ import { loadAboutContent } from "@/content/about";
 import NextSteps from "@/components/NextSteps";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getCurrentLanguage } from "@/lib/language";
+import { fetchPublishedTestimonials } from "@/lib/supabase/content";
 
 export default async function AboutPage() {
   const language = await getCurrentLanguage();
@@ -12,6 +13,15 @@ export default async function AboutPage() {
   const aboutContent = loadAboutContent(language);
   const { nextStepsHeading, navLabels } = dictionary;
   const { hero, philosophy, story, timeline, capabilities, values, testimonials } = aboutContent;
+  const supabaseTestimonials = await fetchPublishedTestimonials();
+
+  const testimonialItems = supabaseTestimonials.length
+    ? supabaseTestimonials.map((item) => ({
+        name: item.name,
+        quote: item.quote,
+        role: [item.role, item.company].filter(Boolean).join(" • "),
+      }))
+    : testimonials.items;
 
   return (
     <div className="about">
@@ -61,10 +71,10 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {testimonials.items.length > 0 && testimonials.heading && (
+      {testimonialItems.length > 0 && testimonials.heading && (
         <section className="about__section" data-animate>
           <h2 className="h2">{testimonials.heading}</h2>
-          <TestimonialsDeck items={testimonials.items} cta={testimonials.cta} />
+          <TestimonialsDeck items={testimonialItems} cta={testimonials.cta} />
         </section>
       )}
 

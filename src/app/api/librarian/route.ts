@@ -9,6 +9,7 @@ export const config = {
 import OpenAI from "openai";
 import { NextRequest, NextResponse } from "next/server";
 import { findKnowledgeSnippets, knowledgeToContext } from "@/lib/knowledge";
+import { createSupabaseServiceClient } from "@/lib/supabase";
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -28,6 +29,12 @@ interface LibrarianRequest {
   language?: "id" | "en";
   tone?: "formal" | "santai" | "deep";
   images?: ImageAttachment[];
+  identity?: {
+    name?: string;
+    source?: string;
+    email?: string;
+  };
+  page?: string;
 }
 
 const DEFAULT_LANGUAGE: "id" | "en" = "id";
@@ -131,6 +138,39 @@ function prepareMessages(messages: Message[], images: ImageAttachment[] | undefi
   return prepared;
 }
 
+type AgentSessionLog = {
+  identity?: LibrarianRequest["identity"];
+  intent?: string;
+  language: "id" | "en";
+  tone?: "formal" | "santai" | "deep";
+  page?: string;
+};
+
+async function logAgentSession(log: AgentSessionLog) {
+  if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    return;
+  }
+
+  try {
+    const supabase = createSupabaseServiceClient();
+    await supabase.from("agent_sessions").insert({
+      visitor_name: log.identity?.name?.slice(0, 160) ?? null,
+      visitor_email: log.identity?.email?.slice(0, 160) ?? null,
+      referrer: (log.identity?.source ?? log.page)?.slice(0, 255) ?? null,
+      agent_type: "librarian",
+      intent: log.intent ? clampWords(log.intent, 32) : null,
+      metadata: {
+        page: log.page ?? null,
+        language: log.language,
+        tone: log.tone ?? null,
+      },
+      created_at: new Date().toISOString(),
+    });
+  } catch (error) {
+    console.error("Failed to log agent session", error);
+  }
+}
+
 export async function POST(request: NextRequest) {
   const body = (await request.json().catch(() => null)) as LibrarianRequest | null;
 
@@ -175,6 +215,14 @@ export async function POST(request: NextRequest) {
     }
 
     const message = clampWords(response.output_text.trim(), 140);
+
+    await logAgentSession({
+      identity: body.identity,
+      intent: lastUserMessage?.content,
+      language,
+      tone: body.tone,
+      page: body.page,
+    });
 
     return NextResponse.json({
       message,

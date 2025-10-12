@@ -2100,6 +2100,62 @@ nav.pills {
   flex-wrap: wrap;
 }
 
+.contact__form {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact__form-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contact__form-body {
+  display: grid;
+  gap: 16px;
+}
+
+.contact__form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.95rem;
+  color: var(--fg);
+}
+
+.contact__form-field input,
+.contact__form-field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--stroke);
+  background: var(--card);
+  color: var(--fg);
+  font: inherit;
+  resize: vertical;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.contact__form-field input:focus,
+.contact__form-field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 28%, transparent);
+}
+
+.contact__form-error {
+  color: #ffb4b4;
+  font-size: 0.8rem;
+}
+
+.contact__form-feedback {
+  font-size: 0.9rem;
+  color: var(--accent);
+}
+
 @media (max-width: 720px) {
   .floating-date {
     top: calc(var(--floating-date-mobile-top, 190px));

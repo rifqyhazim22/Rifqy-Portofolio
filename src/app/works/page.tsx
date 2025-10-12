@@ -1,11 +1,21 @@
 import NextSteps from "@/components/NextSteps";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getCurrentLanguage } from "@/lib/language";
+import { fetchFeaturedProjects } from "@/lib/supabase/content";
 
 export default async function WorksPage() {
   const language = await getCurrentLanguage();
   const dictionary = getDictionary(language);
   const { works, nextStepsHeading, navLabels } = dictionary;
+  const featuredProjects = await fetchFeaturedProjects();
+
+  const gallery = featuredProjects.length
+    ? featuredProjects.map((project) => ({
+        href: project.link_url ?? (project.slug ? `/projects/${project.slug}` : "#"),
+        title: project.title,
+        sub: project.tagline ?? project.description ?? "",
+      }))
+    : works.gallery;
 
   return (
     <div className="works">
@@ -21,7 +31,7 @@ export default async function WorksPage() {
       </div>
 
       <div className="grid grid-2" style={{ marginTop: "6px" }} data-animate>
-        {works.gallery.map((item) => (
+        {gallery.map((item) => (
           <a key={item.title} className="card" href={item.href} target="_blank" rel="noopener">
             <div className="k">{item.title}</div>
             <div className="sub">{item.sub}</div>

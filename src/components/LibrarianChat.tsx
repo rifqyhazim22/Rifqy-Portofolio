@@ -8,6 +8,10 @@ import {
   type ChangeEvent,
   type KeyboardEvent,
 } from "react";
+import {
+  VisitorIdentityPrompt,
+  type VisitorIdentity,
+} from "./VisitorIdentityPrompt";
 
 type Language = "id" | "en";
 type Tone = "formal" | "santai" | "deep";
@@ -66,6 +70,13 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
   const [loading, setLoading] = useState(false);
   const [pendingImages, setPendingImages] = useState<ImageDraft[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [identity, setIdentity] = useState<VisitorIdentity>({
+    name: "",
+    source: "",
+  });
+  const [identityReady, setIdentityReady] = useState(false);
+  const [identityError, setIdentityError] = useState<string | null>(null);
+  const [checkingIdentity, setCheckingIdentity] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const placeholders = useMemo(
@@ -99,10 +110,94 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
   }, []);
 
   useEffect(() => {
+    let cancelled = false;
+
+    const bootstrapIdentity = async () => {
+      try {
+        const response = await fetch("/api/owner/session", { cache: "no-store" });
+        const data = (await response.json().catch(() => null)) as
+          | { isOwner?: boolean }
+          | null;
+        if (!cancelled && data?.isOwner) {
+          setIdentity({ name: "Owner", source: "internal" });
+          setIdentityReady(true);
+          setCheckingIdentity(false);
+          return;
+        }
+      } catch {
+        // ignore—likely offline or not logged in
+      }
+
+      if (cancelled) return;
+
+      if (typeof window !== "undefined") {
+        const stored = window.localStorage.getItem("fi-visitor-identity");
+        if (stored) {
+          try {
+            const parsed = JSON.parse(stored) as VisitorIdentity;
+            if (parsed?.name && parsed?.source) {
+              setIdentity({
+                name: parsed.name,
+                source: parsed.source,
+              });
+              setIdentityReady(true);
+            }
+          } catch {
+            // remove corrupt data
+            window.localStorage.removeItem("fi-visitor-identity");
+          }
+        }
+      }
+
+      setCheckingIdentity(false);
+    };
+
+    bootstrapIdentity();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
     if (!messagesEndRef.current) return;
     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
+  const persistIdentity = (nextIdentity: VisitorIdentity) => {
+    setIdentity(nextIdentity);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(
+        "fi-visitor-identity",
+        JSON.stringify(nextIdentity),
+      );
+    }
+  };
+
+  const handleIdentityChange = (nextIdentity: VisitorIdentity) => {
+    setIdentity(nextIdentity);
+    if (identityError) {
+      setIdentityError(null);
+    }
+  };
+
+  const handleIdentitySubmit = () => {
+    const trimmedName = identity.name.trim();
+    const trimmedSource = identity.source.trim();
+
+    if (!trimmedName || !trimmedSource) {
+      setIdentityError(
+        language === "id"
+          ? "Nama dan sumber informasi wajib diisi."
+          : "Name and discovery source are required.",
+      );
+      return;
+    }
+
+    persistIdentity({ name: trimmedName, source: trimmedSource });
+    setIdentityReady(true);
+    setIdentityError(null);
+  };
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -169,7 +264,17 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
       return;
     }
 
+    if (!identityReady) {
+      setIdentityError(
+        language === "id"
+          ? "Kenalan dulu yuk—isi nama dan sumbernya."
+          : "Please share your name and how you found the site first.",
+      );
+      return;
+    }
+
     setError(null);
+    setIdentityError(null);
 
     const userContent =
       trimmed ||
@@ -210,6 +315,16 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
             mimeType: image.mimeType,
             name: image.name,
           })),
+          identity: identityReady
+            ? {
+                name: identity.name,
+                source: identity.source,
+              }
+            : undefined,
+          page:
+            typeof window !== "undefined"
+              ? window.location.pathname
+              : undefined,
         }),
       });
 
@@ -261,6 +376,36 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
       handleSubmit();
     }
   };
+
+  if (checkingIdentity) {
+    return (
+      <div className="librarian card">
+        <div className="librarian__messages">
+          <div className="librarian__bubble librarian__bubble--assistant">
+            <div className="librarian__typing">
+              <span />
+              <span />
+              <span />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!identityReady) {
+    return (
+      <div className="librarian card">
+        <VisitorIdentityPrompt
+          language={language}
+          identity={identity}
+          onChange={handleIdentityChange}
+          onSubmit={handleIdentitySubmit}
+          error={identityError}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="librarian card">

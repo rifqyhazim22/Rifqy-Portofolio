@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import navigationEmbeddings from "@/content/navigation/embeddings.json";
 import navigationConfig from "@/content/navigation/config.json";
 import { findKnowledgeSnippets, knowledgeToContext } from "@/lib/knowledge";
+import { createSupabaseServiceClient } from "@/lib/supabase";
 
 const MAX_OUTPUT_TOKENS = 3200;
 
@@ -36,6 +37,11 @@ type AgentRequest = {
   language?: "id" | "en";
   location?: string;
   tone?: "formal" | "santai" | "deep";
+  identity?: {
+    name?: string;
+    source?: string;
+    email?: string;
+  };
 };
 
 interface RouteConfig {
@@ -162,6 +168,42 @@ function clampWords(text: string, maxWords: number): string {
     return trimmed;
   }
   return `${words.slice(0, maxWords).join(" ")}…`;
+}
+
+type AgentSessionLogInput = {
+  identity?: AgentRequest["identity"];
+  intent?: string;
+  language: "id" | "en";
+  tone: "formal" | "santai" | "deep";
+  location?: string | null;
+  navigation?: string | null;
+};
+
+async function logNavigatorSession(input: AgentSessionLogInput) {
+  if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    return;
+  }
+
+  try {
+    const supabase = createSupabaseServiceClient();
+    await supabase.from("agent_sessions").insert({
+      visitor_name: input.identity?.name?.slice(0, 160) ?? null,
+      visitor_email: input.identity?.email?.slice(0, 160) ?? null,
+      referrer:
+        input.identity?.source?.slice(0, 255) ?? input.location?.slice(0, 255) ?? null,
+      agent_type: "navigator",
+      intent: input.intent ? clampWords(input.intent, 32) : null,
+      metadata: {
+        location: input.location ?? null,
+        navigation: input.navigation ?? null,
+        language: input.language,
+        tone: input.tone,
+      },
+      created_at: new Date().toISOString(),
+    });
+  } catch (error) {
+    console.error("Failed to log navigator session", error);
+  }
 }
 
 function normalizePath(value: string | null): string | null {
@@ -387,7 +429,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON payload." }, { status: 400 });
   }
 
-  const { messages = [], language = "id", location, tone = "formal" } = payload;
+  const { messages = [], language = "id", location, tone = "formal", identity } = payload;
   const normalizedTone = tone === "santai" || tone === "deep" ? tone : "formal";
 
   const locationDescriptions: Record<string, string> = {
@@ -461,6 +503,15 @@ export async function POST(request: NextRequest) {
     const navigation = await resolveNavigationTarget(rawNavigation, trimmedMessages);
     const cleanedText = fullText.replace(/\[\[NAVIGATE:[^\]]+\]\]/gi, "").trim();
     const trimmedText = clampWords(cleanedText, 100);
+
+    await logNavigatorSession({
+      identity,
+      intent: lastUserMessage?.content,
+      language,
+      tone: normalizedTone,
+      location: location ?? null,
+      navigation,
+    });
 
     return NextResponse.json({ message: trimmedText, navigation });
   } catch (error) {

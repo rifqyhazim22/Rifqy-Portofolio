@@ -1,6 +1,7 @@
 import NextSteps from "@/components/NextSteps";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getCurrentLanguage } from "@/lib/language";
+import ContactForm from "@/components/ContactForm";
 
 export default async function ContactPage() {
   const language = await getCurrentLanguage();
@@ -30,6 +31,8 @@ export default async function ContactPage() {
           </a>
         ))}
       </div>
+
+      <ContactForm language={language} />
 
       <div className="hr" data-animate />
 

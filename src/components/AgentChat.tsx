@@ -2,6 +2,10 @@
 
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import {
+  VisitorIdentityPrompt,
+  type VisitorIdentity,
+} from "./VisitorIdentityPrompt";
 
 interface Message {
   role: "user" | "assistant";
@@ -15,6 +19,7 @@ interface AgentResponse {
 }
 
 const STORAGE_KEY = "rh-agent-chat-session";
+const IDENTITY_STORAGE_KEY = "fi-visitor-identity";
 
 function resolveLanguage(): "id" | "en" {
   if (typeof document === "undefined") {
@@ -45,6 +50,13 @@ export default function AgentChat() {
   const [language, setLanguage] = useState<"id" | "en">("id");
   const [tone, setTone] = useState<"formal" | "santai" | "deep">("formal");
   const [allowHover, setAllowHover] = useState(false);
+  const [identity, setIdentity] = useState<VisitorIdentity>({
+    name: "",
+    source: "",
+  });
+  const [identityReady, setIdentityReady] = useState(false);
+  const [identityError, setIdentityError] = useState<string | null>(null);
+  const [checkingIdentity, setCheckingIdentity] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const hoverTimeout = useRef<number | null>(null);
 
@@ -91,6 +103,52 @@ export default function AgentChat() {
     window.addEventListener("tonechange", handleToneChange as EventListener);
     return () => {
       window.removeEventListener("tonechange", handleToneChange as EventListener);
+    };
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const bootstrapIdentity = async () => {
+      try {
+        const response = await fetch("/api/owner/session", { cache: "no-store" });
+        const data = (await response.json().catch(() => null)) as
+          | { isOwner?: boolean }
+          | null;
+        if (!cancelled && data?.isOwner) {
+          setIdentity({ name: "Owner", source: "internal" });
+          setIdentityReady(true);
+          setCheckingIdentity(false);
+          return;
+        }
+      } catch {
+        // ignore
+      }
+
+      if (cancelled) return;
+
+      if (typeof window !== "undefined") {
+        const stored = window.localStorage.getItem(IDENTITY_STORAGE_KEY);
+        if (stored) {
+          try {
+            const parsed = JSON.parse(stored) as VisitorIdentity;
+            if (parsed?.name && parsed?.source) {
+              setIdentity({ name: parsed.name, source: parsed.source });
+              setIdentityReady(true);
+            }
+          } catch {
+            window.localStorage.removeItem(IDENTITY_STORAGE_KEY);
+          }
+        }
+      }
+
+      setCheckingIdentity(false);
+    };
+
+    bootstrapIdentity();
+
+    return () => {
+      cancelled = true;
     };
   }, []);
 
@@ -162,9 +220,53 @@ export default function AgentChat() {
     }
   }, []);
 
+  const persistIdentity = (nextIdentity: VisitorIdentity) => {
+    setIdentity(nextIdentity);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(
+        IDENTITY_STORAGE_KEY,
+        JSON.stringify(nextIdentity),
+      );
+    }
+  };
+
+  const handleIdentityChange = (nextIdentity: VisitorIdentity) => {
+    setIdentity(nextIdentity);
+    if (identityError) {
+      setIdentityError(null);
+    }
+  };
+
+  const handleIdentitySubmit = () => {
+    const trimmedName = identity.name.trim();
+    const trimmedSource = identity.source.trim();
+
+    if (!trimmedName || !trimmedSource) {
+      setIdentityError(
+        language === "en"
+          ? "Please share your name and how you found the site."
+          : "Nama dan sumber kunjungan wajib diisi.",
+      );
+      return;
+    }
+
+    persistIdentity({ name: trimmedName, source: trimmedSource });
+    setIdentityReady(true);
+    setIdentityError(null);
+  };
+
   const handleSubmit = async () => {
     const trimmed = input.trim();
     if (!trimmed || loading) return;
+
+    if (!identityReady) {
+      setIdentityError(
+        language === "en"
+          ? "Introduce yourself first so I can keep track."
+          : "Kenalan dulu yuk—isi nama dan sumbernya.",
+      );
+      return;
+    }
 
     const newMessage: Message = { role: "user", content: trimmed };
     const history = [...messages, newMessage];
@@ -177,7 +279,13 @@ export default function AgentChat() {
       const response = await fetch("/api/agent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: history, language, location: pathname, tone }),
+        body: JSON.stringify({
+          messages: history,
+          language,
+          location: pathname,
+          tone,
+          identity: identityReady ? identity : undefined,
+        }),
       });
 
       const data = (await response.json()) as AgentResponse;
@@ -271,13 +379,8 @@ export default function AgentChat() {
             </button>
           </div>
 
-          <div className="agent__messages">
-            {messages.map((message, index) => (
-              <div key={index} className={`agent__message agent__message--${message.role}`}>
-                <div>{message.content}</div>
-              </div>
-            ))}
-            {loading && (
+          {checkingIdentity ? (
+            <div className="agent__messages">
               <div className="agent__message agent__message--assistant">
                 <div className="agent__typing">
                   <span />
@@ -285,22 +388,51 @@ export default function AgentChat() {
                   <span />
                 </div>
               </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
+            </div>
+          ) : !identityReady ? (
+            <div className="agent__identity" style={{ height: "100%" }}>
+              <VisitorIdentityPrompt
+                language={language}
+                identity={identity}
+                onChange={handleIdentityChange}
+                onSubmit={handleIdentitySubmit}
+                error={identityError}
+              />
+            </div>
+          ) : (
+            <>
+              <div className="agent__messages">
+                {messages.map((message, index) => (
+                  <div key={index} className={`agent__message agent__message--${message.role}`}>
+                    <div>{message.content}</div>
+                  </div>
+                ))}
+                {loading && (
+                  <div className="agent__message agent__message--assistant">
+                    <div className="agent__typing">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                  </div>
+                )}
+                <div ref={messagesEndRef} />
+              </div>
 
-          <div className="agent__composer">
-            <textarea
-              value={input}
-              onChange={(event) => setInput(event.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder={placeholders[language]}
-              rows={3}
-            />
-            <button type="button" className="pill agent__send" onClick={handleSubmit} disabled={loading}>
-              {language === "en" ? "Send" : "Kirim"}
-            </button>
-          </div>
+              <div className="agent__composer">
+                <textarea
+                  value={input}
+                  onChange={(event) => setInput(event.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder={placeholders[language]}
+                  rows={3}
+                />
+                <button type="button" className="pill agent__send" onClick={handleSubmit} disabled={loading}>
+                  {language === "en" ? "Send" : "Kirim"}
+                </button>
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>
