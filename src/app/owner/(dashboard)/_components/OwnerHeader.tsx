@@ -21,16 +21,16 @@ export const OwnerHeader = ({ email }: OwnerHeaderProps) => {
   };
 
   return (
-    <header className="sticky top-0 z-20 flex items-center justify-between border-b border-white/10 bg-slate-950/70 px-6 py-4 backdrop-blur">
+    <header className="owner-header">
       <div>
-        <p className="text-sm font-medium text-white/70">Signed in as</p>
-        <p className="font-semibold text-white">{email ?? "Owner"}</p>
+        <p>Owner session</p>
+        <strong>{email ?? "Owner"}</strong>
       </div>
       <button
         type="button"
         onClick={handleSignOut}
         disabled={isPending}
-        className="rounded-md border border-white/20 px-4 py-2 text-sm font-medium text-white transition hover:border-white/40 hover:text-white/80 disabled:cursor-not-allowed disabled:border-white/10 disabled:text-white/40"
+        className="owner-header__signout"
       >
         {isPending ? "Signing out…" : "Sign out"}
       </button>

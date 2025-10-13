@@ -22,7 +22,7 @@ type TestimonialListProps = {
   testimonials: TestimonialRecord[];
 };
 
-const emptyForm: Partial<TestimonialRecord> = {
+const EMPTY_FORM: Partial<TestimonialRecord> = {
   name: "",
   role: "",
   company: "",
@@ -34,23 +34,22 @@ const emptyForm: Partial<TestimonialRecord> = {
 
 export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [formState, setFormState] = useState<Partial<TestimonialRecord>>(
-    emptyForm,
-  );
+  const [formState, setFormState] = useState<Partial<TestimonialRecord>>(EMPTY_FORM);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
   const resetForm = () => {
     setSelectedId(null);
-    setFormState(emptyForm);
+    setFormState(EMPTY_FORM);
+    setFeedback(null);
   };
 
   const handleSelect = (id: string) => {
     const record = testimonials.find((item) => item.id === id);
-    if (record) {
-      setSelectedId(record.id);
-      setFormState(record);
-    }
+    if (!record) return;
+    setSelectedId(record.id);
+    setFormState(record);
+    setFeedback(null);
   };
 
   const handleSubmit = () => {
@@ -89,6 +88,7 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
 
   const handleDelete = (id: string) => {
     if (!confirm("Delete this testimonial?")) return;
+
     startTransition(async () => {
       try {
         await deleteTestimonialAction(id);
@@ -105,142 +105,116 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
   };
 
   return (
-    <section className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-slate-900/40">
-      <header className="mb-4 flex items-center justify-between gap-4">
+    <section className="owner-panel owner-panel--grid">
+      <header>
         <div>
-          <h2 className="text-xl font-semibold text-white">Testimonials</h2>
-          <p className="text-sm text-white/60">
-            Capture social proof and control publishing state.
-          </p>
+          <h3>Testimonials</h3>
+          <p>Kelola social proof untuk diperlihatkan di publik.</p>
         </div>
-        <button
-          type="button"
-          onClick={resetForm}
-          className="rounded-md border border-white/15 px-3 py-1.5 text-sm text-white/70 transition hover:border-white/30 hover:text-white"
-        >
-          + New testimonial
+        <button type="button" onClick={resetForm} className="owner-panel__secondary">
+          {selectedId ? "Reset form" : "+ New testimonial"}
         </button>
       </header>
 
-      <div className="grid gap-6 md:grid-cols-[320px_1fr]">
-        <ul className="space-y-2 overflow-auto rounded-xl border border-white/10 bg-slate-950/40 p-3 max-h-[320px]">
+      <div className="owner-panel__body">
+        <ul className="owner-panel__list">
           {testimonials.map((item) => (
             <li key={item.id}>
               <button
                 type="button"
                 onClick={() => handleSelect(item.id)}
-                className={`w-full rounded-lg px-3 py-2 text-left text-sm transition ${
-                  selectedId === item.id
-                    ? "bg-accent/80 text-slate-950"
-                    : "bg-white/5 text-white/80 hover:bg-white/10"
+                className={`owner-panel__list-item ${
+                  selectedId === item.id ? "owner-panel__list-item--active" : ""
                 }`}
               >
-                <div className="flex items-center justify-between gap-2">
-                  <span className="font-medium">{item.name}</span>
-                  <span className="text-xs uppercase tracking-wide text-white/60">
-                    {item.status ?? "draft"}
-                  </span>
+                <div>
+                  <span>{item.name}</span>
+                  <small>{item.status ?? "draft"}</small>
                 </div>
-                {(item.role || item.company) && (
-                  <p className="mt-1 text-xs text-white/70">
-                    {[item.role, item.company].filter(Boolean).join(" · ")}
-                  </p>
-                )}
+                {(item.role || item.company) ? (
+                  <p>{[item.role, item.company].filter(Boolean).join(" • ")}</p>
+                ) : null}
               </button>
             </li>
           ))}
-          {!testimonials.length && (
-            <li className="rounded-lg bg-white/5 px-3 py-2 text-sm text-white/60">
-              No testimonials yet
-            </li>
-          )}
+          {!testimonials.length && <li className="owner-panel__empty">No testimonials yet</li>}
         </ul>
 
-        <div className="space-y-4">
-          <div className="grid gap-3 md:grid-cols-2">
-            <label className="text-sm font-medium text-white/70">
-              Name
+        <div className="owner-panel__form">
+          <div className="owner-panel__grid owner-panel__grid--two">
+            <label className="owner-panel__field">
+              <span>Name</span>
               <input
                 value={formState.name ?? ""}
                 onChange={(event) =>
                   setFormState((prev) => ({ ...prev, name: event.target.value }))
                 }
-                className="mt-1 w-full rounded-md border border-white/10 bg-slate-900 px-3 py-2 text-sm text-white focus:border-accent focus:outline-none"
                 placeholder="Customer name"
               />
             </label>
-            <label className="text-sm font-medium text-white/70">
-              Role
+            <label className="owner-panel__field">
+              <span>Role</span>
               <input
                 value={formState.role ?? ""}
                 onChange={(event) =>
                   setFormState((prev) => ({ ...prev, role: event.target.value }))
                 }
-                className="mt-1 w-full rounded-md border border-white/10 bg-slate-900 px-3 py-2 text-sm text-white focus:border-accent focus:outline-none"
                 placeholder="Title"
               />
             </label>
           </div>
 
-          <label className="text-sm font-medium text-white/70">
-            Company
+          <label className="owner-panel__field">
+            <span>Company</span>
             <input
               value={formState.company ?? ""}
               onChange={(event) =>
                 setFormState((prev) => ({ ...prev, company: event.target.value }))
               }
-              className="mt-1 w-full rounded-md border border-white/10 bg-slate-900 px-3 py-2 text-sm text-white focus:border-accent focus:outline-none"
               placeholder="Company or affiliation"
             />
           </label>
 
-          <label className="text-sm font-medium text-white/70">
-            Quote
+          <label className="owner-panel__field">
+            <span>Quote</span>
             <textarea
               value={formState.quote ?? ""}
               onChange={(event) =>
                 setFormState((prev) => ({ ...prev, quote: event.target.value }))
               }
               rows={4}
-              className="mt-1 w-full rounded-md border border-white/10 bg-slate-900 px-3 py-2 text-sm text-white focus:border-accent focus:outline-none"
               placeholder="Testimonial content"
             />
           </label>
 
-          <div className="grid gap-3 md:grid-cols-2">
-            <label className="text-sm font-medium text-white/70">
-              Avatar URL
+          <div className="owner-panel__grid owner-panel__grid--two">
+            <label className="owner-panel__field">
+              <span>Avatar URL</span>
               <input
                 value={formState.avatar_url ?? ""}
                 onChange={(event) =>
-                  setFormState((prev) => ({
-                    ...prev,
-                    avatar_url: event.target.value,
-                  }))
+                  setFormState((prev) => ({ ...prev, avatar_url: event.target.value }))
                 }
-                className="mt-1 w-full rounded-md border border-white/10 bg-slate-900 px-3 py-2 text-sm text-white focus:border-accent focus:outline-none"
                 placeholder="/images/customer.png"
               />
             </label>
-
-            <label className="text-sm font-medium text-white/70">
-              Display order
+            <label className="owner-panel__field">
+              <span>Display order</span>
               <input
                 type="number"
                 value={formState.display_order ?? 0}
                 onChange={(event) =>
                   setFormState((prev) => ({
                     ...prev,
-                    display_order: Number(event.target.value ?? 0),
+                    display_order: Number(event.target.value),
                   }))
                 }
-                className="mt-1 w-full rounded-md border border-white/10 bg-slate-900 px-3 py-2 text-sm text-white focus:border-accent focus:outline-none"
               />
             </label>
           </div>
 
-          <label className="text-sm font-medium text-white/70">
-            Status
+          <label className="owner-panel__field">
+            <span>Status</span>
             <select
               value={formState.status ?? "draft"}
               onChange={(event) =>
@@ -249,28 +223,21 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
                   status: event.target.value as "draft" | "published",
                 }))
               }
-              className="mt-1 w-full rounded-md border border-white/10 bg-slate-900 px-3 py-2 text-sm text-white focus:border-accent focus:outline-none"
             >
               <option value="draft">Draft</option>
               <option value="published">Published</option>
             </select>
           </label>
 
-          <div className="flex items-center justify-between gap-3">
-            <div className="text-sm text-white/60">
-              {feedback && (
-                <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white">
-                  {feedback}
-                </span>
-              )}
-            </div>
-            <div className="flex items-center gap-3">
+          <div className="owner-panel__footer">
+            {feedback && <span>{feedback}</span>}
+            <div className="owner-panel__actions">
               {selectedId && (
                 <button
                   type="button"
                   onClick={() => handleDelete(selectedId)}
                   disabled={isPending}
-                  className="rounded-md border border-red-400/40 px-3 py-2 text-sm font-medium text-red-300 transition hover:border-red-300 hover:bg-red-500/10 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="owner-panel__secondary owner-panel__secondary--danger"
                 >
                   Delete
                 </button>
@@ -279,7 +246,7 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
                 type="button"
                 onClick={handleSubmit}
                 disabled={isPending}
-                className="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-slate-900 transition hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-60"
+                className="owner-panel__primary"
               >
                 {isPending
                   ? "Saving…"
@@ -294,4 +261,3 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
     </section>
   );
 };
-

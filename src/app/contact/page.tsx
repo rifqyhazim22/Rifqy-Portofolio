@@ -33,18 +33,10 @@ export default async function ContactPage() {
       </div>
 
       <section className="card contact__portal" data-animate>
-        <div className="contact__portal-content">
-          <div>
-            <h2>Owner dashboard portal</h2>
-            <p>
-              Masuk ke area privat untuk mengedit konten, memeriksa log agent, dan melihat
-              pesan yang masuk.
-            </p>
-          </div>
-          <a className="pill contact__portal-button" href="/owner/login">
-            Buka dashboard ↗
-          </a>
-        </div>
+        <h2>{language === "id" ? "Portal Owner" : "Owner Portal"}</h2>
+        <a className="pill contact__portal-button" href="/owner/login">
+          {language === "id" ? "Masuk dashboard" : "Open dashboard"} ↗
+        </a>
       </section>
 
       <ContactForm language={language} />

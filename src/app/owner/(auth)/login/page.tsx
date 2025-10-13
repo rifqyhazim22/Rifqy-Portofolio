@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { getCurrentLanguage } from "@/lib/language";
 import { LoginForm } from "./ui/LoginForm";
 
 export const metadata: Metadata = {
@@ -9,55 +10,66 @@ type LoginPageProps = {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 };
 
-const reasonCopy: Record<string, string> = {
-  "signin-required": "Please sign in to access the owner dashboard.",
-  unauthorized: "Your account is not approved for owner access.",
+const reasonCopy: Record<string, { id: string; en: string }> = {
+  "signin-required": {
+    id: "Silakan masuk terlebih dahulu.",
+    en: "Please sign in to access the owner dashboard.",
+  },
+  unauthorized: {
+    id: "Akun kamu belum diberi akses owner.",
+    en: "Your account is not approved for owner access.",
+  },
 };
 
-const statusCopy: Record<string, string> = {
-  "signed-out": "You have been signed out.",
+const statusCopy: Record<string, { id: string; en: string }> = {
+  "signed-out": {
+    id: "Kamu sudah keluar dari dashboard.",
+    en: "You have been signed out.",
+  },
 };
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
   const resolved = (await searchParams) ?? {};
   const reasonParam = resolved.reason;
   const statusParam = resolved.status;
+  const lang = await getCurrentLanguage();
 
   const reasonKey = Array.isArray(reasonParam) ? reasonParam[0] : reasonParam;
   const statusKey = Array.isArray(statusParam) ? statusParam[0] : statusParam;
 
-  const reasonMessage = reasonKey ? reasonCopy[reasonKey] ?? null : null;
-  const statusMessage = statusKey ? statusCopy[statusKey] ?? null : null;
+  const reasonMessage = reasonKey ? reasonCopy[reasonKey]?.[lang] ?? null : null;
+  const statusMessage = statusKey ? statusCopy[statusKey]?.[lang] ?? null : null;
+
+  const copy = {
+    title: lang === "id" ? "Portal Owner" : "Owner Portal",
+    subtitle:
+      lang === "id"
+        ? "Masuk dengan kredensial Supabase yang kamu konfigurasi."
+        : "Sign in with the Supabase credentials you configured.",
+    tip:
+      lang === "id"
+        ? "Saran: buat akun owner terpisah agar aktivitasmu mudah dibedakan dari pengunjung."
+        : "Tip: keep a separate owner account so you can differentiate admin activity from visitors.",
+  };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 px-6">
-      <div className="w-full max-w-md space-y-6 rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl shadow-slate-950/60">
-        <div>
-          <h1 className="text-2xl font-semibold text-white">
-            Owner access
-          </h1>
-          <p className="mt-1 text-sm text-white/60">
-            Sign in with the Supabase credentials configured for this project.
-          </p>
+    <div className="owner-login">
+      <div className="owner-login__card" data-animate>
+        <header className="owner-login__header">
+          <span>Rifqy Hazim HR</span>
+          <h1>{copy.title}</h1>
+          <p>{copy.subtitle}</p>
+        </header>
+        <div className="owner-login__messages">
+          {statusMessage && (
+            <div className="owner-login__badge owner-login__badge--success">{statusMessage}</div>
+          )}
+          {reasonMessage && (
+            <div className="owner-login__badge owner-login__badge--warn">{reasonMessage}</div>
+          )}
         </div>
-        {statusMessage && (
-          <div className="rounded-xl border border-emerald-300/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
-            {statusMessage}
-          </div>
-        )}
-        {reasonMessage && (
-          <div className="rounded-xl border border-orange-300/40 bg-orange-500/10 px-4 py-3 text-sm text-orange-100">
-            {reasonMessage}
-          </div>
-        )}
         <LoginForm />
-        <p className="text-xs text-white/40">
-          Tip: keep a separate owner account with{" "}
-          <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs text-white">
-            SUPABASE_OWNER_EMAIL
-          </code>{" "}
-          so you can differentiate admin activity from visitor journeys.
-        </p>
+        <p className="owner-login__tip">{copy.tip}</p>
       </div>
     </div>
   );
