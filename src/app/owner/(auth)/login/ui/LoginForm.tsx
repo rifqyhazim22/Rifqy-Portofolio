@@ -11,6 +11,18 @@ const errorCopy = (error: string) => {
   return error;
 };
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
+
+const buildRedirectUrl = () => {
+  if (SITE_URL) {
+    return `${SITE_URL.replace(/\/$/, "")}/owner`;
+  }
+  if (typeof window !== "undefined") {
+    return `${window.location.origin}/owner`;
+  }
+  return undefined;
+};
+
 export const LoginForm = () => {
   const router = useRouter();
   const supabase = useMemo(() => createSupabaseBrowserClient(), []);
@@ -50,7 +62,7 @@ export const LoginForm = () => {
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${window.location.origin}/owner`,
+          emailRedirectTo: buildRedirectUrl(),
         },
       });
 

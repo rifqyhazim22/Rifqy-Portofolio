@@ -32,6 +32,7 @@ cp .env.local.example .env.local
 | `SUPABASE_JWT_SECRET` | server only | Keep for future auth hooks/webhooks. |
 | `SUPABASE_OWNER_EMAIL` | server only | Email allowed into the `/owner` dashboard. Should match a Supabase Auth user. |
 | `NEXT_PUBLIC_FORCE_IDENTITY_PROMPT` | shared | Optional. Set to `true` during development to always show the visitor identity form on refresh. Leave unset/`false` in production. |
+| `NEXT_PUBLIC_SITE_URL` | shared | Optional. Set to your deployed domain (e.g., `https://rifqy-portofolio.vercel.app`) so Supabase magic links redirect correctly in production. |
 
 Set the same variables in Vercel → Project Settings → Environment Variables (Production + Preview). Rotate any key immediately if it ever leaks into a public log.
 
