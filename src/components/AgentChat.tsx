@@ -20,6 +20,8 @@ interface AgentResponse {
 
 const STORAGE_KEY = "rh-agent-chat-session";
 const IDENTITY_STORAGE_KEY = "fi-visitor-identity";
+const FORCE_IDENTITY_PROMPT =
+  process.env.NEXT_PUBLIC_FORCE_IDENTITY_PROMPT === "true";
 
 function resolveLanguage(): "id" | "en" {
   if (typeof document === "undefined") {
@@ -127,7 +129,7 @@ export default function AgentChat() {
 
       if (cancelled) return;
 
-      if (typeof window !== "undefined") {
+      if (!FORCE_IDENTITY_PROMPT && typeof window !== "undefined") {
         const stored = window.localStorage.getItem(IDENTITY_STORAGE_KEY);
         if (stored) {
           try {
@@ -222,7 +224,7 @@ export default function AgentChat() {
 
   const persistIdentity = (nextIdentity: VisitorIdentity) => {
     setIdentity(nextIdentity);
-    if (typeof window !== "undefined") {
+    if (!FORCE_IDENTITY_PROMPT && typeof window !== "undefined") {
       window.localStorage.setItem(
         IDENTITY_STORAGE_KEY,
         JSON.stringify(nextIdentity),

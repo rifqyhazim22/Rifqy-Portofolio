@@ -13,6 +13,9 @@ import {
   type VisitorIdentity,
 } from "./VisitorIdentityPrompt";
 
+const FORCE_IDENTITY_PROMPT =
+  process.env.NEXT_PUBLIC_FORCE_IDENTITY_PROMPT === "true";
+
 type Language = "id" | "en";
 type Tone = "formal" | "santai" | "deep";
 
@@ -130,7 +133,7 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
 
       if (cancelled) return;
 
-      if (typeof window !== "undefined") {
+      if (!FORCE_IDENTITY_PROMPT && typeof window !== "undefined") {
         const stored = window.localStorage.getItem("fi-visitor-identity");
         if (stored) {
           try {
@@ -166,7 +169,7 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
 
   const persistIdentity = (nextIdentity: VisitorIdentity) => {
     setIdentity(nextIdentity);
-    if (typeof window !== "undefined") {
+    if (!FORCE_IDENTITY_PROMPT && typeof window !== "undefined") {
       window.localStorage.setItem(
         "fi-visitor-identity",
         JSON.stringify(nextIdentity),

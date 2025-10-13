@@ -31,6 +31,7 @@ cp .env.local.example .env.local
 | `SUPABASE_SERVICE_ROLE_KEY` | server only | Needed for server actions/API routes to read & write protected tables. **Never** expose in client code. |
 | `SUPABASE_JWT_SECRET` | server only | Keep for future auth hooks/webhooks. |
 | `SUPABASE_OWNER_EMAIL` | server only | Email allowed into the `/owner` dashboard. Should match a Supabase Auth user. |
+| `NEXT_PUBLIC_FORCE_IDENTITY_PROMPT` | shared | Optional. Set to `true` during development to always show the visitor identity form on refresh. Leave unset/`false` in production. |
 
 Set the same variables in Vercel → Project Settings → Environment Variables (Production + Preview). Rotate any key immediately if it ever leaks into a public log.
 
