@@ -257,12 +257,12 @@ const idDictionary: Dictionary = {
       downloadsNote: "File docx tersimpan di perpustakaan ini. Kalau kamu butuh format lain atau versi app, tinggal hubungi aku.",
       downloads: [
         {
-          href: "/cv-dan-portofolio/CV Rifqy by agent mode.docx",
+          href: "/cv-dan-portofolio/CV Rifqy by chat mode.docx",
           title: "Download CV (docx)",
           sub: "CV terbaru yang dirapikan oleh agent—siap kamu baca atau adaptasi."
         },
         {
-          href: "/cv-dan-portofolio/Portofolio Rifqy by agent mode.docx",
+          href: "/cv-dan-portofolio/Portofolio Rifqy by chat mode.docx",
           title: "Download Portofolio (docx)",
           sub: "Studi kasus, deliverables, dan highlight proyek generatif."
         },
@@ -462,12 +462,12 @@ const enDictionary: Dictionary = {
       downloadsNote: "Docs live inside this library. Need another format or the app build? Ping me and I'll prepare it.",
       downloads: [
         {
-          href: "/cv-dan-portofolio/CV Rifqy by agent mode.docx",
+          href: "/cv-dan-portofolio/CV Rifqy by chat mode.docx",
           title: "Download CV (.docx)",
           sub: "Latest CV curated with the agent—ready for review or remix."
         },
         {
-          href: "/cv-dan-portofolio/Portofolio Rifqy by agent mode.docx",
+          href: "/cv-dan-portofolio/Portofolio Rifqy by chat mode.docx",
           title: "Download Portfolio (.docx)",
           sub: "Case studies, deliverables, and generative highlights."
         },
