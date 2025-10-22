@@ -1,10 +1,10 @@
 {
   "hero": {
     "name": "Rifqy Hazim Haidar Ramadhan",
-    "title": "AI Professional & Agent Developer",
-    "tagline": "AI Engineer · Gen AI Engineer · Web App Developer",
-    "summary": "I build LLM agents, generative pipelines, and web experiences that feel human-first. Every partnership starts with empathy, system mapping, and evaluation loops so intelligence can travel responsibly.",
-    "availability": "Mission: Freedom of Intelligence—bringing intelligence to every human and corner of the universe. Open for collaborations on LLM agents, generative storytelling, and impactful web delivery.",
+    "title": "Prompt & Context Engineer & AI Agent Developer",
+    "tagline": "Prompt & Context Engineer · Web/App Developer · AI Agent Developer",
+    "summary": "I design prompt systems, LLM agents, and web experiences that stay human-first. Every partnership starts with empathy—listening to your context, mapping missions, and keeping evaluation loops that preserve trust.",
+    "availability": "Mission: Freedom of Intelligence—bringing intelligence to every human and corner of the universe. Open for collaborations on LLM context engineering, agent development, and impactful web delivery.",
     "actions": [
       {
         "label": "View AI Case Studies ↗",
@@ -22,18 +22,10 @@
       }
     ],
     "highlights": [
-      {
-        "label": "LLM Stack",
-        "value": "Codex · ChatGPT · Gemini"
-      },
-      {
-        "label": "Focus",
-        "value": "LLM · GenAI · Web/App Dev"
-      },
-      {
-        "label": "Base",
-        "value": "Jabodetabek, Indonesia"
-      }
+      { "label": "LLM Stack", "value": "Codex · ChatGPT · Gemini" },
+      { "label": "Focus", "value": "Prompt/Context Eng · AI Agent Dev · Web/App Dev" },
+      { "label": "Plus", "value": "Web3 Enthusiast" },
+      { "label": "Base", "value": "Jabodetabek, Indonesia" }
     ],
     "portraitSrc": "/images/hero.jpg",
     "backgroundSrc": "/images/hero-background.png"
@@ -56,8 +48,8 @@
       },
       {
         "href": "/projects",
-        "title": "Generative Pipelines",
-        "sub": "Video, image, and audio pipelines that craft living stories and remain reproducible."
+        "title": "Prompt & Context Systems",
+        "sub": "Prompt blueprints, knowledge bases, and generative tool integrations that keep workflows consistent."
       },
       {
         "href": "/playbooks",

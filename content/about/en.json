@@ -1,8 +1,8 @@
 {
   "hero": {
     "title": "About Rifqy",
-    "tagline": "AI Engineer · Gen AI Engineer · Web App Developer",
-    "summary": "I write this story myself: an AI engineer weaving LLM agents, generative strategy, and web experiences that stay human. Everything starts by listening—understanding the wonder, the tension, and the room to grow together."
+    "tagline": "Prompt & Context Engineer · Web/App Developer · AI Agent Developer",
+    "summary": "I write this story myself: a prompt & context engineer weaving LLM agents, generative tooling, and web experiences that stay human. Everything starts by listening—understanding the wonder, the tension, and the room to grow together."
   },
   "philosophy": {
     "heading": "Philosophy & Vision",
@@ -19,7 +19,7 @@
     "heading": "Story & Mission",
     "paragraphs": [
       "I grew up obsessed with knowledge. Freedom of Intelligence became my personal mantra—intelligence that can travel freely, touch people, communities, and the universe. \"Ad astra abyssosque\" reminds me to dive deep, fly far, and return with creations that matter.",
-      "I start every collaboration with empathy. I listen to the story, map the system, and craft LLM agents, generative pipelines, and web apps that protect privacy. When there are gaps, I fill them with documentation, evaluation, and warm guidance so everyone feels supported.",
+      "I start every collaboration with empathy. I listen to the story, map the system, and craft LLM agents, prompt stacks, and web apps that protect privacy. When there are gaps, I fill them with documentation, evaluation, and warm guidance so everyone feels supported.",
       "Education with real impact fuels this journey. I want to share tools and narratives that anyone can understand—founders experimenting with AI, students who need a bridge, teams searching for clarity. By bringing intelligence into AI, web, and frontier explorations, this personal brand becomes a living library you can revisit anytime."
     ]
   },
@@ -77,8 +77,8 @@
         ]
       },
       {
-        "title": "Generative AI Pipelines",
-        "description": "Producing video, image, and audio assets with reproducible SOPs.",
+        "title": "Generative Tooling Pipelines",
+        "description": "Linking video, image, and audio tooling with reproducible SOPs.",
         "items": [
           "Sora",
           "Runway",

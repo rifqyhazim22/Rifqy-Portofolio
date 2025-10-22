@@ -1,8 +1,8 @@
 {
   "hero": {
     "title": "Tentang Rifqy",
-    "tagline": "AI Engineer · Gen AI Engineer · Web App Developer",
-    "summary": "Aku menulis sendiri perjalanan ini: seorang AI engineer yang menggabungkan agen LLM, strategi generatif, dan pengalaman web yang terasa akrab. Semua dimulai dengan mendengar—berusaha memahami rasa ingin tahu, keresahan, dan potensi tumbuh bersama."
+    "tagline": "Prompt & Context Engineer · Web/App Developer · AI Agent Developer",
+    "summary": "Aku menulis sendiri perjalanan ini: seorang prompt & context engineer yang menggabungkan agen LLM, tools generatif, dan pengalaman web yang terasa akrab. Semua dimulai dengan mendengar—berusaha memahami rasa ingin tahu, keresahan, dan potensi tumbuh bersama."
   },
   "philosophy": {
     "heading": "Filosofi & Visi",
@@ -19,7 +19,7 @@
     "heading": "Cerita & Misi",
     "paragraphs": [
       "Aku tumbuh sebagai anak yang jatuh cinta pada pengetahuan. Freedom of Intelligence adalah janji pribadiku—kecerdasan yang bebas menembus batas, menyentuh manusia, komunitas, dan semesta. Kalimat 'ad astra abyssosque' jadi pengingat: selami sedalam mungkin, terbang setinggi mungkin, lalu bawakan kembali inovasi yang bermanfaat.",
-      "Setiap kolaborasi kumulai dari empati. Aku memetakan cerita orang, mendengar konteks tim, lalu menyusun agen LLM, pipeline generatif, dan aplikasi web yang menjaga privasi. Jika ada ruang kosong, aku coba isi dengan dokumentasi rapi, evaluasi otomatis, dan ritme kerja yang bikin semua merasa ditemani.",
+      "Setiap kolaborasi kumulai dari empati. Aku memetakan cerita orang, mendengar konteks tim, lalu menyusun agen LLM, sistem prompt, dan aplikasi web yang menjaga privasi. Jika ada ruang kosong, aku coba isi dengan dokumentasi rapi, evaluasi otomatis, dan ritme kerja yang bikin semua merasa ditemani.",
       "Perjalananku berputar pada edukasi yang berdampak. Aku ingin menyampaikan ilmu dan alat yang bisa dipahami siapa saja—dari founder yang mau berinovasi, hingga murid yang mencari jalan baru. Dengan membawa kecerdasan ke ranah AI, web, hingga eksplorasi masa depan, aku berharap personal branding ini menjadi perpustakaan hidup yang bisa kamu singgahi kapan pun."
     ]
   },
@@ -77,8 +77,8 @@
         ]
       },
       {
-        "title": "Generative AI Pipelines",
-        "description": "Produksi video, gambar, dan audio dengan SOP reproducible.",
+        "title": "Generative Tooling Pipelines",
+        "description": "Mengikat tools video, gambar, dan audio dengan SOP reproducible.",
         "items": [
           "Sora",
           "Runway",

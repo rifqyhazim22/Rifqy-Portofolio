@@ -116,7 +116,7 @@ const idDictionary: Dictionary = {
     about: {
       title: "About",
       intro:
-        "Aku mengundangmu masuk ke perpustakaan pribadiku—orkestrasi LLM, agen, pipeline generatif, dan pengalaman web yang kubangun dengan empati dari briefing sampai rilis.",
+        "Aku mengundangmu masuk ke perpustakaan pribadiku—orkestrasi LLM, agen, sistem prompt, tooling generatif, dan pengalaman web yang kubangun dengan empati dari briefing sampai rilis.",
       philosophyHeading: "Misi & Narasi",
       philosophyBody:
         "Freedom of Intelligence memandu langkahku. \"Ad astra abyssosque\" menjaga ritme: selami kompleksitas, terbangkan kecerdasan, lalu kembali dengan solusi terdokumentasi yang bisa dirawat siapa saja.",
@@ -129,8 +129,8 @@ const idDictionary: Dictionary = {
         },
         {
           href: "/projects",
-          title: "Generative Pipelines",
-          sub: "Pipeline video/gambar berbasis Sora, Runway, Veo dengan SOP yang bisa kamu ulang dan ajarkan.",
+          title: "Prompt & Context Systems",
+          sub: "Blueprint prompt, knowledge base, dan integrasi tools generatif dengan SOP yang bisa kamu ulang dan ajarkan.",
         },
         {
           href: "/industry",
@@ -153,7 +153,7 @@ const idDictionary: Dictionary = {
 
     works: {
       title: "Karya",
-      intro: "Aku memanfaatkan GPT-5 Codex, ChatGPT, dan toolchain generatif buat membangun agen, otomasi, dan produk imersif. Setiap pengerjaan kurajut dari empati, pemetaan sistem, evaluasi, dan workflow yang menjaga privasi.",
+      intro: "Aku memanfaatkan GPT-5 Codex, ChatGPT, dan toolkit prompt + generatif buat membangun agen, otomasi, dan produk imersif. Setiap pengerjaan kurajut dari empati, pemetaan sistem, evaluasi, dan workflow yang menjaga privasi.",
       buttons: [
         {
           href: "https://drive.google.com/drive/folders/17f6zsRc_Ytk9Ze99MluKoaXbnzZdkZCF?usp=sharing",
@@ -204,7 +204,7 @@ const idDictionary: Dictionary = {
     },
     projects: {
       title: "Projects",
-      intro: "Proyek jangka panjang untuk mengorkestrasi agen LLM, memperbesar pipeline generatif, dan meneliti peluang Web2/Web3 & crypto. Detail mendalam tersimpan di Google Drive.",
+      intro: "Proyek jangka panjang untuk mengorkestrasi agen LLM, memperbesar stack prompt & tooling generatif, dan meneliti peluang Web2/Web3 & crypto. Detail mendalam tersimpan di Google Drive.",
       buttons: [
         {
           href: "https://drive.google.com/drive/folders/17f6zsRc_Ytk9Ze99MluKoaXbnzZdkZCF?usp=sharing",
@@ -245,7 +245,7 @@ const idDictionary: Dictionary = {
     },
     contact: {
       title: "Contact",
-      intro: "Ajak diskusi seputar AI engineering, pengembangan web/app, atau kolaborasi riset.",
+      intro: "Ajak diskusi seputar prompt/context engineering, pengembangan agen LLM, web/app, atau kolaborasi riset.",
       contacts: [
         { href: "mailto:rifqyhazim22@gmail.com", title: "Email", sub: "rifqyhazim22@gmail.com" },
         { href: "https://wa.me/6281322963566", title: "WhatsApp", sub: "081322963566" },
@@ -264,7 +264,7 @@ const idDictionary: Dictionary = {
         {
           href: "/cv-dan-portofolio/Portofolio Rifqy by agent mode.docx",
           title: "Download Portofolio (docx)",
-          sub: "Studi kasus, deliverables, dan highlight proyek generatif."
+          sub: "Studi kasus, deliverables, dan highlight agen & tooling yang kupimpin."
         },
         {
           href: "mailto:rifqyhazim22@gmail.com?subject=Request%20Access%20to%20Rifqy%20App%20Build",
@@ -287,7 +287,7 @@ const idDictionary: Dictionary = {
         {
           href: "#deliverables",
           title: "Apa output utama yang dikirim?",
-          sub: "Agen LLM terukur, aset generatif, aplikasi Next.js, serta panduan deploy end-to-end."
+          sub: "Agen LLM terukur, blueprint prompt, aplikasi Next.js, serta panduan deploy end-to-end."
         },
       ],
     },
@@ -322,7 +322,7 @@ const enDictionary: Dictionary = {
     about: {
       title: "About",
       intro:
-        "I invite you into my personal library—LLM agents, generative pipelines, and web experiences crafted with empathy from briefing to launch.",
+        "I invite you into my personal library—LLM agents, prompt systems, generative tooling, and web experiences crafted with empathy from briefing to launch.",
       philosophyHeading: "Story & Mission",
       philosophyBody:
         "Freedom of Intelligence guides each step. \"Ad astra abyssosque\" keeps the rhythm: dive deep into complexity, let intelligence travel far, then return with documented solutions anyone can maintain.",
@@ -335,8 +335,8 @@ const enDictionary: Dictionary = {
         },
         {
           href: "/projects",
-          title: "Generative Pipelines",
-          sub: "Video/image pipelines with reproducible SOPs so stories stay alive and shareable.",
+          title: "Prompt & Context Systems",
+          sub: "Prompt blueprints, knowledge bases, and generative tool integrations that stay teachable and repeatable.",
         },
         {
           href: "/playbooks",
@@ -358,7 +358,7 @@ const enDictionary: Dictionary = {
     learningHub: industryCache.en.learningHub,
     works: {
       title: "Works",
-      intro: "I lean on GPT-5 Codex, ChatGPT, and generative toolchains to build agents, automation, and immersive products. Every delivery is woven from empathy, system mapping, evaluation, and privacy-first workflows.",
+      intro: "I lean on GPT-5 Codex, ChatGPT, and prompt + generative toolchains to build agents, automation, and immersive products. Every delivery is woven from empathy, system mapping, evaluation, and privacy-first workflows.",
       buttons: [
         {
           href: "https://drive.google.com/drive/folders/17f6zsRc_Ytk9Ze99MluKoaXbnzZdkZCF?usp=sharing",
@@ -409,7 +409,7 @@ const enDictionary: Dictionary = {
     },
     projects: {
       title: "Projects",
-      intro: "Long-horizon blueprints for LLM agents, scaled generative ops, and Web2/Web3/crypto research. Drive folders store the deep dives.",
+      intro: "Long-horizon blueprints for LLM agents, scaled prompt ops & generative tooling, and Web2/Web3/crypto research. Drive folders store the deep dives.",
       buttons: [
         {
           href: "https://drive.google.com/drive/folders/17f6zsRc_Ytk9Ze99MluKoaXbnzZdkZCF?usp=sharing",
@@ -450,7 +450,7 @@ const enDictionary: Dictionary = {
     },
     contact: {
       title: "Contact",
-      intro: "Reach out for AI engineering, web/app development, or research collaborations.",
+      intro: "Reach out for prompt/context engineering, AI agent development, web/app builds, or research collaborations.",
       contacts: [
         { href: "mailto:rifqyhazim22@gmail.com", title: "Email", sub: "rifqyhazim22@gmail.com" },
         { href: "https://wa.me/6281322963566", title: "WhatsApp", sub: "+62 813-2296-3566" },
@@ -469,7 +469,7 @@ const enDictionary: Dictionary = {
         {
           href: "/cv-dan-portofolio/Portofolio Rifqy by agent mode.docx",
           title: "Download Portfolio (.docx)",
-          sub: "Case studies, deliverables, and generative highlights."
+          sub: "Case studies, deliverables, and agent/tooling highlights."
         },
         {
           href: "mailto:rifqyhazim22@gmail.com?subject=Request%20Access%20to%20Rifqy%20App%20Build",
@@ -492,7 +492,7 @@ const enDictionary: Dictionary = {
         {
           href: "#deliverables",
           title: "Which deliverables can I expect?",
-          sub: "LLM agents with metrics, generative assets, Next.js apps, and end-to-end deployment guides.",
+          sub: "LLM agents with metrics, prompt playbooks, Next.js apps, and end-to-end deployment guides.",
         },
       ],
     },
