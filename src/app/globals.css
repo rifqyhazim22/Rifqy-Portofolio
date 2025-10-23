@@ -2699,6 +2699,7 @@ nav.pills {
 
 .owner-dashboard__panel-grid {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: clamp(16px, 2vw, 24px);
 }
 
@@ -3588,6 +3589,10 @@ nav.pills {
   grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
   gap: clamp(20px, 3vw, 32px);
   align-items: flex-start;
+}
+
+.owner-story-card__body--solo {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .owner-story-card__side {

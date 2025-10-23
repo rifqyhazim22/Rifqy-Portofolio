@@ -100,11 +100,13 @@ export default async function OwnerDashboardPage() {
 
       <div className="owner-dashboard__columns">
         <div className="owner-dashboard__primary" data-animate>
-          <Suspense fallback={<DashboardSkeleton />}>
-            <SiteSectionsPanel sections={sections} />
-          </Suspense>
-          <AgentLogPanel logs={agentLogs} />
-          <StorytellingPanel projects={projects} testimonials={testimonials} />
+          <div className="owner-dashboard__panel-grid">
+            <Suspense fallback={<DashboardSkeleton />}>
+              <SiteSectionsPanel sections={sections} />
+            </Suspense>
+            <AgentLogPanel logs={agentLogs} />
+            <StorytellingPanel projects={projects} testimonials={testimonials} />
+          </div>
         </div>
       </div>
     </div>

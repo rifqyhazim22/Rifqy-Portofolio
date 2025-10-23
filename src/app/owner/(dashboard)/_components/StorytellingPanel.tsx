@@ -172,6 +172,7 @@ const EmptyListPlaceholder = ({
 
 const ProjectPanel = ({ records }: { records: ProjectRecord[] }) => {
   const { selectedId, formState, setFormState, select } = useProjectState(records);
+  const isEmpty = records.length === 0;
   const [feedback, setFeedback] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -258,7 +259,9 @@ const ProjectPanel = ({ records }: { records: ProjectRecord[] }) => {
         </button>
       </div>
 
-      <div className="owner-story-card__body">
+      <div
+        className={`owner-story-card__body ${isEmpty ? "owner-story-card__body--solo" : ""}`}
+      >
         <aside className="owner-story-card__side">
           <ul className="owner-story-card__list">
             {records.map((project) => (
@@ -400,7 +403,7 @@ const ProjectPanel = ({ records }: { records: ProjectRecord[] }) => {
                 placeholder="AI, Automation, Product"
               />
             </label>
-            <div className="owner-story-card__grid owner-story-card__grid--three">
+            <div className="owner-story-card__grid owner-story-card__grid--two">
               <label className="owner-panel__field">
                 <span>Display order</span>
                 <input
@@ -429,20 +432,20 @@ const ProjectPanel = ({ records }: { records: ProjectRecord[] }) => {
                   <option value="published">Published</option>
                 </select>
               </label>
-              <label className="owner-panel__checkbox">
-                <input
-                  type="checkbox"
-                  checked={Boolean(formState.is_featured)}
-                  onChange={(event) =>
-                    setFormState((prev) => ({
-                      ...prev,
-                      is_featured: event.target.checked,
-                    }))
-                  }
-                />
-                <span>Featured</span>
-              </label>
             </div>
+            <label className="owner-panel__checkbox owner-story-card__field--wide">
+              <input
+                type="checkbox"
+                checked={Boolean(formState.is_featured)}
+                onChange={(event) =>
+                  setFormState((prev) => ({
+                    ...prev,
+                    is_featured: event.target.checked,
+                  }))
+                }
+              />
+              <span>Featured</span>
+            </label>
           </div>
 
           <footer className="owner-story-card__footer">
@@ -476,6 +479,7 @@ const ProjectPanel = ({ records }: { records: ProjectRecord[] }) => {
 
 const TestimonialPanel = ({ records }: { records: TestimonialRecord[] }) => {
   const { selectedId, formState, setFormState, select } = useTestimonialState(records);
+  const isEmpty = records.length === 0;
   const [feedback, setFeedback] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -561,7 +565,9 @@ const TestimonialPanel = ({ records }: { records: TestimonialRecord[] }) => {
         </button>
       </div>
 
-      <div className="owner-story-card__body">
+      <div
+        className={`owner-story-card__body ${isEmpty ? "owner-story-card__body--solo" : ""}`}
+      >
         <aside className="owner-story-card__side">
           <ul className="owner-story-card__list">
             {records.map((item) => (
@@ -666,17 +672,17 @@ const TestimonialPanel = ({ records }: { records: TestimonialRecord[] }) => {
 
           <div className="owner-story-card__section">
             <h4>Visual & Publishing</h4>
-            <div className="owner-story-card__grid owner-story-card__grid--three">
-              <label className="owner-panel__field owner-story-card__field--wide">
-                <span>Avatar URL</span>
-                <input
-                  value={formState.avatar_url ?? ""}
-                  onChange={(event) =>
-                    setFormState((prev) => ({ ...prev, avatar_url: event.target.value }))
-                  }
-                  placeholder="/images/customer.png"
-                />
-              </label>
+            <label className="owner-panel__field owner-story-card__field--wide">
+              <span>Avatar URL</span>
+              <input
+                value={formState.avatar_url ?? ""}
+                onChange={(event) =>
+                  setFormState((prev) => ({ ...prev, avatar_url: event.target.value }))
+                }
+                placeholder="/images/customer.png"
+              />
+            </label>
+            <div className="owner-story-card__grid owner-story-card__grid--two">
               <label className="owner-panel__field">
                 <span>Display order</span>
                 <input

@@ -126,7 +126,11 @@ export const SiteSectionsPanel = ({ sections }: SiteSectionsPanelProps) => {
         </div>
       </header>
 
-      <div className="owner-story-card__body">
+      <div
+        className={`owner-story-card__body ${
+          sections.length === 0 ? "owner-story-card__body--solo" : ""
+        }`}
+      >
         <aside className="owner-story-card__side">
           <ul className="owner-story-card__list">
             {sections.map((section) => (
