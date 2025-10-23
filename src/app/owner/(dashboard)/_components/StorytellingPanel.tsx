@@ -751,7 +751,7 @@ export const StorytellingPanel = ({ projects, testimonials }: StorytellingPanelP
   const [active, setActive] = useState<"projects" | "testimonials">("projects");
 
   return (
-    <section className="owner-story-card owner-story-card--story">
+    <section className="owner-story-card owner-story-card--story owner-story-card--wide">
       <header className="owner-story-card__header">
         <div className="owner-story-card__title">
           <h3>Storytelling assets</h3>

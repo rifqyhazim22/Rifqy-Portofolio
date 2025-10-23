@@ -2703,6 +2703,10 @@ nav.pills {
   gap: clamp(16px, 2vw, 24px);
 }
 
+.owner-dashboard__panel-grid > .owner-story-card--wide {
+  grid-column: 1 / -1;
+}
+
 .owner-dashboard__aside {
   display: flex;
   flex-direction: column;
