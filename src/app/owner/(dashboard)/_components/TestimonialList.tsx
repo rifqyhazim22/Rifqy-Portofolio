@@ -33,7 +33,7 @@ const EMPTY_FORM: Partial<TestimonialRecord> = {
 };
 
 const formatStatus = (status: "draft" | "published" | null | undefined) =>
-  status === "draft" ? "Draft" : "Published";
+  status === "published" ? "Published" : "Draft";
 
 const formatTimestamp = (value?: string | null) => {
   if (!value) return null;
@@ -53,18 +53,18 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
   const [feedback, setFeedback] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
+  const totals = useMemo(() => {
+    const published = testimonials.filter((item) => item.status === "published").length;
+    return {
+      total: testimonials.length,
+      published,
+      draft: testimonials.length - published,
+    };
+  }, [testimonials]);
+
   const selected = useMemo(
     () => testimonials.find((item) => item.id === selectedId) ?? null,
     [testimonials, selectedId],
-  );
-
-  const totalPublished = useMemo(
-    () => testimonials.filter((item) => item.status === "published").length,
-    [testimonials],
-  );
-  const totalDraft = useMemo(
-    () => testimonials.filter((item) => item.status !== "published").length,
-    [testimonials],
   );
 
   const resetForm = () => {
@@ -133,59 +133,64 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
     });
   };
 
-  const ctaLabel = selectedId ? "Reset form" : "New testimonial";
+  const actionLabel = selectedId ? "Reset form" : "New testimonial";
 
   return (
-    <section className="owner-panel owner-panel--manager">
-      <div className="owner-manager__hero">
-        <div className="owner-manager__title">
+    <section className="owner-story-card">
+      <header className="owner-story-card__header">
+        <div className="owner-story-card__title">
           <h3>Testimonials</h3>
           <p>Kelola social proof untuk diperlihatkan di publik.</p>
         </div>
-        <div className="owner-manager__summary">
-          <article>
-            <span>Total</span>
-            <strong>{testimonials.length}</strong>
-          </article>
-          <article>
-            <span>Published</span>
-            <strong>{totalPublished}</strong>
-          </article>
-          <article>
-            <span>Drafts</span>
-            <strong>{totalDraft}</strong>
-          </article>
-        </div>
-        <button type="button" onClick={resetForm} className="owner-manager__add">
-          <span aria-hidden>＋</span>
-          {ctaLabel}
-        </button>
-      </div>
-
-      <div className="owner-manager">
-        <aside className="owner-manager__list">
-          <div className="owner-manager__list-head">
-            <span>Entries</span>
-            <span className="owner-manager__count">{testimonials.length}</span>
+        <div className="owner-story-card__header-actions">
+          <div className="owner-story-card__metrics" aria-label="Testimonials overview">
+            <article>
+              <span>Total</span>
+              <strong>{totals.total}</strong>
+            </article>
+            <article>
+              <span>Published</span>
+              <strong>{totals.published}</strong>
+            </article>
+            <article>
+              <span>Drafts</span>
+              <strong>{totals.draft}</strong>
+            </article>
           </div>
-          <ul className="owner-manager__items">
+          <button type="button" onClick={resetForm} className="owner-story-card__button">
+            <span aria-hidden>＋</span>
+            {actionLabel}
+          </button>
+        </div>
+      </header>
+
+      <div className="owner-story-card__body">
+        <aside className="owner-story-card__side">
+          <ul className="owner-story-card__list">
             {testimonials.map((item) => (
               <li key={item.id}>
                 <button
                   type="button"
                   onClick={() => handleSelect(item.id)}
-                  className={`owner-manager__item ${
-                    selectedId === item.id ? "owner-manager__item--active" : ""
+                  className={`owner-story-card__item ${
+                    selectedId === item.id ? "owner-story-card__item--active" : ""
                   }`}
                 >
-                  <div className="owner-manager__item-main">
+                  <div className="owner-story-card__item-text">
                     <strong>{item.name}</strong>
-                    <span>
+                    <small>
                       {[item.role, item.company].filter(Boolean).join(" • ") || "No role info"}
-                    </span>
+                    </small>
+                    <div className="owner-story-card__item-meta">
+                      {item.display_order !== null && item.display_order !== undefined ? (
+                        <span>Order #{item.display_order}</span>
+                      ) : null}
+                    </div>
                   </div>
                   <span
-                    className={`owner-manager__status owner-manager__status--${(item.status ?? "published").toLowerCase()}`}
+                    className={`owner-story-card__badge owner-story-card__badge--${(
+                      item.status ?? "published"
+                    ).toLowerCase()}`}
                   >
                     {formatStatus(item.status)}
                   </span>
@@ -193,22 +198,18 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
               </li>
             ))}
             {!testimonials.length && (
-              <li className="owner-manager__empty">No testimonials yet</li>
+              <li className="owner-story-card__empty">Belum ada testimonial yang tercatat.</li>
             )}
           </ul>
         </aside>
 
-        <div className="owner-manager__form">
-          <div className="owner-manager__legend">
+        <div className="owner-story-card__form">
+          <div className="owner-story-card__legend">
             <span>{selectedId ? "Edit testimonial" : "Buat testimonial baru"}</span>
-            {selected?.updated_at ? (
-              <time className="owner-manager__timestamp">
-                Updated {formatTimestamp(selected.updated_at)}
-              </time>
-            ) : null}
+            {selected?.updated_at ? <time>{formatTimestamp(selected.updated_at)}</time> : null}
           </div>
 
-          <div className="owner-manager__grid owner-manager__grid--two">
+          <div className="owner-story-card__grid owner-story-card__grid--two">
             <label className="owner-panel__field">
               <span>Name</span>
               <input
@@ -231,7 +232,7 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
             </label>
           </div>
 
-          <label className="owner-panel__field owner-manager__field--wide">
+          <label className="owner-panel__field owner-story-card__field--wide">
             <span>Company</span>
             <input
               value={formState.company ?? ""}
@@ -242,7 +243,7 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
             />
           </label>
 
-          <label className="owner-panel__field owner-manager__field--wide">
+          <label className="owner-panel__field owner-story-card__field--wide">
             <span>Quote</span>
             <textarea
               value={formState.quote ?? ""}
@@ -254,7 +255,7 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
             />
           </label>
 
-          <div className="owner-manager__grid owner-manager__grid--two">
+          <div className="owner-story-card__grid owner-story-card__grid--two">
             <label className="owner-panel__field">
               <span>Avatar URL</span>
               <input
@@ -280,7 +281,7 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
             </label>
           </div>
 
-          <label className="owner-panel__field owner-manager__field--wide">
+          <label className="owner-panel__field owner-story-card__field--wide">
             <span>Status</span>
             <select
               value={formState.status ?? "draft"}
@@ -296,11 +297,9 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
             </select>
           </label>
 
-          <footer className="owner-manager__footer">
-            {feedback && (
-              <span className="owner-manager__feedback">{feedback}</span>
-            )}
-            <div className="owner-manager__actions">
+          <footer className="owner-story-card__footer">
+            {feedback && <span className="owner-story-card__feedback">{feedback}</span>}
+            <div className="owner-story-card__actions">
               {selectedId && (
                 <button
                   type="button"
