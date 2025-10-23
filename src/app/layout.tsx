@@ -28,6 +28,7 @@ export default async function RootLayout({
 }>) {
   const language = await getCurrentLanguage();
   const dictionary = getDictionary(language);
+  const currentYear = new Date().getFullYear();
 
   return (
     <html lang={language} data-theme="dark" data-palette="midnight" data-font-scale="base" data-tone="formal">
@@ -41,6 +42,9 @@ export default async function RootLayout({
           languageToggle={dictionary.languageToggle}
         />
         <main className="wrap">{children}</main>
+        <footer className="site-footer">
+          © {currentYear} Rifqy Hazim HR. All rights reserved.
+        </footer>
         <FloatingDate />
         <AgentChat />
       </body>

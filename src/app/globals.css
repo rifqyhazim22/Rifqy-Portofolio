@@ -171,6 +171,15 @@ img {
   padding: var(--wrap-padding);
 }
 
+.site-footer {
+  max-width: 1040px;
+  margin: 48px auto 32px;
+  padding: 0 22px;
+  font-size: 14px;
+  text-align: center;
+  color: var(--muted);
+}
+
 .wrap .owner-shell {
   margin: calc(-1 * var(--wrap-padding));
   width: calc(100% + (var(--wrap-padding) * 2));
