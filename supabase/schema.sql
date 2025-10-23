@@ -120,33 +120,40 @@ alter table public.contact_messages enable row level security;
 
 -- Allow anyone with the anon key to read published content -----------------
 
+drop policy if exists "Public can read published sections" on public.site_sections;
 create policy "Public can read published sections"
   on public.site_sections for select
   using (status = 'published');
 
+drop policy if exists "Public can read published projects" on public.projects;
 create policy "Public can read published projects"
   on public.projects for select
   using (status = 'published');
 
+drop policy if exists "Public can read published testimonials" on public.testimonials;
 create policy "Public can read published testimonials"
   on public.testimonials for select
   using (status = 'published');
 
 -- Contact form submissions -------------------------------------------------
 
+drop policy if exists "Anon can submit contact message" on public.contact_messages;
 create policy "Anon can submit contact message"
   on public.contact_messages for insert
   with check (true);
 
+drop policy if exists "Hide contact messages from anon" on public.contact_messages;
 create policy "Hide contact messages from anon"
   on public.contact_messages for select
   using (false);
 
 -- Lock analytics tables to service key only --------------------------------
 
+drop policy if exists "Block anon access to agent sessions" on public.agent_sessions;
 create policy "Block anon access to agent sessions"
   on public.agent_sessions for select using (false);
 
+drop policy if exists "Block anon writes to agent sessions" on public.agent_sessions;
 create policy "Block anon writes to agent sessions"
   on public.agent_sessions for insert with check (false);
 
