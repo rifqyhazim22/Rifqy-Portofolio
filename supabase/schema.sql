@@ -90,18 +90,22 @@ begin
 end;
 $$ language plpgsql;
 
+drop trigger if exists set_updated_at_site_sections on public.site_sections;
 create trigger set_updated_at_site_sections
   before update on public.site_sections
   for each row execute function public.touch_updated_at();
 
+drop trigger if exists set_updated_at_projects on public.projects;
 create trigger set_updated_at_projects
   before update on public.projects
   for each row execute function public.touch_updated_at();
 
+drop trigger if exists set_updated_at_testimonials on public.testimonials;
 create trigger set_updated_at_testimonials
   before update on public.testimonials
   for each row execute function public.touch_updated_at();
 
+drop trigger if exists set_updated_at_contact_messages on public.contact_messages;
 create trigger set_updated_at_contact_messages
   before update on public.contact_messages
   for each row execute function public.touch_updated_at();
