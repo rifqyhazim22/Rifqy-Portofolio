@@ -2699,7 +2699,7 @@ nav.pills {
 
 .owner-dashboard__panel-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(16px, 2vw, 24px);
 }
 
@@ -3942,11 +3942,11 @@ nav.pills {
 
 @media (min-width: 1024px) {
   .owner-dashboard__columns {
-    grid-template-columns: minmax(0, 2.4fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .owner-dashboard__panel-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .owner-panel--grid .owner-panel__body {
