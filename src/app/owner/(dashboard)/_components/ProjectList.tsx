@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useMemo, useState, useTransition } from "react";
 import {
   deleteProjectAction,
   upsertProjectAction,
@@ -38,9 +38,19 @@ const DEFAULT_PROJECT: Partial<ProjectRecord> = {
   status: "draft",
 };
 
-const formatStatus = (status: "draft" | "published" | null | undefined) => {
-  if (status === "published") return "Published";
-  return "Draft";
+const formatStatus = (status: "draft" | "published" | null | undefined) =>
+  status === "published" ? "Published" : "Draft";
+
+const formatTimestamp = (value?: string | null) => {
+  if (!value) return null;
+  try {
+    return new Intl.DateTimeFormat("id-ID", {
+      dateStyle: "medium",
+      timeStyle: "short",
+    }).format(new Date(value));
+  } catch {
+    return value;
+  }
 };
 
 export const ProjectList = ({ projects }: ProjectListProps) => {
@@ -48,6 +58,11 @@ export const ProjectList = ({ projects }: ProjectListProps) => {
   const [formState, setFormState] = useState<Partial<ProjectRecord>>(DEFAULT_PROJECT);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+
+  const selectedProject = useMemo(
+    () => projects.find((project) => project.id === selectedId) ?? null,
+    [projects, selectedId],
+  );
 
   const resetForm = () => {
     setSelectedId(null);
@@ -124,15 +139,16 @@ export const ProjectList = ({ projects }: ProjectListProps) => {
 
   return (
     <section className="owner-panel owner-panel--manager">
-      <header className="owner-panel__header">
-        <div>
+      <div className="owner-manager__hero">
+        <div className="owner-manager__title">
           <h3>Projects</h3>
           <p>Kurasi studi kasus utama dan link portofolio detail.</p>
         </div>
         <button type="button" onClick={resetForm} className="owner-manager__add">
+          <span aria-hidden>＋</span>
           {activeLabel}
         </button>
-      </header>
+      </div>
 
       <div className="owner-manager">
         <aside className="owner-manager__list">
@@ -153,6 +169,13 @@ export const ProjectList = ({ projects }: ProjectListProps) => {
                   <div className="owner-manager__item-main">
                     <strong>{project.title}</strong>
                     {project.tagline ? <span>{project.tagline}</span> : null}
+                    <div className="owner-manager__item-meta">
+                      {project.slug ? <code>{project.slug}</code> : <span>Slug pending</span>}
+                      {project.display_order !== null &&
+                      project.display_order !== undefined ? (
+                        <span>Order #{project.display_order}</span>
+                      ) : null}
+                    </div>
                   </div>
                   <span
                     className={`owner-manager__status owner-manager__status--${(project.status ?? "draft").toLowerCase()}`}
@@ -171,6 +194,11 @@ export const ProjectList = ({ projects }: ProjectListProps) => {
         <div className="owner-manager__form">
           <div className="owner-manager__legend">
             <span>{selectedId ? "Edit project" : "Buat project baru"}</span>
+            {selectedProject?.updated_at ? (
+              <time className="owner-manager__timestamp">
+                Updated {formatTimestamp(selectedProject.updated_at)}
+              </time>
+            ) : null}
           </div>
 
           <div className="owner-manager__grid owner-manager__grid--three">

@@ -3062,6 +3062,39 @@ nav.pills {
   flex-wrap: wrap;
 }
 
+.owner-manager__hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: clamp(16px, 3.2vw, 24px);
+  flex-wrap: wrap;
+}
+
+.owner-manager__title {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.owner-manager__title h3 {
+  margin: 0;
+  font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+  font-weight: 600;
+}
+
+.owner-manager__title p {
+  margin: 0;
+  color: color-mix(in oklab, var(--fg) 70%, transparent);
+  font-size: 0.95rem;
+}
+
+.owner-manager__timestamp {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--fg) 55%, transparent);
+}
+
 .owner-manager {
   display: flex;
   flex-wrap: wrap;
@@ -3174,6 +3207,24 @@ nav.pills {
 .owner-manager__item-main span {
   font-size: 0.8rem;
   color: color-mix(in oklab, var(--fg) 65%, transparent);
+}
+
+.owner-manager__item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: color-mix(in oklab, var(--fg) 58%, transparent);
+}
+
+.owner-manager__item-meta code {
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: rgba(6, 14, 32, 0.7);
+  border: 1px solid rgba(122, 162, 255, 0.25);
+  color: var(--fg);
 }
 
 .owner-manager__status {

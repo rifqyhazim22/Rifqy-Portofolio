@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useMemo, useState, useTransition } from "react";
 import {
   deleteTestimonialAction,
   upsertTestimonialAction,
@@ -35,11 +35,28 @@ const EMPTY_FORM: Partial<TestimonialRecord> = {
 const formatStatus = (status: "draft" | "published" | null | undefined) =>
   status === "draft" ? "Draft" : "Published";
 
+const formatTimestamp = (value?: string | null) => {
+  if (!value) return null;
+  try {
+    return new Intl.DateTimeFormat("id-ID", {
+      dateStyle: "medium",
+      timeStyle: "short",
+    }).format(new Date(value));
+  } catch {
+    return value;
+  }
+};
+
 export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [formState, setFormState] = useState<Partial<TestimonialRecord>>(EMPTY_FORM);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+
+  const selected = useMemo(
+    () => testimonials.find((item) => item.id === selectedId) ?? null,
+    [testimonials, selectedId],
+  );
 
   const resetForm = () => {
     setSelectedId(null);
@@ -111,15 +128,16 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
 
   return (
     <section className="owner-panel owner-panel--manager">
-      <header className="owner-panel__header">
-        <div>
+      <div className="owner-manager__hero">
+        <div className="owner-manager__title">
           <h3>Testimonials</h3>
           <p>Kelola social proof untuk diperlihatkan di publik.</p>
         </div>
         <button type="button" onClick={resetForm} className="owner-manager__add">
+          <span aria-hidden>＋</span>
           {ctaLabel}
         </button>
-      </header>
+      </div>
 
       <div className="owner-manager">
         <aside className="owner-manager__list">
@@ -160,6 +178,11 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
         <div className="owner-manager__form">
           <div className="owner-manager__legend">
             <span>{selectedId ? "Edit testimonial" : "Buat testimonial baru"}</span>
+            {selected?.updated_at ? (
+              <time className="owner-manager__timestamp">
+                Updated {formatTimestamp(selected.updated_at)}
+              </time>
+            ) : null}
           </div>
 
           <div className="owner-manager__grid owner-manager__grid--two">
