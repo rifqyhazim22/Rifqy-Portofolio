@@ -58,6 +58,15 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
     [testimonials, selectedId],
   );
 
+  const totalPublished = useMemo(
+    () => testimonials.filter((item) => item.status === "published").length,
+    [testimonials],
+  );
+  const totalDraft = useMemo(
+    () => testimonials.filter((item) => item.status !== "published").length,
+    [testimonials],
+  );
+
   const resetForm = () => {
     setSelectedId(null);
     setFormState(EMPTY_FORM);
@@ -132,6 +141,20 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
         <div className="owner-manager__title">
           <h3>Testimonials</h3>
           <p>Kelola social proof untuk diperlihatkan di publik.</p>
+        </div>
+        <div className="owner-manager__summary">
+          <article>
+            <span>Total</span>
+            <strong>{testimonials.length}</strong>
+          </article>
+          <article>
+            <span>Published</span>
+            <strong>{totalPublished}</strong>
+          </article>
+          <article>
+            <span>Drafts</span>
+            <strong>{totalDraft}</strong>
+          </article>
         </div>
         <button type="button" onClick={resetForm} className="owner-manager__add">
           <span aria-hidden>＋</span>

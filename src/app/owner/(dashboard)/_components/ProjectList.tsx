@@ -64,6 +64,15 @@ export const ProjectList = ({ projects }: ProjectListProps) => {
     [projects, selectedId],
   );
 
+  const totalPublished = useMemo(
+    () => projects.filter((project) => project.status === "published").length,
+    [projects],
+  );
+  const totalDraft = useMemo(
+    () => projects.filter((project) => project.status !== "published").length,
+    [projects],
+  );
+
   const resetForm = () => {
     setSelectedId(null);
     setFormState(DEFAULT_PROJECT);
@@ -143,6 +152,20 @@ export const ProjectList = ({ projects }: ProjectListProps) => {
         <div className="owner-manager__title">
           <h3>Projects</h3>
           <p>Kurasi studi kasus utama dan link portofolio detail.</p>
+        </div>
+        <div className="owner-manager__summary">
+          <article>
+            <span>Total</span>
+            <strong>{projects.length}</strong>
+          </article>
+          <article>
+            <span>Published</span>
+            <strong>{totalPublished}</strong>
+          </article>
+          <article>
+            <span>Drafts</span>
+            <strong>{totalDraft}</strong>
+          </article>
         </div>
         <button type="button" onClick={resetForm} className="owner-manager__add">
           <span aria-hidden>＋</span>
