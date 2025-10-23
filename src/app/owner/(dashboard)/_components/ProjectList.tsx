@@ -38,6 +38,11 @@ const DEFAULT_PROJECT: Partial<ProjectRecord> = {
   status: "draft",
 };
 
+const formatStatus = (status: "draft" | "published" | null | undefined) => {
+  if (status === "published") return "Published";
+  return "Draft";
+};
+
 export const ProjectList = ({ projects }: ProjectListProps) => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [formState, setFormState] = useState<Partial<ProjectRecord>>(DEFAULT_PROJECT);
@@ -115,42 +120,60 @@ export const ProjectList = ({ projects }: ProjectListProps) => {
     });
   };
 
+  const activeLabel = selectedId ? "Reset form" : "New project";
+
   return (
-    <section className="owner-panel owner-panel--grid">
-      <header>
+    <section className="owner-panel owner-panel--manager">
+      <header className="owner-panel__header">
         <div>
           <h3>Projects</h3>
           <p>Kurasi studi kasus utama dan link portofolio detail.</p>
         </div>
-        <button type="button" onClick={resetForm} className="owner-panel__secondary">
-          {selectedId ? "Reset form" : "+ New project"}
+        <button type="button" onClick={resetForm} className="owner-manager__add">
+          {activeLabel}
         </button>
       </header>
 
-      <div className="owner-panel__body">
-        <ul className="owner-panel__list">
-          {projects.map((project) => (
-            <li key={project.id}>
-              <button
-                type="button"
-                onClick={() => handleSelect(project.id)}
-                className={`owner-panel__list-item ${
-                  selectedId === project.id ? "owner-panel__list-item--active" : ""
-                }`}
-              >
-                <div>
-                  <span>{project.title}</span>
-                  <small>{project.status ?? "draft"}</small>
-                </div>
-                {project.tagline ? <p>{project.tagline}</p> : null}
-              </button>
-            </li>
-          ))}
-          {!projects.length && <li className="owner-panel__empty">No projects yet</li>}
-        </ul>
+      <div className="owner-manager">
+        <aside className="owner-manager__list">
+          <div className="owner-manager__list-head">
+            <span>Entries</span>
+            <span className="owner-manager__count">{projects.length}</span>
+          </div>
+          <ul className="owner-manager__items">
+            {projects.map((project) => (
+              <li key={project.id}>
+                <button
+                  type="button"
+                  onClick={() => handleSelect(project.id)}
+                  className={`owner-manager__item ${
+                    selectedId === project.id ? "owner-manager__item--active" : ""
+                  }`}
+                >
+                  <div className="owner-manager__item-main">
+                    <strong>{project.title}</strong>
+                    {project.tagline ? <span>{project.tagline}</span> : null}
+                  </div>
+                  <span
+                    className={`owner-manager__status owner-manager__status--${(project.status ?? "draft").toLowerCase()}`}
+                  >
+                    {formatStatus(project.status)}
+                  </span>
+                </button>
+              </li>
+            ))}
+            {!projects.length && (
+              <li className="owner-manager__empty">No projects yet</li>
+            )}
+          </ul>
+        </aside>
 
-        <div className="owner-panel__form">
-          <div className="owner-panel__grid owner-panel__grid--three">
+        <div className="owner-manager__form">
+          <div className="owner-manager__legend">
+            <span>{selectedId ? "Edit project" : "Buat project baru"}</span>
+          </div>
+
+          <div className="owner-manager__grid owner-manager__grid--three">
             <label className="owner-panel__field">
               <span>Title</span>
               <input
@@ -183,18 +206,30 @@ export const ProjectList = ({ projects }: ProjectListProps) => {
             </label>
           </div>
 
-          <label className="owner-panel__field">
-            <span>Tagline</span>
-            <input
-              value={formState.tagline ?? ""}
-              onChange={(event) =>
-                setFormState((prev) => ({ ...prev, tagline: event.target.value }))
-              }
-              placeholder="Quick hook for the project"
-            />
-          </label>
+          <div className="owner-manager__grid owner-manager__grid--two">
+            <label className="owner-panel__field">
+              <span>Tagline</span>
+              <input
+                value={formState.tagline ?? ""}
+                onChange={(event) =>
+                  setFormState((prev) => ({ ...prev, tagline: event.target.value }))
+                }
+                placeholder="Quick hook for the project"
+              />
+            </label>
+            <label className="owner-panel__field">
+              <span>Hero image URL</span>
+              <input
+                value={formState.hero_image_url ?? ""}
+                onChange={(event) =>
+                  setFormState((prev) => ({ ...prev, hero_image_url: event.target.value }))
+                }
+                placeholder="/images/project-x.png"
+              />
+            </label>
+          </div>
 
-          <label className="owner-panel__field">
+          <label className="owner-panel__field owner-manager__field--wide">
             <span>Description</span>
             <textarea
               value={formState.description ?? ""}
@@ -206,36 +241,24 @@ export const ProjectList = ({ projects }: ProjectListProps) => {
             />
           </label>
 
-          <div className="owner-panel__grid owner-panel__grid--two">
-            <label className="owner-panel__field">
-              <span>Hero image URL</span>
-              <input
-                value={formState.hero_image_url ?? ""}
-                onChange={(event) =>
-                  setFormState((prev) => ({ ...prev, hero_image_url: event.target.value }))
-                }
-                placeholder="/images/project-x.png"
-              />
-            </label>
-            <label className="owner-panel__field">
-              <span>Tags (comma separated)</span>
-              <input
-                value={(formState.tags ?? []).join(", ")}
-                onChange={(event) =>
-                  setFormState((prev) => ({
-                    ...prev,
-                    tags: event.target.value
-                      .split(",")
-                      .map((tag) => tag.trim())
-                      .filter(Boolean),
-                  }))
-                }
-                placeholder="AI, Automation, Product"
-              />
-            </label>
-          </div>
+          <label className="owner-panel__field owner-manager__field--wide">
+            <span>Tags (comma separated)</span>
+            <input
+              value={(formState.tags ?? []).join(", ")}
+              onChange={(event) =>
+                setFormState((prev) => ({
+                  ...prev,
+                  tags: event.target.value
+                    .split(",")
+                    .map((tag) => tag.trim())
+                    .filter(Boolean),
+                }))
+              }
+              placeholder="AI, Automation, Product"
+            />
+          </label>
 
-          <div className="owner-panel__grid owner-panel__grid--three">
+          <div className="owner-manager__grid owner-manager__grid--three">
             <label className="owner-panel__field">
               <span>Display order</span>
               <input
@@ -264,7 +287,7 @@ export const ProjectList = ({ projects }: ProjectListProps) => {
                 <option value="published">Published</option>
               </select>
             </label>
-            <label className="owner-panel__checkbox">
+            <label className="owner-panel__checkbox owner-manager__checkbox">
               <input
                 type="checkbox"
                 checked={Boolean(formState.is_featured)}
@@ -279,9 +302,11 @@ export const ProjectList = ({ projects }: ProjectListProps) => {
             </label>
           </div>
 
-          <div className="owner-panel__footer">
-            {feedback && <span>{feedback}</span>}
-            <div className="owner-panel__actions">
+          <footer className="owner-manager__footer">
+            {feedback && (
+              <span className="owner-manager__feedback">{feedback}</span>
+            )}
+            <div className="owner-manager__actions">
               {selectedId && (
                 <button
                   type="button"
@@ -305,7 +330,7 @@ export const ProjectList = ({ projects }: ProjectListProps) => {
                     : "Create project"}
               </button>
             </div>
-          </div>
+          </footer>
         </div>
       </div>
     </section>

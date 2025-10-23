@@ -32,6 +32,9 @@ const EMPTY_FORM: Partial<TestimonialRecord> = {
   status: "draft",
 };
 
+const formatStatus = (status: "draft" | "published" | null | undefined) =>
+  status === "draft" ? "Draft" : "Published";
+
 export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [formState, setFormState] = useState<Partial<TestimonialRecord>>(EMPTY_FORM);
@@ -104,44 +107,62 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
     });
   };
 
+  const ctaLabel = selectedId ? "Reset form" : "New testimonial";
+
   return (
-    <section className="owner-panel owner-panel--grid">
-      <header>
+    <section className="owner-panel owner-panel--manager">
+      <header className="owner-panel__header">
         <div>
           <h3>Testimonials</h3>
           <p>Kelola social proof untuk diperlihatkan di publik.</p>
         </div>
-        <button type="button" onClick={resetForm} className="owner-panel__secondary">
-          {selectedId ? "Reset form" : "+ New testimonial"}
+        <button type="button" onClick={resetForm} className="owner-manager__add">
+          {ctaLabel}
         </button>
       </header>
 
-      <div className="owner-panel__body">
-        <ul className="owner-panel__list">
-          {testimonials.map((item) => (
-            <li key={item.id}>
-              <button
-                type="button"
-                onClick={() => handleSelect(item.id)}
-                className={`owner-panel__list-item ${
-                  selectedId === item.id ? "owner-panel__list-item--active" : ""
-                }`}
-              >
-                <div>
-                  <span>{item.name}</span>
-                  <small>{item.status ?? "draft"}</small>
-                </div>
-                {(item.role || item.company) ? (
-                  <p>{[item.role, item.company].filter(Boolean).join(" • ")}</p>
-                ) : null}
-              </button>
-            </li>
-          ))}
-          {!testimonials.length && <li className="owner-panel__empty">No testimonials yet</li>}
-        </ul>
+      <div className="owner-manager">
+        <aside className="owner-manager__list">
+          <div className="owner-manager__list-head">
+            <span>Entries</span>
+            <span className="owner-manager__count">{testimonials.length}</span>
+          </div>
+          <ul className="owner-manager__items">
+            {testimonials.map((item) => (
+              <li key={item.id}>
+                <button
+                  type="button"
+                  onClick={() => handleSelect(item.id)}
+                  className={`owner-manager__item ${
+                    selectedId === item.id ? "owner-manager__item--active" : ""
+                  }`}
+                >
+                  <div className="owner-manager__item-main">
+                    <strong>{item.name}</strong>
+                    <span>
+                      {[item.role, item.company].filter(Boolean).join(" • ") || "No role info"}
+                    </span>
+                  </div>
+                  <span
+                    className={`owner-manager__status owner-manager__status--${(item.status ?? "published").toLowerCase()}`}
+                  >
+                    {formatStatus(item.status)}
+                  </span>
+                </button>
+              </li>
+            ))}
+            {!testimonials.length && (
+              <li className="owner-manager__empty">No testimonials yet</li>
+            )}
+          </ul>
+        </aside>
 
-        <div className="owner-panel__form">
-          <div className="owner-panel__grid owner-panel__grid--two">
+        <div className="owner-manager__form">
+          <div className="owner-manager__legend">
+            <span>{selectedId ? "Edit testimonial" : "Buat testimonial baru"}</span>
+          </div>
+
+          <div className="owner-manager__grid owner-manager__grid--two">
             <label className="owner-panel__field">
               <span>Name</span>
               <input
@@ -164,7 +185,7 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
             </label>
           </div>
 
-          <label className="owner-panel__field">
+          <label className="owner-panel__field owner-manager__field--wide">
             <span>Company</span>
             <input
               value={formState.company ?? ""}
@@ -175,7 +196,7 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
             />
           </label>
 
-          <label className="owner-panel__field">
+          <label className="owner-panel__field owner-manager__field--wide">
             <span>Quote</span>
             <textarea
               value={formState.quote ?? ""}
@@ -187,7 +208,7 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
             />
           </label>
 
-          <div className="owner-panel__grid owner-panel__grid--two">
+          <div className="owner-manager__grid owner-manager__grid--two">
             <label className="owner-panel__field">
               <span>Avatar URL</span>
               <input
@@ -213,7 +234,7 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
             </label>
           </div>
 
-          <label className="owner-panel__field">
+          <label className="owner-panel__field owner-manager__field--wide">
             <span>Status</span>
             <select
               value={formState.status ?? "draft"}
@@ -229,9 +250,11 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
             </select>
           </label>
 
-          <div className="owner-panel__footer">
-            {feedback && <span>{feedback}</span>}
-            <div className="owner-panel__actions">
+          <footer className="owner-manager__footer">
+            {feedback && (
+              <span className="owner-manager__feedback">{feedback}</span>
+            )}
+            <div className="owner-manager__actions">
               {selectedId && (
                 <button
                   type="button"
@@ -255,7 +278,7 @@ export const TestimonialList = ({ testimonials }: TestimonialListProps) => {
                     : "Create testimonial"}
               </button>
             </div>
-          </div>
+          </footer>
         </div>
       </div>
     </section>
