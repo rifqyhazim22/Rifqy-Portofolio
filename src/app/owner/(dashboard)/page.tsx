@@ -4,17 +4,14 @@ import {
   type AgentLogRecord,
 } from "./_components/AgentLogPanel";
 import {
-  EditableSectionCard,
+  SiteSectionsPanel,
   type SiteSection,
-} from "./_components/EditableSectionCard";
+} from "./_components/SiteSectionsPanel";
 import {
-  ProjectList,
+  StorytellingPanel,
   type ProjectRecord,
-} from "./_components/ProjectList";
-import {
-  TestimonialList,
   type TestimonialRecord,
-} from "./_components/TestimonialList";
+} from "./_components/StorytellingPanel";
 import { createSupabaseServiceClient } from "@/lib/supabase";
 
 const fetchOwnerDashboardData = async () => {
@@ -103,35 +100,12 @@ export default async function OwnerDashboardPage() {
 
       <div className="owner-dashboard__columns">
         <div className="owner-dashboard__primary" data-animate>
-          <section className="owner-dashboard__panel card">
-            <header>
-              <h2>Site sections</h2>
-              <p>Edit hero, promo, dan copy setiap halaman.</p>
-            </header>
-            <Suspense fallback={<DashboardSkeleton />}>
-              <div className="owner-dashboard__section-list">
-                {sections.map((section) => (
-                  <EditableSectionCard key={section.id} section={section} />
-                ))}
-              </div>
-            </Suspense>
-          </section>
-
-          <section className="owner-dashboard__panel card">
-            <header>
-              <h2>Storytelling assets</h2>
-              <p>Kelola studi kasus dan testimoni untuk ditampilkan publik.</p>
-            </header>
-            <div className="owner-dashboard__panel-grid">
-              <ProjectList projects={projects} />
-              <TestimonialList testimonials={testimonials} />
-            </div>
-          </section>
-        </div>
-
-        <aside className="owner-dashboard__aside" data-animate>
+          <Suspense fallback={<DashboardSkeleton />}>
+            <SiteSectionsPanel sections={sections} />
+          </Suspense>
           <AgentLogPanel logs={agentLogs} />
-        </aside>
+          <StorytellingPanel projects={projects} testimonials={testimonials} />
+        </div>
       </div>
     </div>
   );
