@@ -156,7 +156,17 @@ export const SiteSectionsPanel = ({ sections }: SiteSectionsPanelProps) => {
               </li>
             ))}
             {!sections.length && (
-              <li className="owner-story-card__empty">Belum ada section yang terdaftar.</li>
+              <li className="owner-story-card__empty-block">
+                <h4>Belum ada section</h4>
+                <p>
+                  Tambahkan section di Supabase lalu sinkronkan di sini untuk mengedit hero, copy,
+                  dan metadata halaman secara cepat.
+                </p>
+                <ul>
+                  <li>Gunakan slug sebagai identitas penulisan.</li>
+                  <li>Status <strong>Published</strong> akan tampil di website.</li>
+                </ul>
+              </li>
             )}
           </ul>
         </aside>
@@ -171,61 +181,73 @@ export const SiteSectionsPanel = ({ sections }: SiteSectionsPanelProps) => {
 
           {selectedSection ? (
             <>
-              <label className="owner-panel__field">
-                <span>Title</span>
-                <input
-                  value={editorState.title}
-                  onChange={(event) =>
-                    setEditorState((prev) => ({ ...prev, title: event.target.value }))
-                  }
-                  placeholder="Section title"
-                />
-              </label>
+              <div className="owner-story-card__section">
+                <h4>Judul & Status</h4>
+                <div className="owner-story-card__grid owner-story-card__grid--two">
+                  <label className="owner-panel__field">
+                    <span>Title</span>
+                    <input
+                      value={editorState.title}
+                      onChange={(event) =>
+                        setEditorState((prev) => ({ ...prev, title: event.target.value }))
+                      }
+                      placeholder="Section title"
+                    />
+                  </label>
+                  <label className="owner-panel__field">
+                    <span>Status</span>
+                    <select
+                      value={editorState.status}
+                      onChange={(event) =>
+                        setEditorState((prev) => ({
+                          ...prev,
+                          status: event.target.value as "draft" | "published",
+                        }))
+                      }
+                    >
+                      <option value="draft">Draft</option>
+                      <option value="published">Published</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
 
-              <label className="owner-panel__field owner-story-card__field--wide">
-                <span>Body</span>
-                <textarea
-                  value={editorState.body}
-                  onChange={(event) =>
-                    setEditorState((prev) => ({ ...prev, body: event.target.value }))
-                  }
-                  rows={6}
-                  placeholder="Markdown / HTML copy"
-                />
-              </label>
+              <div className="owner-story-card__section">
+                <h4>Body copy</h4>
+                <label className="owner-panel__field owner-story-card__field--wide">
+                  <span>Body</span>
+                  <textarea
+                    value={editorState.body}
+                    onChange={(event) =>
+                      setEditorState((prev) => ({ ...prev, body: event.target.value }))
+                    }
+                    rows={6}
+                    placeholder="Markdown / HTML copy"
+                  />
+                </label>
+              </div>
 
-              <label className="owner-panel__field owner-story-card__field--wide">
-                <span>Metadata (JSON)</span>
-                <textarea
-                  value={editorState.metadataJson}
-                  onChange={(event) =>
-                    setEditorState((prev) => ({ ...prev, metadataJson: event.target.value }))
-                  }
-                  rows={6}
-                  spellCheck={false}
-                  placeholder={`{
+              <div className="owner-story-card__section">
+                <h4>Metadata JSON</h4>
+                <p className="owner-story-card__hint">
+                  Gunakan metadata untuk mengatur headline hero, CTA, atau konfigurasi lain yang
+                  dibaca frontend.
+                </p>
+                <label className="owner-panel__field owner-story-card__field--wide">
+                  <span>Metadata</span>
+                  <textarea
+                    value={editorState.metadataJson}
+                    onChange={(event) =>
+                      setEditorState((prev) => ({ ...prev, metadataJson: event.target.value }))
+                    }
+                    rows={6}
+                    spellCheck={false}
+                    placeholder={`{
   "heroHeadline": "Title",
   "ctaLabel": "Hubungi kami"
 }`}
-                  className="font-mono text-sm"
-                />
-              </label>
-
-              <div className="owner-story-card__grid owner-story-card__grid--two">
-                <label className="owner-panel__field">
-                  <span>Status</span>
-                  <select
-                    value={editorState.status}
-                    onChange={(event) =>
-                      setEditorState((prev) => ({
-                        ...prev,
-                        status: event.target.value as "draft" | "published",
-                      }))
-                    }
-                  >
-                    <option value="draft">Draft</option>
-                    <option value="published">Published</option>
-                  </select>
+                    className="font-mono text-sm"
+                  />
                 </label>
               </div>
 

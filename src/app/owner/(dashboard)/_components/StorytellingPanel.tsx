@@ -151,6 +151,25 @@ const useTestimonialState = (records: TestimonialRecord[]) => {
   return { selectedId, formState, setFormState, select };
 };
 
+const EmptyListPlaceholder = ({
+  title,
+  bulletOne,
+  bulletTwo,
+}: {
+  title: string;
+  bulletOne: string;
+  bulletTwo: string;
+}) => (
+  <li className="owner-story-card__empty-block">
+    <h4>{title}</h4>
+    <p>Cara tercepat untuk memulai:</p>
+    <ul>
+      <li>{bulletOne}</li>
+      <li>{bulletTwo}</li>
+    </ul>
+  </li>
+);
+
 const ProjectPanel = ({ records }: { records: ProjectRecord[] }) => {
   const { selectedId, formState, setFormState, select } = useProjectState(records);
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -175,6 +194,7 @@ const ProjectPanel = ({ records }: { records: ProjectRecord[] }) => {
       setFeedback("Title is required");
       return;
     }
+
     startTransition(async () => {
       try {
         await upsertProjectAction({
@@ -185,7 +205,7 @@ const ProjectPanel = ({ records }: { records: ProjectRecord[] }) => {
           tagline: formState.tagline || undefined,
           description: formState.description || undefined,
           heroImageUrl: formState.hero_image_url || undefined,
-          tags: formState.tags ?? undefined,
+          tags: formState.tags || undefined,
           displayOrder: formState.display_order ?? undefined,
           isFeatured: formState.is_featured,
           status: formState.status,
@@ -213,8 +233,10 @@ const ProjectPanel = ({ records }: { records: ProjectRecord[] }) => {
     });
   };
 
+  const tagsValue = (formState.tags ?? []).join(", ");
+
   return (
-    <div className="owner-story-card__panel" data-active>
+    <div className="owner-story-card__panel" data-kind="projects">
       <div className="owner-story-card__header-actions">
         <div className="owner-story-card__metrics" aria-label="Project overview">
           <article>
@@ -269,7 +291,11 @@ const ProjectPanel = ({ records }: { records: ProjectRecord[] }) => {
               </li>
             ))}
             {!records.length && (
-              <li className="owner-story-card__empty">Belum ada project yang tercatat.</li>
+              <EmptyListPlaceholder
+                title="Belum ada project"
+                bulletOne="Klik “New project” untuk menambah studi kasus pertama."
+                bulletTwo="Gunakan tag & order untuk mengatur urutan tampil di website."
+              />
             )}
           </ul>
         </aside>
@@ -280,133 +306,143 @@ const ProjectPanel = ({ records }: { records: ProjectRecord[] }) => {
             {selected?.updated_at ? <time>{formatTimestamp(selected.updated_at)}</time> : null}
           </div>
 
-          <div className="owner-story-card__grid owner-story-card__grid--three">
-            <label className="owner-panel__field">
-              <span>Title</span>
-              <input
-                value={formState.title}
+          <div className="owner-story-card__section">
+            <h4>Identitas</h4>
+            <div className="owner-story-card__grid owner-story-card__grid--three">
+              <label className="owner-panel__field">
+                <span>Title</span>
+                <input
+                  value={formState.title}
+                  onChange={(event) =>
+                    setFormState((prev) => ({ ...prev, title: event.target.value }))
+                  }
+                  placeholder="Project title"
+                />
+              </label>
+              <label className="owner-panel__field">
+                <span>Slug</span>
+                <input
+                  value={formState.slug ?? ""}
+                  onChange={(event) =>
+                    setFormState((prev) => ({ ...prev, slug: event.target.value }))
+                  }
+                  placeholder="e.g. marketing-automation"
+                />
+              </label>
+              <label className="owner-panel__field">
+                <span>External link</span>
+                <input
+                  value={formState.link_url ?? ""}
+                  onChange={(event) =>
+                    setFormState((prev) => ({ ...prev, link_url: event.target.value }))
+                  }
+                  placeholder="https://..."
+                />
+              </label>
+            </div>
+          </div>
+
+          <div className="owner-story-card__section">
+            <h4>Deskripsi</h4>
+            <div className="owner-story-card__grid owner-story-card__grid--two">
+              <label className="owner-panel__field">
+                <span>Tagline</span>
+                <input
+                  value={formState.tagline ?? ""}
+                  onChange={(event) =>
+                    setFormState((prev) => ({ ...prev, tagline: event.target.value }))
+                  }
+                  placeholder="Quick hook for the project"
+                />
+              </label>
+              <label className="owner-panel__field">
+                <span>Hero image URL</span>
+                <input
+                  value={formState.hero_image_url ?? ""}
+                  onChange={(event) =>
+                    setFormState((prev) => ({ ...prev, hero_image_url: event.target.value }))
+                  }
+                  placeholder="/images/project-x.png"
+                />
+              </label>
+            </div>
+            <label className="owner-panel__field owner-story-card__field--wide">
+              <span>Description</span>
+              <textarea
+                value={formState.description ?? ""}
                 onChange={(event) =>
-                  setFormState((prev) => ({ ...prev, title: event.target.value }))
+                  setFormState((prev) => ({ ...prev, description: event.target.value }))
                 }
-                placeholder="Project title"
-              />
-            </label>
-            <label className="owner-panel__field">
-              <span>Slug</span>
-              <input
-                value={formState.slug ?? ""}
-                onChange={(event) =>
-                  setFormState((prev) => ({ ...prev, slug: event.target.value }))
-                }
-                placeholder="e.g. marketing-automation"
-              />
-            </label>
-            <label className="owner-panel__field">
-              <span>External link</span>
-              <input
-                value={formState.link_url ?? ""}
-                onChange={(event) =>
-                  setFormState((prev) => ({ ...prev, link_url: event.target.value }))
-                }
-                placeholder="https://..."
+                rows={4}
+                placeholder="Ringkasan deliverable, proses, atau hasil"
               />
             </label>
           </div>
 
-          <div className="owner-story-card__grid owner-story-card__grid--two">
-            <label className="owner-panel__field">
-              <span>Tagline</span>
+          <div className="owner-story-card__section">
+            <h4>Publishing</h4>
+            <p className="owner-story-card__hint">
+              Tag membentuk filter di halaman public. Display order menentukan urutan muncul.
+            </p>
+            <label className="owner-panel__field owner-story-card__field--wide">
+              <span>Tags (comma separated)</span>
               <input
-                value={formState.tagline ?? ""}
-                onChange={(event) =>
-                  setFormState((prev) => ({ ...prev, tagline: event.target.value }))
-                }
-                placeholder="Quick hook for the project"
-              />
-            </label>
-            <label className="owner-panel__field">
-              <span>Hero image URL</span>
-              <input
-                value={formState.hero_image_url ?? ""}
-                onChange={(event) =>
-                  setFormState((prev) => ({ ...prev, hero_image_url: event.target.value }))
-                }
-                placeholder="/images/project-x.png"
-              />
-            </label>
-          </div>
-
-          <label className="owner-panel__field owner-story-card__field--wide">
-            <span>Description</span>
-            <textarea
-              value={formState.description ?? ""}
-              onChange={(event) =>
-                setFormState((prev) => ({ ...prev, description: event.target.value }))
-              }
-              rows={4}
-              placeholder="Longer write-up or Markdown"
-            />
-          </label>
-
-          <label className="owner-panel__field owner-story-card__field--wide">
-            <span>Tags (comma separated)</span>
-            <input
-              value={(formState.tags ?? []).join(", ")}
-              onChange={(event) =>
-                setFormState((prev) => ({
-                  ...prev,
-                  tags: event.target.value
-                    .split(",")
-                    .map((tag) => tag.trim())
-                    .filter(Boolean),
-                }))
-              }
-              placeholder="AI, Automation, Product"
-            />
-          </label>
-
-          <div className="owner-story-card__grid owner-story-card__grid--three">
-            <label className="owner-panel__field">
-              <span>Display order</span>
-              <input
-                type="number"
-                value={formState.display_order ?? 0}
+                value={tagsValue}
                 onChange={(event) =>
                   setFormState((prev) => ({
                     ...prev,
-                    display_order: Number(event.target.value),
+                    tags: event.target.value
+                      .split(",")
+                      .map((tag) => tag.trim())
+                      .filter(Boolean),
                   }))
                 }
+                placeholder="AI, Automation, Product"
               />
             </label>
-            <label className="owner-panel__field">
-              <span>Status</span>
-              <select
-                value={formState.status}
-                onChange={(event) =>
-                  setFormState((prev) => ({
-                    ...prev,
-                    status: event.target.value as "draft" | "published",
-                  }))
-                }
-              >
-                <option value="draft">Draft</option>
-                <option value="published">Published</option>
-              </select>
-            </label>
-            <label className="owner-panel__checkbox">
-              <input
-                type="checkbox"
-                checked={Boolean(formState.is_featured)}
-                onChange={(event) =>
-                  setFormState((prev) => ({
-                    ...prev,
-                    is_featured: event.target.checked,
-                  }))
-                }
-              />
-              <span>Featured</span>
-            </label>
+            <div className="owner-story-card__grid owner-story-card__grid--three">
+              <label className="owner-panel__field">
+                <span>Display order</span>
+                <input
+                  type="number"
+                  value={formState.display_order ?? 0}
+                  onChange={(event) =>
+                    setFormState((prev) => ({
+                      ...prev,
+                      display_order: Number(event.target.value),
+                    }))
+                  }
+                />
+              </label>
+              <label className="owner-panel__field">
+                <span>Status</span>
+                <select
+                  value={formState.status}
+                  onChange={(event) =>
+                    setFormState((prev) => ({
+                      ...prev,
+                      status: event.target.value as "draft" | "published",
+                    }))
+                  }
+                >
+                  <option value="draft">Draft</option>
+                  <option value="published">Published</option>
+                </select>
+              </label>
+              <label className="owner-panel__checkbox">
+                <input
+                  type="checkbox"
+                  checked={Boolean(formState.is_featured)}
+                  onChange={(event) =>
+                    setFormState((prev) => ({
+                      ...prev,
+                      is_featured: event.target.checked,
+                    }))
+                  }
+                />
+                <span>Featured</span>
+              </label>
+            </div>
           </div>
 
           <footer className="owner-story-card__footer">
@@ -503,9 +539,9 @@ const TestimonialPanel = ({ records }: { records: TestimonialRecord[] }) => {
   };
 
   return (
-    <div className="owner-story-card__panel" data-active>
+    <div className="owner-story-card__panel" data-kind="testimonials">
       <div className="owner-story-card__header-actions">
-        <div className="owner-story-card__metrics" aria-label="Testimonial overview">
+        <div className="owner-story-card__metrics" aria-label="Testimonials overview">
           <article>
             <span>Total</span>
             <strong>{totals.total}</strong>
@@ -559,7 +595,11 @@ const TestimonialPanel = ({ records }: { records: TestimonialRecord[] }) => {
               </li>
             ))}
             {!records.length && (
-              <li className="owner-story-card__empty">Belum ada testimonial yang tercatat.</li>
+              <EmptyListPlaceholder
+                title="Belum ada testimonial"
+                bulletOne="Klik “New testimonial” dan masukkan nama, role, dan quote singkat."
+                bulletTwo="Gunakan status Published untuk menampilkan di halaman publik."
+              />
             )}
           </ul>
         </aside>
@@ -570,93 +610,103 @@ const TestimonialPanel = ({ records }: { records: TestimonialRecord[] }) => {
             {selected?.updated_at ? <time>{formatTimestamp(selected.updated_at)}</time> : null}
           </div>
 
-          <div className="owner-story-card__grid owner-story-card__grid--two">
-            <label className="owner-panel__field">
-              <span>Name</span>
+          <div className="owner-story-card__section">
+            <h4>Identitas</h4>
+            <div className="owner-story-card__grid owner-story-card__grid--two">
+              <label className="owner-panel__field">
+                <span>Name</span>
+                <input
+                  value={formState.name}
+                  onChange={(event) =>
+                    setFormState((prev) => ({ ...prev, name: event.target.value }))
+                  }
+                  placeholder="Customer name"
+                />
+              </label>
+              <label className="owner-panel__field">
+                <span>Role</span>
+                <input
+                  value={formState.role ?? ""}
+                  onChange={(event) =>
+                    setFormState((prev) => ({ ...prev, role: event.target.value }))
+                  }
+                  placeholder="Title"
+                />
+              </label>
+            </div>
+            <label className="owner-panel__field owner-story-card__field--wide">
+              <span>Company</span>
               <input
-                value={formState.name}
+                value={formState.company ?? ""}
                 onChange={(event) =>
-                  setFormState((prev) => ({ ...prev, name: event.target.value }))
+                  setFormState((prev) => ({ ...prev, company: event.target.value }))
                 }
-                placeholder="Customer name"
-              />
-            </label>
-            <label className="owner-panel__field">
-              <span>Role</span>
-              <input
-                value={formState.role ?? ""}
-                onChange={(event) =>
-                  setFormState((prev) => ({ ...prev, role: event.target.value }))
-                }
-                placeholder="Title"
-              />
-            </label>
-          </div>
-
-          <label className="owner-panel__field owner-story-card__field--wide">
-            <span>Company</span>
-            <input
-              value={formState.company ?? ""}
-              onChange={(event) =>
-                setFormState((prev) => ({ ...prev, company: event.target.value }))
-              }
-              placeholder="Company or affiliation"
-            />
-          </label>
-
-          <label className="owner-panel__field owner-story-card__field--wide">
-            <span>Quote</span>
-            <textarea
-              value={formState.quote ?? ""}
-              onChange={(event) =>
-                setFormState((prev) => ({ ...prev, quote: event.target.value }))
-              }
-              rows={4}
-              placeholder="Testimonial content"
-            />
-          </label>
-
-          <div className="owner-story-card__grid owner-story-card__grid--two">
-            <label className="owner-panel__field">
-              <span>Avatar URL</span>
-              <input
-                value={formState.avatar_url ?? ""}
-                onChange={(event) =>
-                  setFormState((prev) => ({ ...prev, avatar_url: event.target.value }))
-                }
-                placeholder="/images/customer.png"
-              />
-            </label>
-            <label className="owner-panel__field">
-              <span>Display order</span>
-              <input
-                type="number"
-                value={formState.display_order ?? 0}
-                onChange={(event) =>
-                  setFormState((prev) => ({
-                    ...prev,
-                    display_order: Number(event.target.value),
-                  }))
-                }
+                placeholder="Company or affiliation"
               />
             </label>
           </div>
 
-          <label className="owner-panel__field owner-story-card__field--wide">
-            <span>Status</span>
-            <select
-              value={formState.status}
-              onChange={(event) =>
-                setFormState((prev) => ({
-                  ...prev,
-                  status: event.target.value as "draft" | "published",
-                }))
-              }
-            >
-              <option value="draft">Draft</option>
-              <option value="published">Published</option>
-            </select>
-          </label>
+          <div className="owner-story-card__section">
+            <h4>Quote</h4>
+            <p className="owner-story-card__hint">
+              Simpan quote ringkas (2-3 kalimat) agar mudah ditampilkan di landing page.
+            </p>
+            <label className="owner-panel__field owner-story-card__field--wide">
+              <span>Quote</span>
+              <textarea
+                value={formState.quote ?? ""}
+                onChange={(event) =>
+                  setFormState((prev) => ({ ...prev, quote: event.target.value }))
+                }
+                rows={4}
+                placeholder="Testimonial content"
+              />
+            </label>
+          </div>
+
+          <div className="owner-story-card__section">
+            <h4>Visual & Publishing</h4>
+            <div className="owner-story-card__grid owner-story-card__grid--three">
+              <label className="owner-panel__field owner-story-card__field--wide">
+                <span>Avatar URL</span>
+                <input
+                  value={formState.avatar_url ?? ""}
+                  onChange={(event) =>
+                    setFormState((prev) => ({ ...prev, avatar_url: event.target.value }))
+                  }
+                  placeholder="/images/customer.png"
+                />
+              </label>
+              <label className="owner-panel__field">
+                <span>Display order</span>
+                <input
+                  type="number"
+                  value={formState.display_order ?? 0}
+                  onChange={(event) =>
+                    setFormState((prev) => ({
+                      ...prev,
+                      display_order: Number(event.target.value),
+                    }))
+                  }
+                />
+              </label>
+              <label className="owner-panel__field">
+                <span>Status</span>
+                <select
+                  value={formState.status}
+                  onChange={(event) =>
+                    setFormState((prev) => ({
+                      ...prev,
+                      status: event.target.value as "draft" | "published",
+                    }))
+                  }
+                >
+                  <option value="draft">Draft</option>
+                  <option value="published">Published</option>
+                </select>
+              </label>
+            </div>
+          </div>
 
           <footer className="owner-story-card__footer">
             {feedback && <span className="owner-story-card__feedback">{feedback}</span>}
@@ -699,7 +749,7 @@ export const StorytellingPanel = ({ projects, testimonials }: StorytellingPanelP
       <header className="owner-story-card__header">
         <div className="owner-story-card__title">
           <h3>Storytelling assets</h3>
-          <p>Kelola studi kasus dan testimoni yang tampil di halaman publik.</p>
+          <p>Kelola studi kasus dan testimoni yang tampil di website utama.</p>
         </div>
         <div className="owner-story-card__tabs" role="tablist" aria-label="Storytelling tabs">
           <button
@@ -727,12 +777,14 @@ export const StorytellingPanel = ({ projects, testimonials }: StorytellingPanelP
         <div
           className={`owner-story-card__panel-wrapper ${active === "projects" ? "is-active" : ""}`}
           role="tabpanel"
+          aria-label="Projects panel"
         >
           <ProjectPanel records={projects} />
         </div>
         <div
           className={`owner-story-card__panel-wrapper ${active === "testimonials" ? "is-active" : ""}`}
           role="tabpanel"
+          aria-label="Testimonials panel"
         >
           <TestimonialPanel records={testimonials} />
         </div>

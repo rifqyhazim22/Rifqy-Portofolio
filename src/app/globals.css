@@ -2814,6 +2814,20 @@ nav.pills {
   font-size: 0.9rem;
 }
 
+.owner-panel__empty--tall {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  text-align: left;
+}
+
+.owner-panel__empty--tall h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
 .owner-panel__form {
   display: flex;
   flex-direction: column;
@@ -3038,10 +3052,43 @@ nav.pills {
   border: 1px solid rgba(255, 255, 255, 0.14);
 }
 
+.owner-panel__metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.owner-panel__metrics article {
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(9, 18, 36, 0.7);
+  border: 1px solid rgba(122, 162, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.owner-panel__metrics span {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--fg) 60%, transparent);
+}
+
+.owner-panel__metrics strong {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
 .owner-panel__logs {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 6px;
 }
 
 .owner-panel__log {
@@ -3429,6 +3476,12 @@ nav.pills {
   font-size: 0.95rem;
 }
 
+.owner-story-card__panel {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 2.6vw, 24px);
+}
+
 .owner-story-card__tabs {
   display: inline-flex;
   padding: 6px;
@@ -3552,6 +3605,32 @@ nav.pills {
   gap: 12px;
 }
 
+.owner-story-card__empty-block {
+  border-radius: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+.owner-story-card__empty-block h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.owner-story-card__empty-block ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: color-mix(in oklab, var(--fg) 70%, transparent);
+}
+
 .owner-story-card__item {
   width: 100%;
   border-radius: 20px;
@@ -3670,6 +3749,33 @@ nav.pills {
   text-transform: none;
   letter-spacing: 0.02em;
   color: color-mix(in oklab, var(--fg) 55%, transparent);
+}
+
+.owner-story-card__section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid rgba(122, 162, 255, 0.14);
+}
+
+.owner-story-card__section:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.owner-story-card__section h4 {
+  margin: 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--fg) 58%, transparent);
+}
+
+.owner-story-card__hint {
+  margin: 0;
+  font-size: 0.78rem;
+  color: color-mix(in oklab, var(--fg) 60%, transparent);
 }
 
 .owner-story-card__grid {
