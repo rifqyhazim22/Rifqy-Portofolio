@@ -23,11 +23,12 @@ export default async function OwnerLayout({ children }: OwnerLayoutProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-950 to-slate-900 text-white">
-      <OwnerHeader email={user.email ?? undefined} />
-      <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-8">
-        {children}
-      </main>
+    <div className="owner-shell">
+      <div className="owner-shell__backdrop" aria-hidden />
+      <div className="owner-shell__frame">
+        <OwnerHeader email={user.email ?? undefined} />
+        <main className="owner-shell__main">{children}</main>
+      </div>
     </div>
   );
 }

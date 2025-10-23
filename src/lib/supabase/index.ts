@@ -4,3 +4,4 @@ export {
   createSupabaseServiceClient,
   getSupabaseServiceClient,
 } from "./service-client";
+export { fetchCurrentOwner, requireOwner, OwnerAuthError } from "./owner-auth";
