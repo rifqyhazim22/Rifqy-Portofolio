@@ -173,81 +173,9 @@ export const upsertProjectRecord = async (input: UpsertProjectInput) => {
   return response.data;
 };
 
-export type UpsertTestimonialInput = {
-  id?: string;
-  name: string;
-  role?: string | null;
-  company?: string | null;
-  quote: string;
-  avatarUrl?: string | null;
-  displayOrder?: number | null;
-  status?: StatusValue;
-};
-
-export const upsertTestimonialRecord = async (
-  input: UpsertTestimonialInput,
-) => {
-  const supabase = createSupabaseServiceClient();
-
-  const statusValue =
-    input.status ?? (input.id ? undefined : "published");
-
-  const payload = cleanUndefined({
-    name: input.name.trim(),
-    role: normalizeString(input.role ?? undefined),
-    company: normalizeString(input.company ?? undefined),
-    quote: input.quote,
-    avatar_url: normalizeString(input.avatarUrl ?? undefined),
-    display_order:
-      input.displayOrder === undefined || input.displayOrder === null
-        ? null
-        : Number.isFinite(input.displayOrder)
-          ? input.displayOrder
-          : null,
-    status: statusValue,
-    updated_at: new Date().toISOString(),
-  });
-
-  let response;
-  if (input.id) {
-    response = await supabase
-      .from("testimonials")
-      .update(payload)
-      .eq("id", input.id)
-      .select("*")
-      .single();
-  } else {
-    response = await supabase
-      .from("testimonials")
-      .insert({
-        ...payload,
-        created_at: new Date().toISOString(),
-        status: payload.status ?? "published",
-      })
-      .select("*")
-      .single();
-  }
-
-  if (response.error) {
-    throw new Error(response.error.message);
-  }
-
-  resetSupabaseContentCache();
-  return response.data;
-};
-
 export const deleteProjectRecord = async (id: string) => {
   const supabase = createSupabaseServiceClient();
   const { error } = await supabase.from("projects").delete().eq("id", id);
-  if (error) {
-    throw new Error(error.message);
-  }
-  resetSupabaseContentCache();
-};
-
-export const deleteTestimonialRecord = async (id: string) => {
-  const supabase = createSupabaseServiceClient();
-  const { error } = await supabase.from("testimonials").delete().eq("id", id);
   if (error) {
     throw new Error(error.message);
   }

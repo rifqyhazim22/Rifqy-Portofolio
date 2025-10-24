@@ -203,38 +203,6 @@ const projects = [
   },
 ];
 
-const testimonials = [
-  {
-    name: "Nadya Pratama",
-    role: "Head of Product",
-    company: "Creator Collective",
-    quote:
-      "“Rifqy bantu tim kami membangun agen evaluasi konten. SOP yang dia siapkan bikin editor kami bisa langsung adaptasi.”",
-    avatar_url: null,
-    display_order: 1,
-    status: "published",
-  },
-  {
-    name: "Michael Tan",
-    role: "CTO",
-    company: "Nova Mobility",
-    quote:
-      "“Ia mengubah data perjalanan jadi rekomendasi operasional dalam hitungan hari. Dokumentasinya rapi, gampang dioperasikan tim internal.”",
-    avatar_url: null,
-    display_order: 2,
-    status: "published",
-  },
-  {
-    name: "Alya Salsabila",
-    role: "Lead Researcher",
-    company: "Orbit Labs",
-    quote:
-      "“Prompt system & guardrails yang ia rancang bikin riset AI kami jauh lebih reliable. Kolaborasi yang penuh empati.”",
-    avatar_url: null,
-    display_order: 3,
-    status: "published",
-  },
-];
 
 (async () => {
   try {
@@ -273,40 +241,6 @@ const testimonials = [
     }
 
     console.log("All projects seeded.");
-
-    for (const testimonial of testimonials) {
-      let query = client.from("testimonials").select("id").eq("name", testimonial.name).limit(1);
-
-      if (testimonial.company) {
-        query = query.eq("company", testimonial.company);
-      } else {
-        query = query.is("company", null);
-      }
-
-      const { data: existing, error: fetchError } = await query.maybeSingle();
-
-      if (fetchError && fetchError.code !== "PGRST116") {
-        throw new Error(`Failed to fetch testimonial ${testimonial.name}: ${fetchError.message}`);
-      }
-
-      let error;
-      if (existing?.id) {
-        ({ error } = await client
-          .from("testimonials")
-          .update(testimonial)
-          .eq("id", existing.id));
-      } else {
-        ({ error } = await client.from("testimonials").insert(testimonial));
-      }
-
-      if (error) {
-        throw new Error(`Failed to upsert testimonial ${testimonial.name}: ${error.message}`);
-      }
-
-      console.log(`Upserted testimonial: ${testimonial.name}`);
-    }
-
-    console.log("All testimonials seeded.");
     process.exit(0);
   } catch (error) {
     console.error(error instanceof Error ? error.message : error);

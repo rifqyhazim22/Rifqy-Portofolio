@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useState, useTransition } from "react";
-import { updateSiteSectionAction } from "../actions";
+import { useRouter } from "next/navigation";
+import { createSiteSectionAction, updateSiteSectionAction } from "../actions";
 
 export type SiteSection = {
   id: string;
@@ -37,6 +38,7 @@ const formatTimestamp = (value?: string | null) => {
 };
 
 export const SiteSectionsPanel = ({ sections }: SiteSectionsPanelProps) => {
+  const router = useRouter();
   const [selectedId, setSelectedId] = useState<string | null>(sections[0]?.id ?? null);
   const [editorState, setEditorState] = useState(() => {
     const first = sections[0];
@@ -95,8 +97,24 @@ export const SiteSectionsPanel = ({ sections }: SiteSectionsPanelProps) => {
           status: editorState.status,
         });
         setFeedback("Section updated");
+        router.refresh();
       } catch (error) {
         setFeedback(error instanceof Error ? error.message : "Failed to update section");
+      }
+    });
+  };
+
+  const handleCreate = () => {
+    const slug = prompt("Slug baru untuk content block?");
+    if (!slug) return;
+
+    startTransition(async () => {
+      try {
+        await createSiteSectionAction(slug);
+        setFeedback("Content block created");
+        router.refresh();
+      } catch (error) {
+        setFeedback(error instanceof Error ? error.message : "Failed to create block");
       }
     });
   };
@@ -105,11 +123,11 @@ export const SiteSectionsPanel = ({ sections }: SiteSectionsPanelProps) => {
     <section className="owner-story-card">
       <header className="owner-story-card__header">
         <div className="owner-story-card__title">
-          <h3>Site sections</h3>
-          <p>Edit copy, hero, dan metadata setiap halaman.</p>
+          <h3>Content blocks</h3>
+          <p>Atur narasi halaman—judul, body, dan metadata yang langsung tersaji di frontend.</p>
         </div>
         <div className="owner-story-card__header-actions">
-          <div className="owner-story-card__metrics" aria-label="Site sections overview">
+          <div className="owner-story-card__metrics" aria-label="Content blocks overview">
             <article>
               <span>Total</span>
               <strong>{totals.total}</strong>
@@ -123,6 +141,15 @@ export const SiteSectionsPanel = ({ sections }: SiteSectionsPanelProps) => {
               <strong>{totals.draft}</strong>
             </article>
           </div>
+          <button
+            type="button"
+            className="owner-story-card__button"
+            onClick={handleCreate}
+            disabled={isPending}
+          >
+            <span aria-hidden>＋</span>
+            New block
+          </button>
         </div>
       </header>
 
@@ -161,14 +188,14 @@ export const SiteSectionsPanel = ({ sections }: SiteSectionsPanelProps) => {
             ))}
             {!sections.length && (
               <li className="owner-story-card__empty-block">
-                <h4>Belum ada section</h4>
+                <h4>Belum ada content block</h4>
                 <p>
-                  Tambahkan section di Supabase lalu sinkronkan di sini untuk mengedit hero, copy,
-                  dan metadata halaman secara cepat.
+                  Klik <strong>New block</strong> untuk menambahkan slug baru, lalu isi judul, body,
+                  dan metadata yang dibaca frontend.
                 </p>
                 <ul>
-                  <li>Gunakan slug sebagai identitas penulisan.</li>
-                  <li>Status <strong>Published</strong> akan tampil di website.</li>
+                  <li>Slug memetakan block ke komponen halaman.</li>
+                  <li>Status <strong>Published</strong> akan langsung tampil di website.</li>
                 </ul>
               </li>
             )}

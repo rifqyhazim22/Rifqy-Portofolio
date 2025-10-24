@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import { OwnerHeader } from "./_components/OwnerHeader";
+import { OwnerNav } from "./_components/OwnerNav";
 import { createSupabaseServerClient } from "@/lib/supabase";
 
 type OwnerLayoutProps = {
@@ -27,7 +28,10 @@ export default async function OwnerLayout({ children }: OwnerLayoutProps) {
       <div className="owner-shell__backdrop" aria-hidden />
       <div className="owner-shell__frame">
         <OwnerHeader email={user.email ?? undefined} />
-        <main className="owner-shell__main">{children}</main>
+        <div className="owner-shell__main">
+          <OwnerNav />
+          <div className="owner-shell__content">{children}</div>
+        </div>
       </div>
     </div>
   );

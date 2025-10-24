@@ -4,12 +4,10 @@ import { revalidatePath } from "next/cache";
 import { requireOwner } from "@/lib/supabase";
 import {
   updateSiteSectionRecord,
+  createSiteSectionRecord,
   upsertProjectRecord,
-  upsertTestimonialRecord,
   deleteProjectRecord,
-  deleteTestimonialRecord,
   type UpsertProjectInput as OwnerProjectInput,
-  type UpsertTestimonialInput as OwnerTestimonialInput,
   type SiteSectionUpdateInput,
 } from "@/lib/supabase/owner-content";
 
@@ -48,6 +46,22 @@ export async function updateSiteSectionAction(input: UpdateSiteSectionInput) {
   }
 
   await updateSiteSectionRecord(payload);
+  revalidatePath("/owner/content");
+  revalidatePath("/owner");
+
+  return { success: true };
+}
+
+export async function createSiteSectionAction(slug: string) {
+  const value = slug?.trim();
+  if (!value) {
+    throw new Error("Slug is required");
+  }
+
+  await requireOwner();
+
+  await createSiteSectionRecord({ slug: value, status: "draft" });
+  revalidatePath("/owner/content");
   revalidatePath("/owner");
 
   return { success: true };
@@ -57,17 +71,7 @@ export async function upsertProjectAction(input: OwnerProjectInput) {
   await requireOwner();
 
   await upsertProjectRecord(input);
-  revalidatePath("/owner");
-
-  return { success: true };
-}
-
-export async function upsertTestimonialAction(
-  input: OwnerTestimonialInput,
-) {
-  await requireOwner();
-
-  await upsertTestimonialRecord(input);
+  revalidatePath("/owner/content");
   revalidatePath("/owner");
 
   return { success: true };
@@ -79,16 +83,7 @@ export async function deleteProjectAction(id: string) {
   await requireOwner();
 
   await deleteProjectRecord(id);
-  revalidatePath("/owner");
-  return { success: true };
-}
-
-export async function deleteTestimonialAction(id: string) {
-  if (!id) throw new Error("Missing testimonial id");
-
-  await requireOwner();
-
-  await deleteTestimonialRecord(id);
+  revalidatePath("/owner/content");
   revalidatePath("/owner");
   return { success: true };
 }
