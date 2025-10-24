@@ -28,10 +28,10 @@ export default async function OwnerLayout({ children }: OwnerLayoutProps) {
       <div className="owner-shell__backdrop" aria-hidden />
       <div className="owner-shell__frame">
         <OwnerHeader email={user.email ?? undefined} />
-        <div className="owner-shell__main">
+        <main className="owner-shell__main">
           <OwnerNav />
           <div className="owner-shell__content">{children}</div>
-        </div>
+        </main>
       </div>
     </div>
   );

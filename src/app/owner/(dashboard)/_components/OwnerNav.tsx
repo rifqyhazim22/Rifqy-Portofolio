@@ -14,7 +14,7 @@ export const OwnerNav = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="owner-nav" aria-label="Owner sections">
+    <nav className="owner-nav owner-nav--bar" aria-label="Owner sections">
       <ul>
         {NAV_LINKS.map((link) => {
           const isActive = pathname === link.href || (pathname?.startsWith(link.href + "/") ?? false);
