@@ -440,8 +440,8 @@ export const AgentCanvas = ({ agents, assets }: AgentCanvasProps) => {
       <div
         className="owner-canvas__body"
         style={{
-          gridTemplateColumns: `${showPalette ? "minmax(240px, 280px)" : "0px"} minmax(0, 1fr) ${
-            showInspector ? "minmax(260px, 320px)" : "0px"
+          gridTemplateColumns: `${showPalette ? "minmax(220px, 260px)" : "0px"} minmax(0, 1fr) ${
+            showInspector ? "minmax(240px, 280px)" : "0px"
           }`,
         }}
       >

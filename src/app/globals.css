@@ -2533,7 +2533,7 @@ nav.pills {
 .owner-shell__frame {
   position: relative;
   z-index: 1;
-  width: min(1140px, calc(100% - clamp(34px, 8vw, 120px)));
+  width: min(1380px, calc(100% - clamp(34px, 6vw, 120px)));
   display: flex;
   flex-direction: column;
   gap: clamp(24px, 4vw, 40px);
@@ -4732,6 +4732,8 @@ section {
 .owner-canvas__palette.is-hidden {
   pointer-events: none;
   opacity: 0;
+  padding: 0;
+  border-width: 0;
 }
 
 .owner-canvas__palette-group {
@@ -4828,6 +4830,8 @@ section {
 .owner-canvas__inspector.is-hidden {
   pointer-events: none;
   opacity: 0;
+  padding: 0;
+  border-width: 0;
 }
 
 .owner-canvas__inspector-body {
