@@ -4512,37 +4512,70 @@ section {
   gap: clamp(18px, 2.8vw, 26px);
 }
 
-.owner-agent-card header {
+.owner-agent-card__meta {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
+  align-items: center;
+  gap: clamp(12px, 2vw, 20px);
+  padding: 16px 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(122, 162, 255, 0.18);
+  background: rgba(10, 20, 44, 0.55);
 }
 
-.owner-agent-card header strong {
+.owner-agent-card__meta > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.owner-agent-card__meta strong {
   font-size: 1rem;
 }
 
-.owner-agent-card header span {
+.owner-agent-card__meta span {
   font-size: 0.82rem;
-  color: color-mix(in oklab, var(--fg) 65%, transparent);
+  color: color-mix(in oklab, var(--fg) 68%, transparent);
 }
 
-.owner-agent-card__status {
-  display: flex;
-  justify-content: flex-start;
-  gap: 12px;
-  padding: 12px 16px;
-  border-radius: 16px;
-  border: 1px solid rgba(122, 162, 255, 0.16);
-  background: rgba(12, 24, 48, 0.55);
+.owner-agent-card__meta time {
+  font-size: 0.75rem;
+  color: color-mix(in oklab, var(--fg) 60%, transparent);
 }
 
-.owner-agent-card__status label {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: 0.9rem;
+.owner-agent-status-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(12, 24, 52, 0.65);
+  border-radius: 999px;
+  padding: 4px;
+  border: 1px solid rgba(122, 162, 255, 0.18);
+}
+
+.owner-agent-status-toggle__btn {
+  min-width: 96px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border: none;
+  background: transparent;
+  color: color-mix(in oklab, var(--fg) 70%, transparent);
+  transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+}
+
+.owner-agent-status-toggle__btn:hover,
+.owner-agent-status-toggle__btn:focus-visible {
+  background: rgba(122, 162, 255, 0.15);
+  color: var(--fg);
+}
+
+.owner-agent-status-toggle__btn.is-active {
+  background: linear-gradient(120deg, #4d8bff 0%, #2f5dff 100%);
+  color: #021433;
+  box-shadow: 0 0 12px rgba(77, 139, 255, 0.45);
 }
 
 .owner-agent-card__section {

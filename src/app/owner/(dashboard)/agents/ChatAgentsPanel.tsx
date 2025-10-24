@@ -31,6 +31,24 @@ const agentMetrics = (agents: AiAgentRecord[]) => {
   return { total: agents.length, active, disabled, draft };
 };
 
+const STATUS_OPTIONS: Array<{ id: "active" | "draft" | "disabled"; label: string }> = [
+  { id: "active", label: "ACTIVE" },
+  { id: "draft", label: "DRAFT" },
+  { id: "disabled", label: "DISABLED" },
+];
+
+const formatUpdatedAt = (value: string | null) => {
+  if (!value) return "Belum pernah disimpan";
+  try {
+    return new Intl.DateTimeFormat("id-ID", {
+      dateStyle: "medium",
+      timeStyle: "short",
+    }).format(new Date(value));
+  } catch {
+    return value;
+  }
+};
+
 type ChatAgentsPanelProps = {
   agents: AiAgentRecord[];
 };
@@ -152,31 +170,32 @@ export const ChatAgentsPanel = ({ agents }: ChatAgentsPanelProps) => {
           const feedback = feedbacks[agent.id] ?? null;
           return (
             <article key={agent.id} className="owner-agent-card">
-              <header>
+              <header className="owner-agent-card__meta">
                 <div>
-                  <strong>{agent.slug}</strong>
-                  <span>{state.updatedAt ? new Date(state.updatedAt).toLocaleString() : "Belum pernah disimpan"}</span>
+                  <strong>{agent.name}</strong>
+                  <span>{agent.slug}</span>
+                  <time>{formatUpdatedAt(state.updatedAt)}</time>
+                </div>
+                <div className="owner-agent-status-toggle" role="group" aria-label={`${agent.slug} status`}>
+                  {STATUS_OPTIONS.map((option) => (
+                    <button
+                      key={option.id}
+                      type="button"
+                      className={`owner-agent-status-toggle__btn ${
+                        state.status === option.id ? "is-active" : ""
+                      }`}
+                      onClick={() =>
+                        updateForm(agent.id, (prev) => ({
+                          ...prev,
+                          status: option.id,
+                        }))
+                      }
+                    >
+                      {option.label}
+                    </button>
+                  ))}
                 </div>
               </header>
-
-              <div className="owner-agent-card__status">
-                <label>
-                  <span>Status</span>
-                  <select
-                    value={state.status}
-                    onChange={(event) =>
-                      updateForm(agent.id, (prev) => ({
-                        ...prev,
-                        status: event.target.value as "active" | "disabled" | "draft",
-                      }))
-                    }
-                  >
-                    <option value="active">Active</option>
-                    <option value="draft">Draft</option>
-                    <option value="disabled">Disabled</option>
-                  </select>
-                </label>
-              </div>
 
               <div className="owner-agent-card__section">
                 <h4>Identitas</h4>
