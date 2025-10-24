@@ -4583,3 +4583,291 @@ section {
   flex-direction: column;
   gap: 12px;
 }
+
+.owner-canvas {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3vw, 32px);
+}
+
+.owner-canvas__header {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2.5vw, 24px);
+  padding: clamp(22px, 3.2vw, 30px);
+  border-radius: 26px;
+  border: 1px solid rgba(122, 162, 255, 0.22);
+  background: rgba(8, 16, 32, 0.72);
+  box-shadow: 0 28px 48px rgba(6, 12, 30, 0.48);
+}
+
+.owner-canvas__title {
+  display: grid;
+  gap: 12px;
+}
+
+.owner-canvas__title input {
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  font-weight: 700;
+  background: transparent;
+  border: none;
+  color: var(--fg);
+  outline: none;
+}
+
+.owner-canvas__title textarea {
+  background: rgba(12, 24, 52, 0.6);
+  border: 1px solid rgba(122, 162, 255, 0.24);
+  border-radius: 18px;
+  padding: 12px 16px;
+  color: color-mix(in oklab, var(--fg) 82%, transparent);
+  resize: none;
+}
+
+.owner-canvas__header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(12px, 2.5vw, 20px);
+  justify-content: space-between;
+}
+
+.owner-canvas__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid rgba(122, 162, 255, 0.22);
+  background: rgba(12, 24, 52, 0.7);
+}
+
+.owner-canvas__status-btn {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: transparent;
+  color: color-mix(in oklab, var(--fg) 70%, transparent);
+  transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+}
+
+.owner-canvas__status-btn:hover,
+.owner-canvas__status-btn:focus-visible {
+  background: rgba(122, 162, 255, 0.18);
+  color: var(--fg);
+}
+
+.owner-canvas__status-btn.is-active {
+  background: linear-gradient(120deg, #4d8bff 0%, #2f5dff 100%);
+  color: #021433;
+  box-shadow: 0 0 12px rgba(77, 139, 255, 0.45);
+}
+
+.owner-canvas__header-buttons {
+  display: inline-flex;
+  gap: 12px;
+}
+
+.owner-canvas__import {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(122, 162, 255, 0.22);
+  background: rgba(12, 24, 52, 0.55);
+  cursor: pointer;
+}
+
+.owner-canvas__body {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr) 320px;
+  gap: clamp(18px, 2.8vw, 26px);
+}
+
+.owner-canvas__palette {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: clamp(18px, 2.5vw, 24px);
+  border-radius: 24px;
+  border: 1px solid rgba(122, 162, 255, 0.18);
+  background: rgba(8, 16, 32, 0.68);
+  box-shadow: 0 28px 46px rgba(6, 12, 30, 0.45);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.owner-canvas__palette-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.owner-canvas__palette-group ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.owner-canvas__palette-group button {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(122, 162, 255, 0.16);
+  background: rgba(13, 26, 52, 0.5);
+  color: var(--fg);
+  text-align: left;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.owner-canvas__palette-group button:hover,
+.owner-canvas__palette-group button:focus-visible {
+  border-color: rgba(122, 162, 255, 0.4);
+  background: rgba(22, 38, 72, 0.7);
+}
+
+.owner-canvas__palette-group button span {
+  font-weight: 600;
+}
+
+.owner-canvas__palette-group button small {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.78rem;
+  color: color-mix(in oklab, var(--fg) 65%, transparent);
+}
+
+.owner-canvas__palette footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.owner-canvas__palette footer li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: color-mix(in oklab, var(--fg) 70%, transparent);
+}
+
+.owner-canvas__workspace {
+  position: relative;
+  min-height: 70vh;
+  border-radius: 28px;
+  border: 1px solid rgba(122, 162, 255, 0.18);
+  overflow: hidden;
+}
+
+.owner-canvas__panel-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: rgba(10, 20, 46, 0.8);
+  color: var(--fg);
+  font-size: 0.8rem;
+}
+
+.owner-canvas__inspector {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: clamp(18px, 2.5vw, 24px);
+  border-radius: 24px;
+  border: 1px solid rgba(122, 162, 255, 0.18);
+  background: rgba(8, 16, 32, 0.72);
+  box-shadow: 0 28px 46px rgba(4, 12, 30, 0.45);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.owner-canvas__inspector-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.owner-canvas__inspector-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.owner-canvas__empty {
+  padding: 24px;
+  border-radius: 18px;
+  border: 1px dashed rgba(122, 162, 255, 0.3);
+  text-align: center;
+  color: color-mix(in oklab, var(--fg) 65%, transparent);
+}
+
+.owner-canvas__error {
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ffb4b4;
+}
+
+.canvas-node {
+  padding: 16px 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(8, 16, 32, 0.86);
+  color: var(--fg);
+  min-width: 220px;
+  box-shadow: 0 18px 30px rgba(5, 10, 24, 0.45);
+}
+
+.canvas-node strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.canvas-node p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: color-mix(in oklab, var(--fg) 72%, transparent);
+}
+
+.canvas-node__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+  color: #031428;
+}
+
+.canvas-node--trigger .canvas-node__badge {
+  background: rgba(125, 211, 252, 0.9);
+}
+
+.canvas-node--agent .canvas-node__badge {
+  background: rgba(196, 181, 253, 0.9);
+}
+
+.canvas-node--action .canvas-node__badge,
+.canvas-node--integration .canvas-node__badge {
+  background: rgba(244, 166, 255, 0.9);
+}
+
+.canvas-node--decision .canvas-node__badge {
+  background: rgba(251, 191, 36, 0.9);
+}

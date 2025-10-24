@@ -8,6 +8,7 @@ const NAV_LINKS = [
   { href: "/owner/content", label: "Content" },
   { href: "/owner/assets", label: "Assets" },
   { href: "/owner/agents", label: "Agents" },
+  { href: "/owner/agents-canvas", label: "Canvas" },
 ];
 
 export const OwnerNav = () => {
