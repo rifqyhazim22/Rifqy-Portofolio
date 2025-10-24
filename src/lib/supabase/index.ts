@@ -5,3 +5,9 @@ export {
   getSupabaseServiceClient,
 } from "./service-client";
 export { fetchCurrentOwner, requireOwner, OwnerAuthError } from "./owner-auth";
+export {
+  listAiAgents,
+  fetchAiAgentBySlug,
+  upsertAiAgentRecord,
+  deleteAiAgentRecord,
+} from "./agents";

@@ -1,9 +1,110 @@
 import OpenAI from "openai";
 import { NextRequest, NextResponse } from "next/server";
 import { findKnowledgeSnippets, knowledgeToContext } from "@/lib/knowledge";
-import { createSupabaseServiceClient } from "@/lib/supabase";
+import { createSupabaseServiceClient, fetchAiAgentBySlug } from "@/lib/supabase";
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+type LocaleMap = { id: string; en: string };
+
+type LibrarianInstructions = {
+  intro: LocaleMap;
+  empathy: LocaleMap;
+  pronoun: LocaleMap;
+  tone: {
+    default: LocaleMap;
+    santai: LocaleMap;
+    deep: LocaleMap;
+  };
+  lengthRule: LocaleMap;
+  knowledgeInstruction: LocaleMap;
+  fallback: LocaleMap;
+  imageGuidance: LocaleMap;
+  navigationRule: LocaleMap;
+  contextLead: LocaleMap;
+};
+
+type LibrarianConfig = {
+  model: string;
+  maxOutputTokens: number | null;
+  instructions: LibrarianInstructions;
+};
+
+const DEFAULT_LIBRARIAN_INSTRUCTIONS: LibrarianInstructions = {
+  intro: {
+    id: "Kamu adalah penjaga perpustakaan digital Rifqy Hazim HR—AI librarian yang mengenal CV, portofolio, dan seluruh narasi website.",
+    en: "You are the digital librarian for Rifqy Hazim HR—you know his CV, portfolio, and all narratives on the website.",
+  },
+  empathy: {
+    id: "Jagalah empati, sambut pengunjung layaknya tamu istimewa, dan bantu mereka memahami misi Freedom of Intelligence.",
+    en: "Maintain empathy, welcome the visitor like a special guest, and help them understand the Freedom of Intelligence mission.",
+  },
+  pronoun: {
+    id: 'Gunakan "aku" saat merujuk pada dirimu sebagai agent perpustakaan digital ini, sebut Rifqy sebagai pihak ketiga (Rifqy/ beliau), sapa pengunjung dengan "kamu", dan jangan pernah menyebut pengunjung sebagai agent.',
+    en: "Use “I/me” for yourself as the site’s library agent, refer to Rifqy in the third person (Rifqy/he), address the visitor as “you”, and never label the visitor as the agent.",
+  },
+  tone: {
+    default: {
+      id: "Pertahankan nada profesional yang hangat.",
+      en: "Use a confident, warm professional tone.",
+    },
+    santai: {
+      id: "Terapkan nada santai namun tetap profesional dan empatik.",
+      en: "Lean into a relaxed yet warm tone.",
+    },
+    deep: {
+      id: "Bangun suasana yang dalam dan reflektif tanpa berlebihan.",
+      en: "Use a reflective tone that still feels approachable.",
+    },
+  },
+  lengthRule: {
+    id: "Batasi jawaban maksimal 120 kata atau empat kalimat. Mulai dengan jawaban inti, lanjutkan insight ringkas, tawarkan bantuan lanjutan seperlunya, dan gunakan maksimal dua emoji yang benar-benar relevan dengan kalimatnya.",
+    en: "Keep the reply under 120 words or four sentences. Lead with the core answer, add concise insight, offer follow-up only if useful, and use at most two emojis that directly support the lines they’re attached to.",
+  },
+  knowledgeInstruction: {
+    id: "Jika menjawab berdasarkan referensi situs, sertakan path halaman di dalam tanda kurung, contoh: (/about).",
+    en: "When citing site references, include the page path inside parentheses, e.g., (/about).",
+  },
+  fallback: {
+    id: "Jika kamu belum punya data, jelaskan dengan jujur tanpa mengada-ada dan tawarkan opsi lanjutan seperti menjadwalkan diskusi atau memperbarui dokumen.",
+    en: "If information is missing, say so transparently and suggest follow-ups such as scheduling a chat or updating the documents.",
+  },
+  imageGuidance: {
+    id: "Kalau pengunjung mengunggah gambar, sampaikan observasi utama dalam maksimal tiga kalimat. Jika konteks belum jelas, ajukan pertanyaan singkat.",
+    en: "If the visitor shares an image, describe the key observations in no more than three sentences. Ask for clarification briefly when needed.",
+  },
+  navigationRule: {
+    id: "Jangan membuat directive navigasi atau format [[NAVIGATE]].",
+    en: "Do not produce navigation directives or the [[NAVIGATE]] format.",
+  },
+  contextLead: {
+    id: "Berikut konteks perpustakaan yang bisa kamu gunakan:",
+    en: "Here is the library context you can rely on:",
+  },
+};
+
+const DEFAULT_LIBRARIAN_CONFIG: LibrarianConfig = {
+  model: "gpt-5-nano",
+  maxOutputTokens: 3200,
+  instructions: DEFAULT_LIBRARIAN_INSTRUCTIONS,
+};
+
+const loadLibrarianConfig = async (): Promise<LibrarianConfig> => {
+  try {
+    const record = await fetchAiAgentBySlug("librarian");
+    if (!record) return DEFAULT_LIBRARIAN_CONFIG;
+    const metadata = (record.metadata ?? {}) as Record<string, unknown>;
+    const instructions = (metadata.instructions as LibrarianInstructions) ?? DEFAULT_LIBRARIAN_INSTRUCTIONS;
+    return {
+      model: record.model ?? DEFAULT_LIBRARIAN_CONFIG.model,
+      maxOutputTokens: record.max_output_tokens ?? DEFAULT_LIBRARIAN_CONFIG.maxOutputTokens,
+      instructions,
+    };
+  } catch (error) {
+    console.error("Failed to load librarian agent config", error);
+    return DEFAULT_LIBRARIAN_CONFIG;
+  }
+};
 
 type Message = {
   role: "user" | "assistant";
@@ -41,60 +142,29 @@ function clampWords(text: string, maxWords: number): string {
   return `${words.slice(0, maxWords).join(" ")}…`;
 }
 
-function buildSystemPrompt(language: "id" | "en", tone: "formal" | "santai" | "deep" | undefined, knowledge: string) {
-  const pronounInstruction =
-    language === "id"
-      ? 'Gunakan "aku" saat merujuk pada dirimu sebagai agent perpustakaan digital ini, sebut Rifqy sebagai pihak ketiga (Rifqy/ beliau), sapa pengunjung dengan "kamu", dan jangan pernah menyebut pengunjung sebagai agent.'
-      : "Use “I/me” for yourself as the site’s library agent, refer to Rifqy in the third person (Rifqy/he), address the visitor as “you”, and never label the visitor as the agent.";
-  const toneHint =
-    tone === "santai"
-      ? language === "id"
-        ? "Terapkan nada santai namun tetap profesional dan empatik."
-        : "Lean into a relaxed yet warm tone."
-      : tone === "deep"
-        ? language === "id"
-          ? "Bangun suasana yang dalam dan reflektif tanpa berlebihan."
-          : "Use a reflective tone that still feels approachable."
-        : language === "id"
-          ? "Pertahankan nada profesional yang hangat."
-          : "Use a confident, warm professional tone.";
-  const knowledgeInstruction =
-    language === "id"
-      ? "Jika menjawab berdasarkan referensi situs, sertakan path halaman di dalam tanda kurung, contoh: (/about)."
-      : "When citing site references, include the page path inside parentheses, e.g., (/about).";
+const getLocaleValue = (entry: LocaleMap, language: "id" | "en") => entry[language] ?? entry.id;
 
-  const fallback =
-    language === "id"
-      ? "Jika kamu belum punya data, jelaskan dengan jujur tanpa mengada-ada dan tawarkan opsi lanjutan seperti menjadwalkan diskusi atau memperbarui dokumen."
-      : "If information is missing, say so transparently and suggest follow-ups such as scheduling a chat or updating the documents.";
-
-  const imageGuidance =
-    language === "id"
-      ? "Kalau pengunjung mengunggah gambar, sampaikan observasi utama dalam maksimal tiga kalimat. Jika konteks belum jelas, ajukan pertanyaan singkat."
-      : "If the visitor shares an image, describe the key observations in no more than three sentences. Ask for clarification briefly when needed.";
-
-  const lengthRule =
-    language === "id"
-      ? "Batasi jawaban maksimal 120 kata atau empat kalimat. Mulai dengan jawaban inti, lanjutkan insight ringkas, tawarkan bantuan lanjutan seperlunya, dan gunakan maksimal dua emoji yang benar-benar relevan dengan kalimatnya."
-      : "Keep the reply under 120 words or four sentences. Lead with the core answer, add concise insight, offer follow-up only if useful, and use at most two emojis that directly support the lines they’re attached to.";
+function buildSystemPrompt(
+  language: "id" | "en",
+  tone: "formal" | "santai" | "deep" | undefined,
+  knowledge: string,
+  config: LibrarianConfig,
+) {
+  const instructions = config.instructions;
+  const toneKey = tone === "santai" || tone === "deep" ? tone : "default";
+  const toneEntry = instructions.tone[toneKey] ?? instructions.tone.default;
 
   return [
-    language === "id"
-      ? "Kamu adalah penjaga perpustakaan digital Rifqy Hazim HR—AI librarian yang mengenal CV, portofolio, dan seluruh narasi website."
-      : "You are the digital librarian for Rifqy Hazim HR—you know his CV, portfolio, and all narratives on the website.",
-    "Jagalah empati, sambut pengunjung layaknya tamu istimewa, dan bantu mereka memahami misi Freedom of Intelligence.",
-    pronounInstruction,
-    toneHint,
-    lengthRule,
-    knowledgeInstruction,
-    fallback,
-    imageGuidance,
-    language === "id"
-      ? "Jangan membuat directive navigasi atau format [[NAVIGATE]]."
-      : "Do not produce navigation directives or the [[NAVIGATE]] format.",
-    language === "id"
-      ? "Berikut konteks perpustakaan yang bisa kamu gunakan:"
-      : "Here is the library context you can rely on:",
+    getLocaleValue(instructions.intro, language),
+    getLocaleValue(instructions.empathy, language),
+    getLocaleValue(instructions.pronoun, language),
+    getLocaleValue(toneEntry, language),
+    getLocaleValue(instructions.lengthRule, language),
+    getLocaleValue(instructions.knowledgeInstruction, language),
+    getLocaleValue(instructions.fallback, language),
+    getLocaleValue(instructions.imageGuidance, language),
+    getLocaleValue(instructions.navigationRule, language),
+    getLocaleValue(instructions.contextLead, language),
     knowledge,
   ].join("\n");
 }
@@ -171,6 +241,7 @@ export async function POST(request: NextRequest) {
   }
 
   const language = body.language ?? DEFAULT_LANGUAGE;
+  const agentConfig = await loadLibrarianConfig();
 
   if (!client.apiKey) {
     const message =
@@ -185,7 +256,7 @@ export async function POST(request: NextRequest) {
     const knowledgeEntries = findKnowledgeSnippets(lastUserMessage?.content, 3);
     const knowledgeContext = knowledgeToContext(knowledgeEntries, language);
 
-    const systemPrompt = buildSystemPrompt(language, body.tone, knowledgeContext);
+    const systemPrompt = buildSystemPrompt(language, body.tone, knowledgeContext, agentConfig);
 
     const history = prepareMessages(body.messages, body.images);
     const input = [
@@ -197,8 +268,8 @@ export async function POST(request: NextRequest) {
     ];
 
     const response = await client.responses.create({
-      model: "gpt-5-nano",
-      max_output_tokens: 3200,
+      model: agentConfig.model,
+      max_output_tokens: agentConfig.maxOutputTokens ?? undefined,
       input: input as any,
     });
 

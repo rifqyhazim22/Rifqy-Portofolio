@@ -71,6 +71,38 @@ create table if not exists public.automation_runs (
 
 create index if not exists automation_runs_automation_id_idx on public.automation_runs (automation_id);
 
+create table if not exists public.ai_agents (
+  id uuid primary key default gen_random_uuid(),
+  slug text not null unique,
+  name text not null,
+  description text,
+  type text not null check (type in ('chat', 'librarian', 'other')),
+  status text not null default 'active' check (status in ('active', 'disabled', 'draft')),
+  model text,
+  system_prompt text,
+  max_output_tokens int,
+  metadata jsonb,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create index if not exists ai_agents_type_idx on public.ai_agents (type);
+create index if not exists ai_agents_status_idx on public.ai_agents (status);
+
+alter table public.ai_agents enable row level security;
+
+drop policy if exists "Block anon select ai agents" on public.ai_agents;
+create policy "Block anon select ai agents"
+  on public.ai_agents for select using (false);
+
+drop policy if exists "Block anon writes ai agents" on public.ai_agents;
+create policy "Block anon writes ai agents"
+  on public.ai_agents for insert with check (false);
+create policy "Block anon updates ai agents"
+  on public.ai_agents for update using (false) with check (false);
+create policy "Block anon delete ai agents"
+  on public.ai_agents for delete using (false);
+
 -- updated_at triggers
 create or replace function public.ensure_touch_updated_at()
 returns void as $$
@@ -101,6 +133,11 @@ create trigger set_updated_at_media_assets
 drop trigger if exists set_updated_at_automations on public.automations;
 create trigger set_updated_at_automations
   before update on public.automations
+  for each row execute function public.touch_updated_at();
+
+drop trigger if exists set_updated_at_ai_agents on public.ai_agents;
+create trigger set_updated_at_ai_agents
+  before update on public.ai_agents
   for each row execute function public.touch_updated_at();
 `;
 

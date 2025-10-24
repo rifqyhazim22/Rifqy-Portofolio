@@ -7,7 +7,7 @@ const NAV_LINKS = [
   { href: "/owner", label: "Overview" },
   { href: "/owner/content", label: "Content" },
   { href: "/owner/assets", label: "Assets" },
-  { href: "/owner/automations", label: "Automations" },
+  { href: "/owner/agents", label: "Agents" },
 ];
 
 export const OwnerNav = () => {

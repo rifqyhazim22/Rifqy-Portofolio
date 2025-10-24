@@ -3,13 +3,19 @@ import { NextRequest, NextResponse } from "next/server";
 import navigationEmbeddings from "@/content/navigation/embeddings.json";
 import navigationConfig from "@/content/navigation/config.json";
 import { findKnowledgeSnippets, knowledgeToContext } from "@/lib/knowledge";
-import { createSupabaseServiceClient } from "@/lib/supabase";
-
-const MAX_OUTPUT_TOKENS = 3200;
+import { createSupabaseServiceClient, fetchAiAgentBySlug } from "@/lib/supabase";
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-const SYSTEM_PROMPT = `You are the AI agent for Rifqy Hazim HR's portfolio website.
+type ChatAgentConfig = {
+  systemPrompt: string;
+  tonePrompts: Record<string, string>;
+  maxOutputTokens: number;
+  model: string;
+};
+
+const DEFAULT_CHAT_AGENT_CONFIG: ChatAgentConfig = {
+  systemPrompt: `You are the AI agent for Rifqy Hazim HR's portfolio website.
 - “HR” in the brand stands for Haidar Ramadhan (part of his full name), not Human Resources.
 - Rifqy Hazim HR is an AI engineer focused on prompt engineering, agent orchestration, and web delivery—keep that positioning clear.
 - Introduce yourself (when needed) as Rifqy’s AI agent. Use “I/me” for yourself, keep Rifqy in third person (he/him), and never imply the visitor is the agent.
@@ -19,12 +25,32 @@ const SYSTEM_PROMPT = `You are the AI agent for Rifqy Hazim HR's portfolio websi
 - When helpful, mention at most one section to explore using the format "Explore: /path".
 - If the visitor explicitly wants to navigate, append [[NAVIGATE:/path]] using the closest official route. Ask for clarification if uncertain.
 - Be transparent when information is missing and offer a brief follow-up suggestion.
-- Use up to two emojis, only when they reinforce the sentence they accompany. Place them right next to the relevant line.`;
+- Use up to two emojis, only when they reinforce the sentence they accompany. Place them right next to the relevant line.`,
+  tonePrompts: {
+    formal: "Stay confident and warm but keep sentences short and purposeful.",
+    santai: "Keep it light and friendly with brief Indonesian-English phrases; avoid rambling.",
+    deep: "Sound reflective yet concise—choose vivid words without adding extra length.",
+  },
+  maxOutputTokens: 3200,
+  model: "gpt-5-nano",
+};
 
-const TONE_PROMPTS: Record<string, string> = {
-  formal: "Stay confident and warm but keep sentences short and purposeful.",
-  santai: "Keep it light and friendly with brief Indonesian-English phrases; avoid rambling.",
-  deep: "Sound reflective yet concise—choose vivid words without adding extra length.",
+const loadChatAgentConfig = async (): Promise<ChatAgentConfig> => {
+  try {
+    const record = await fetchAiAgentBySlug("navigator");
+    if (!record) return DEFAULT_CHAT_AGENT_CONFIG;
+    const metadata = (record.metadata ?? {}) as Record<string, unknown>;
+    const tonePrompts = (metadata.tonePrompts as Record<string, string>) ?? DEFAULT_CHAT_AGENT_CONFIG.tonePrompts;
+    return {
+      systemPrompt: record.system_prompt ?? DEFAULT_CHAT_AGENT_CONFIG.systemPrompt,
+      tonePrompts,
+      maxOutputTokens: record.max_output_tokens ?? DEFAULT_CHAT_AGENT_CONFIG.maxOutputTokens,
+      model: record.model ?? DEFAULT_CHAT_AGENT_CONFIG.model,
+    };
+  } catch (error) {
+    console.error("Failed to load chat agent config", error);
+    return DEFAULT_CHAT_AGENT_CONFIG;
+  }
 };
 
 type ChatMessage = {
@@ -422,6 +448,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "OpenAI API key not configured." }, { status: 500 });
   }
 
+  const agentConfig = await loadChatAgentConfig();
+
   let payload: AgentRequest;
   try {
     payload = (await request.json()) as AgentRequest;
@@ -446,14 +474,15 @@ export async function POST(request: NextRequest) {
   const locationContext = location
     ? locationDescriptions[location] ?? `the page at ${location}`
     : undefined;
-  const toneDirective = TONE_PROMPTS[normalizedTone] ?? TONE_PROMPTS.formal;
+  const toneDirective =
+    agentConfig.tonePrompts[normalizedTone] ?? agentConfig.tonePrompts.formal ?? "";
 
   const lastUserMessage = [...messages].reverse().find((message) => message.role === "user");
   const knowledgeEntries = findKnowledgeSnippets(lastUserMessage?.content, 2);
   const knowledgeContext = knowledgeToContext(knowledgeEntries, language);
 
   const systemSections = [
-    SYSTEM_PROMPT,
+    agentConfig.systemPrompt,
     toneDirective,
     "Remember: cap the reply at 3 sentences or 90 words. Skip emoji unless one truly fits.",
     `Current interface language: ${language === "en" ? "English" : "Indonesian"}. Respond using this language.`,
@@ -487,8 +516,8 @@ export async function POST(request: NextRequest) {
     ];
 
     const nanoResponse = await client.responses.create({
-      model: "gpt-5-nano",
-      max_output_tokens: MAX_OUTPUT_TOKENS,
+      model: agentConfig.model,
+      max_output_tokens: agentConfig.maxOutputTokens,
       input: responseInput as any,
     });
 

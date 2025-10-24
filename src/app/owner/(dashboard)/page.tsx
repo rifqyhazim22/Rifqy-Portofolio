@@ -9,13 +9,13 @@ const fetchOverviewData = async () => {
     sections,
     projects,
     assets,
-    automations,
+    agents,
     agentSessions,
   ] = await Promise.all([
     supabase.from("site_sections").select("id", { count: "exact", head: true }),
     supabase.from("projects").select("id", { count: "exact", head: true }),
     supabase.from("media_assets").select("id", { count: "exact", head: true }),
-    supabase.from("automations").select("id", { count: "exact", head: true }),
+    supabase.from("ai_agents").select("id", { count: "exact", head: true }),
     supabase
       .from("agent_sessions")
       .select("*")
@@ -30,7 +30,7 @@ const fetchOverviewData = async () => {
       sections: sections.count ?? 0,
       projects: projects.count ?? 0,
       assets: assets.count ?? 0,
-      automations: automations.count ?? 0,
+      agents: agents.count ?? 0,
     },
     agentLogs,
   };
@@ -56,7 +56,7 @@ export default async function OwnerOverviewPage() {
           <p className="owner-dashboard__eyebrow">Rifqy Hazim HR • Owner console</p>
           <h1>Mission control</h1>
           <p>
-            Kelola konten, aset media, dan orkestrasi automations yang menopang website dan agen.
+            Kelola konten, aset media, dan agent AI yang menopang website serta percakapan.
           </p>
         </div>
         <div className="owner-dashboard__stats">
@@ -73,8 +73,8 @@ export default async function OwnerOverviewPage() {
             <strong>{metrics.assets}</strong>
           </article>
           <article>
-            <span>Agent kits</span>
-            <strong>{metrics.automations}</strong>
+            <span>AI agents</span>
+            <strong>{metrics.agents}</strong>
           </article>
         </div>
       </section>
