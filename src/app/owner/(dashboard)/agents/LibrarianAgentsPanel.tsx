@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 import type { AiAgentRecord } from "@/lib/supabase/agents";
 import { updateLibrarianAgentAction } from "./actions";
 
@@ -23,7 +23,7 @@ type InstructionsState = {
   contextLead: LocalePair;
 };
 
-const DEFAULT_PAIR = { id: "", en: "" };
+const DEFAULT_PAIR: LocalePair = { id: "", en: "" };
 
 const DEFAULT_INSTRUCTIONS: InstructionsState = {
   intro: {
@@ -81,30 +81,29 @@ const DEFAULT_INSTRUCTIONS: InstructionsState = {
 const toInstructions = (metadata: Record<string, unknown> | null | undefined): InstructionsState => {
   const raw = ((metadata as Record<string, any>)?.instructions ?? {}) as Record<string, any>;
 
-  const readPair = (key: string): LocalePair => {
-    const value = raw[key];
-    if (value && typeof value === "object") {
-      const fallback = (DEFAULT_INSTRUCTIONS as Record<string, any>)[key];
-      const fallbackPair: LocalePair = fallback && typeof fallback.id === "string" && typeof fallback.en === "string"
-        ? fallback
+const readPair = (key: Exclude<keyof InstructionsState, "tone">): LocalePair => {
+  const value = raw[key as string];
+  if (value && typeof value === "object") {
+    const fallback = (DEFAULT_INSTRUCTIONS as Record<string, any>)[key];
+    const fallbackPair: LocalePair = fallback && typeof fallback.id === "string" && typeof fallback.en === "string"
+      ? fallback
         : DEFAULT_PAIR;
       return {
         id: typeof value.id === "string" ? value.id : fallbackPair.id,
         en: typeof value.en === "string" ? value.en : fallbackPair.en,
       };
     }
-    const fallback = (DEFAULT_INSTRUCTIONS as Record<string, any>)[key];
-    return fallback && typeof fallback.id === "string" && typeof fallback.en === "string"
-      ? fallback
-      : DEFAULT_PAIR;
+    return DEFAULT_INSTRUCTIONS[key] ?? DEFAULT_PAIR;
   };
 
-  const readTone = (toneKey: "default" | "santai" | "deep" ): LocalePair => {
+  const readTone = (toneKey: "default" | "santai" | "deep"): LocalePair => {
     const tone = raw.tone;
     if (tone && typeof tone === "object" && tone[toneKey]) {
+      const value = tone[toneKey];
+      const fallback = DEFAULT_INSTRUCTIONS.tone[toneKey];
       return {
-        id: typeof tone[toneKey].id === "string" ? tone[toneKey].id : DEFAULT_INSTRUCTIONS.tone[toneKey].id,
-        en: typeof tone[toneKey].en === "string" ? tone[toneKey].en : DEFAULT_INSTRUCTIONS.tone[toneKey].en,
+        id: typeof value.id === "string" ? value.id : fallback.id,
+        en: typeof value.en === "string" ? value.en : fallback.en,
       };
     }
     return DEFAULT_INSTRUCTIONS.tone[toneKey];
@@ -128,128 +127,143 @@ const toInstructions = (metadata: Record<string, unknown> | null | undefined): I
   };
 };
 
-type LibrarianAgentsPanelProps = {
-  agents: AiAgentRecord[];
-};
+const buildFormState = (agent: AiAgentRecord) => ({
+  name: agent.name,
+  description: agent.description ?? "",
+  status: agent.status ?? "draft",
+  model: agent.model ?? "",
+  maxOutputTokens: agent.max_output_tokens?.toString() ?? "",
+  instructions: toInstructions(agent.metadata),
+  updatedAt: agent.updated_at ?? null,
+});
 
 const cloneInstructions = (value: InstructionsState): InstructionsState =>
   JSON.parse(JSON.stringify(value)) as InstructionsState;
 
+type LibrarianAgentsPanelProps = {
+  agents: AiAgentRecord[];
+};
+
+const localeField = (
+  label: string,
+  valueId: string,
+  valueEn: string,
+  onChangeId: (value: string) => void,
+  onChangeEn: (value: string) => void,
+) => (
+  <div className="owner-panel__field owner-panel__field--split">
+    <div>
+      <span>{label} (ID)</span>
+      <textarea value={valueId} onChange={(event) => onChangeId(event.target.value)} rows={2} />
+    </div>
+    <div>
+      <span>{label} (EN)</span>
+      <textarea value={valueEn} onChange={(event) => onChangeEn(event.target.value)} rows={2} />
+    </div>
+  </div>
+);
+
+const metrics = (agents: AiAgentRecord[]) => {
+  const active = agents.filter((agent) => agent.status === "active").length;
+  const disabled = agents.filter((agent) => agent.status === "disabled").length;
+  const draft = agents.length - active - disabled;
+  return { total: agents.length, active, disabled, draft };
+};
+
 export const LibrarianAgentsPanel = ({ agents }: LibrarianAgentsPanelProps) => {
-  const first = agents[0] ?? null;
-  const [selectedId, setSelectedId] = useState<string | null>(first?.id ?? null);
-  const [feedback, setFeedback] = useState<string | null>(null);
+  const [forms, setForms] = useState<Record<string, ReturnType<typeof buildFormState>>>(() => {
+    const initial: Record<string, ReturnType<typeof buildFormState>> = {};
+    for (const agent of agents) {
+      initial[agent.id] = buildFormState(agent);
+    }
+    return initial;
+  });
+  const [feedbacks, setFeedbacks] = useState<Record<string, string | null>>({});
+  const [pendingId, setPendingId] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  const initialState = useMemo(() => {
-    if (!first) {
-      return {
-        name: "",
-        description: "",
-        status: "draft" as "active" | "disabled" | "draft",
-        model: "",
-        maxOutputTokens: "",
-        instructions: DEFAULT_INSTRUCTIONS,
-        updatedAt: null as string | null,
-      };
-    }
-
-    return {
-      name: first.name,
-      description: first.description ?? "",
-      status: first.status,
-      model: first.model ?? "",
-      maxOutputTokens: first.max_output_tokens?.toString() ?? "",
-      instructions: toInstructions(first.metadata),
-      updatedAt: first.updated_at,
-    };
-  }, [first]);
-
-  const [formState, setFormState] = useState(initialState);
-
-  const selected = useMemo(
-    () => agents.find((agent) => agent.id === selectedId) ?? null,
-    [agents, selectedId],
-  );
-
-  const handleSelect = (agentId: string) => {
-    const agent = agents.find((item) => item.id === agentId);
-    if (!agent) return;
-    setSelectedId(agent.id);
-    setFormState({
-      name: agent.name,
-      description: agent.description ?? "",
-      status: agent.status,
-      model: agent.model ?? "",
-      maxOutputTokens: agent.max_output_tokens?.toString() ?? "",
-      instructions: toInstructions(agent.metadata),
-      updatedAt: agent.updated_at,
+  useEffect(() => {
+    setForms((prev) => {
+      const next = { ...prev };
+      let changed = false;
+      const ids = new Set<string>();
+      for (const agent of agents) {
+        ids.add(agent.id);
+        if (!next[agent.id]) {
+          next[agent.id] = buildFormState(agent);
+          changed = true;
+        }
+      }
+      for (const id of Object.keys(next)) {
+        if (!ids.has(id)) {
+          delete next[id];
+          changed = true;
+        }
+      }
+      return changed ? next : prev;
     });
-    setFeedback(null);
+  }, [agents]);
+
+  const updateForm = (
+    id: string,
+    updater: (prev: ReturnType<typeof buildFormState>) => ReturnType<typeof buildFormState>,
+  ) => {
+    setForms((prev) => ({ ...prev, [id]: updater(prev[id] ?? buildFormState(agents.find((item) => item.id === id)!)) }));
   };
 
-  const updateInstruction = (path: string[], value: string) => {
-    setFormState((prev) => {
-      const next = cloneInstructions(prev.instructions);
-      let current: any = next;
+  const updateInstruction = (agentId: string, path: string[], value: string) => {
+    updateForm(agentId, (prev) => {
+      const instructions = cloneInstructions(prev.instructions);
+      let current: any = instructions;
       for (let i = 0; i < path.length - 1; i += 1) {
         current = current[path[i]];
       }
       current[path[path.length - 1]] = value;
-      return { ...prev, instructions: next };
+      return { ...prev, instructions };
     });
   };
 
-  const handleSubmit = () => {
-    if (!selectedId) {
-      setFeedback("Pilih agent terlebih dahulu.");
-      return;
-    }
-
+  const handleSubmit = (agent: AiAgentRecord) => {
+    const state = forms[agent.id] ?? buildFormState(agent);
+    setPendingId(agent.id);
     startTransition(async () => {
       try {
         await updateLibrarianAgentAction({
-          id: selectedId,
-          name: formState.name,
-          description: formState.description,
-          status: formState.status,
-          model: formState.model,
-          maxOutputTokens: formState.maxOutputTokens ? Number(formState.maxOutputTokens) : null,
-          instructions: formState.instructions,
+          id: agent.id,
+          name: state.name,
+          description: state.description,
+          status: state.status as "active" | "disabled" | "draft",
+          model: state.model,
+          maxOutputTokens: state.maxOutputTokens ? Number(state.maxOutputTokens) : null,
+          instructions: state.instructions,
         });
-        setFeedback("Agent updated");
+        setFeedbacks((prev) => ({ ...prev, [agent.id]: "Agent updated" }));
       } catch (error) {
-        setFeedback(error instanceof Error ? error.message : "Failed to update agent");
+        setFeedbacks((prev) => ({
+          ...prev,
+          [agent.id]: error instanceof Error ? error.message : "Failed to update agent",
+        }));
+      } finally {
+        setPendingId(null);
       }
     });
   };
 
-  const renderLocaleField = (
-    label: string,
-    pathId: string[],
-    pathEn: string[],
-    valueId: string,
-    valueEn: string,
-  ) => (
-    <div className="owner-panel__field owner-panel__field--split">
-      <div>
-        <span>{label} (ID)</span>
-        <textarea
-          value={valueId}
-          onChange={(event) => updateInstruction(pathId, event.target.value)}
-          rows={2}
-        />
-      </div>
-      <div>
-        <span>{label} (EN)</span>
-        <textarea
-          value={valueEn}
-          onChange={(event) => updateInstruction(pathEn, event.target.value)}
-          rows={2}
-        />
-      </div>
-    </div>
-  );
+  if (!agents.length) {
+    return (
+      <section className="owner-story-card owner-story-card--wide">
+        <header className="owner-story-card__header">
+          <div className="owner-story-card__title">
+            <h3>Librarian agents</h3>
+            <p>Belum ada agent librarian yang terdaftar.</p>
+          </div>
+        </header>
+        <p className="owner-story-card__empty">Tambahkan agent baru melalui panel “Create agent”.</p>
+      </section>
+    );
+  }
+
+  const overview = useMemo(() => metrics(agents), [agents]);
 
   return (
     <section className="owner-story-card owner-story-card--wide">
@@ -258,62 +272,55 @@ export const LibrarianAgentsPanel = ({ agents }: LibrarianAgentsPanelProps) => {
           <h3>Librarian agents</h3>
           <p>Atur guardrails dan instruksi untuk agent pustakawan.</p>
         </div>
+        <div className="owner-story-card__metrics" aria-label="Librarian agent overview">
+          <article>
+            <span>Total</span>
+            <strong>{overview.total}</strong>
+          </article>
+          <article>
+            <span>Active</span>
+            <strong>{overview.active}</strong>
+          </article>
+          <article>
+            <span>Draft</span>
+            <strong>{overview.draft}</strong>
+          </article>
+          <article>
+            <span>Disabled</span>
+            <strong>{overview.disabled}</strong>
+          </article>
+        </div>
       </header>
 
-      <div className={`owner-story-card__body ${agents.length ? "" : "owner-story-card__body--solo"}`}>
-        <aside className="owner-story-card__side">
-          <ul className="owner-story-card__list">
-            {agents.map((agent) => (
-              <li key={agent.id}>
-                <button
-                  type="button"
-                  onClick={() => handleSelect(agent.id)}
-                  className={`owner-story-card__item ${selectedId === agent.id ? "owner-story-card__item--active" : ""}`}
-                >
-                  <div className="owner-story-card__item-text">
-                    <strong>{agent.name}</strong>
-                    <small>{agent.slug}</small>
-                    <div className="owner-story-card__item-meta">
-                      <span>{agent.status}</span>
-                      {agent.model ? <span>{agent.model}</span> : null}
-                    </div>
-                  </div>
-                </button>
-              </li>
-            ))}
-            {!agents.length && (
-              <li className="owner-story-card__empty-block">
-                <h4>Belum ada librarian agent</h4>
-                <p>Gunakan panel Create agent untuk menambah agent baru.</p>
-              </li>
-            )}
-          </ul>
-        </aside>
+      <div className="owner-agent-grid">
+        {agents.map((agent) => {
+          const state = forms[agent.id] ?? buildFormState(agent);
+          const feedback = feedbacks[agent.id] ?? null;
+          return (
+            <article key={agent.id} className="owner-agent-card">
+              <header>
+                <div>
+                  <strong>{agent.slug}</strong>
+                  <span>{state.updatedAt ? new Date(state.updatedAt).toLocaleString() : "Belum pernah disimpan"}</span>
+                </div>
+              </header>
 
-        <div className="owner-story-card__form">
-          {selected ? (
-            <>
-              <div className="owner-story-card__legend">
-                <span>{selected.slug}</span>
-                {formState.updatedAt ? <time>{new Date(formState.updatedAt).toLocaleString()}</time> : null}
-              </div>
-
-              <div className="owner-story-card__section">
+              <div className="owner-agent-card__section">
                 <h4>Identitas</h4>
                 <div className="owner-story-card__grid owner-story-card__grid--two">
                   <label className="owner-panel__field">
                     <span>Name</span>
                     <input
-                      value={formState.name}
-                      onChange={(event) => setFormState((prev) => ({ ...prev, name: event.target.value }))}
+                      value={state.name}
+                      onChange={(event) => updateForm(agent.id, (prev) => ({ ...prev, name: event.target.value }))}
                     />
                   </label>
                   <label className="owner-panel__field">
                     <span>Status</span>
                     <select
-                      value={formState.status}
+                      value={state.status}
                       onChange={(event) =>
-                        setFormState((prev) => ({
+                        updateForm(agent.id, (prev) => ({
                           ...prev,
                           status: event.target.value as "active" | "disabled" | "draft",
                         }))
@@ -328,21 +335,21 @@ export const LibrarianAgentsPanel = ({ agents }: LibrarianAgentsPanelProps) => {
                 <label className="owner-panel__field owner-story-card__field--wide">
                   <span>Description</span>
                   <textarea
-                    value={formState.description}
-                    onChange={(event) => setFormState((prev) => ({ ...prev, description: event.target.value }))}
+                    value={state.description}
+                    onChange={(event) => updateForm(agent.id, (prev) => ({ ...prev, description: event.target.value }))}
                     rows={2}
                   />
                 </label>
               </div>
 
-              <div className="owner-story-card__section">
+              <div className="owner-agent-card__section">
                 <h4>Model & Output</h4>
                 <div className="owner-story-card__grid owner-story-card__grid--two">
                   <label className="owner-panel__field">
                     <span>Model</span>
                     <input
-                      value={formState.model}
-                      onChange={(event) => setFormState((prev) => ({ ...prev, model: event.target.value }))}
+                      value={state.model}
+                      onChange={(event) => updateForm(agent.id, (prev) => ({ ...prev, model: event.target.value }))}
                       placeholder="gpt-5-nano"
                     />
                   </label>
@@ -350,111 +357,111 @@ export const LibrarianAgentsPanel = ({ agents }: LibrarianAgentsPanelProps) => {
                     <span>Max output tokens</span>
                     <input
                       type="number"
-                      value={formState.maxOutputTokens}
-                      onChange={(event) => setFormState((prev) => ({ ...prev, maxOutputTokens: event.target.value }))}
+                      value={state.maxOutputTokens}
+                      onChange={(event) => updateForm(agent.id, (prev) => ({ ...prev, maxOutputTokens: event.target.value }))}
                       placeholder="3200"
                     />
                   </label>
                 </div>
               </div>
 
-              <div className="owner-story-card__section">
+              <div className="owner-agent-card__section">
                 <h4>Instruksi bahasa</h4>
-                {renderLocaleField(
+                {localeField(
                   "Intro",
-                  ["intro", "id"],
-                  ["intro", "en"],
-                  formState.instructions.intro.id,
-                  formState.instructions.intro.en,
+                  state.instructions.intro.id,
+                  state.instructions.intro.en,
+                  (value) => updateInstruction(agent.id, ["intro", "id"], value),
+                  (value) => updateInstruction(agent.id, ["intro", "en"], value),
                 )}
-                {renderLocaleField(
+                {localeField(
                   "Empathy",
-                  ["empathy", "id"],
-                  ["empathy", "en"],
-                  formState.instructions.empathy.id,
-                  formState.instructions.empathy.en,
+                  state.instructions.empathy.id,
+                  state.instructions.empathy.en,
+                  (value) => updateInstruction(agent.id, ["empathy", "id"], value),
+                  (value) => updateInstruction(agent.id, ["empathy", "en"], value),
                 )}
-                {renderLocaleField(
+                {localeField(
                   "Pronoun",
-                  ["pronoun", "id"],
-                  ["pronoun", "en"],
-                  formState.instructions.pronoun.id,
-                  formState.instructions.pronoun.en,
+                  state.instructions.pronoun.id,
+                  state.instructions.pronoun.en,
+                  (value) => updateInstruction(agent.id, ["pronoun", "id"], value),
+                  (value) => updateInstruction(agent.id, ["pronoun", "en"], value),
                 )}
               </div>
 
-              <div className="owner-story-card__section">
+              <div className="owner-agent-card__section">
                 <h4>Tone directives</h4>
-                {renderLocaleField(
+                {localeField(
                   "Default tone",
-                  ["tone", "default", "id"],
-                  ["tone", "default", "en"],
-                  formState.instructions.tone.default.id,
-                  formState.instructions.tone.default.en,
+                  state.instructions.tone.default.id,
+                  state.instructions.tone.default.en,
+                  (value) => updateInstruction(agent.id, ["tone", "default", "id"], value),
+                  (value) => updateInstruction(agent.id, ["tone", "default", "en"], value),
                 )}
-                {renderLocaleField(
+                {localeField(
                   "Santai tone",
-                  ["tone", "santai", "id"],
-                  ["tone", "santai", "en"],
-                  formState.instructions.tone.santai.id,
-                  formState.instructions.tone.santai.en,
+                  state.instructions.tone.santai.id,
+                  state.instructions.tone.santai.en,
+                  (value) => updateInstruction(agent.id, ["tone", "santai", "id"], value),
+                  (value) => updateInstruction(agent.id, ["tone", "santai", "en"], value),
                 )}
-                {renderLocaleField(
+                {localeField(
                   "Deep tone",
-                  ["tone", "deep", "id"],
-                  ["tone", "deep", "en"],
-                  formState.instructions.tone.deep.id,
-                  formState.instructions.tone.deep.en,
+                  state.instructions.tone.deep.id,
+                  state.instructions.tone.deep.en,
+                  (value) => updateInstruction(agent.id, ["tone", "deep", "id"], value),
+                  (value) => updateInstruction(agent.id, ["tone", "deep", "en"], value),
                 )}
               </div>
 
-              <div className="owner-story-card__section">
+              <div className="owner-agent-card__section">
                 <h4>Rules & fallback</h4>
-                {renderLocaleField(
+                {localeField(
                   "Length rule",
-                  ["lengthRule", "id"],
-                  ["lengthRule", "en"],
-                  formState.instructions.lengthRule.id,
-                  formState.instructions.lengthRule.en,
+                  state.instructions.lengthRule.id,
+                  state.instructions.lengthRule.en,
+                  (value) => updateInstruction(agent.id, ["lengthRule", "id"], value),
+                  (value) => updateInstruction(agent.id, ["lengthRule", "en"], value),
                 )}
-                {renderLocaleField(
+                {localeField(
                   "Knowledge instruction",
-                  ["knowledgeInstruction", "id"],
-                  ["knowledgeInstruction", "en"],
-                  formState.instructions.knowledgeInstruction.id,
-                  formState.instructions.knowledgeInstruction.en,
+                  state.instructions.knowledgeInstruction.id,
+                  state.instructions.knowledgeInstruction.en,
+                  (value) => updateInstruction(agent.id, ["knowledgeInstruction", "id"], value),
+                  (value) => updateInstruction(agent.id, ["knowledgeInstruction", "en"], value),
                 )}
-                {renderLocaleField(
+                {localeField(
                   "Fallback",
-                  ["fallback", "id"],
-                  ["fallback", "en"],
-                  formState.instructions.fallback.id,
-                  formState.instructions.fallback.en,
+                  state.instructions.fallback.id,
+                  state.instructions.fallback.en,
+                  (value) => updateInstruction(agent.id, ["fallback", "id"], value),
+                  (value) => updateInstruction(agent.id, ["fallback", "en"], value),
                 )}
               </div>
 
-              <div className="owner-story-card__section">
+              <div className="owner-agent-card__section">
                 <h4>Visual & context</h4>
-                {renderLocaleField(
+                {localeField(
                   "Image guidance",
-                  ["imageGuidance", "id"],
-                  ["imageGuidance", "en"],
-                  formState.instructions.imageGuidance.id,
-                  formState.instructions.imageGuidance.en,
+                  state.instructions.imageGuidance.id,
+                  state.instructions.imageGuidance.en,
+                  (value) => updateInstruction(agent.id, ["imageGuidance", "id"], value),
+                  (value) => updateInstruction(agent.id, ["imageGuidance", "en"], value),
                 )}
-                {renderLocaleField(
+                {localeField(
                   "Navigation rule",
-                  ["navigationRule", "id"],
-                  ["navigationRule", "en"],
-                  formState.instructions.navigationRule.id,
-                  formState.instructions.navigationRule.en,
+                  state.instructions.navigationRule.id,
+                  state.instructions.navigationRule.en,
+                  (value) => updateInstruction(agent.id, ["navigationRule", "id"], value),
+                  (value) => updateInstruction(agent.id, ["navigationRule", "en"], value),
                 )}
-                {renderLocaleField(
+                {localeField(
                   "Context lead",
-                  ["contextLead", "id"],
-                  ["contextLead", "en"],
-                  formState.instructions.contextLead.id,
-                  formState.instructions.contextLead.en,
+                  state.instructions.contextLead.id,
+                  state.instructions.contextLead.en,
+                  (value) => updateInstruction(agent.id, ["contextLead", "id"], value),
+                  (value) => updateInstruction(agent.id, ["contextLead", "en"], value),
                 )}
               </div>
 
@@ -463,19 +470,17 @@ export const LibrarianAgentsPanel = ({ agents }: LibrarianAgentsPanelProps) => {
                 <div className="owner-story-card__actions">
                   <button
                     type="button"
-                    onClick={handleSubmit}
-                    disabled={isPending}
+                    onClick={() => handleSubmit(agent)}
+                    disabled={isPending && pendingId === agent.id}
                     className="owner-panel__primary"
                   >
-                    {isPending ? "Saving…" : "Save changes"}
+                    {isPending && pendingId === agent.id ? "Saving…" : "Save changes"}
                   </button>
                 </div>
               </footer>
-            </>
-          ) : (
-            <p className="owner-story-card__empty">Pilih agent untuk diedit.</p>
-          )}
-        </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   );
