@@ -132,6 +132,9 @@ type LibrarianAgentsPanelProps = {
   agents: AiAgentRecord[];
 };
 
+const cloneInstructions = (value: InstructionsState): InstructionsState =>
+  JSON.parse(JSON.stringify(value)) as InstructionsState;
+
 export const LibrarianAgentsPanel = ({ agents }: LibrarianAgentsPanelProps) => {
   const first = agents[0] ?? null;
   const [selectedId, setSelectedId] = useState<string | null>(first?.id ?? null);
@@ -187,7 +190,7 @@ export const LibrarianAgentsPanel = ({ agents }: LibrarianAgentsPanelProps) => {
 
   const updateInstruction = (path: string[], value: string) => {
     setFormState((prev) => {
-      const next = structuredClone(prev.instructions);
+      const next = cloneInstructions(prev.instructions);
       let current: any = next;
       for (let i = 0; i < path.length - 1; i += 1) {
         current = current[path[i]];

@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { requireOwner, upsertAiAgentRecord } from "@/lib/supabase";
 import type { AiAgentRecord } from "@/lib/supabase/agents";
+import { logAiAgentVersion } from "@/lib/supabase";
 
 const normalize = (value: string | null | undefined) => {
   if (value === undefined) return undefined;
@@ -37,7 +38,8 @@ export async function updateChatAgentAction(input: UpdateChatAgentInput) {
     throw new Error("Missing agent id");
   }
 
-  await requireOwner();
+  const owner = await requireOwner();
+  const editor = owner.email ?? owner.id;
 
   const metadata = {
     tonePrompts: {
@@ -47,7 +49,7 @@ export async function updateChatAgentAction(input: UpdateChatAgentInput) {
     },
   };
 
-  await upsertAiAgentRecord({
+  const updated = await upsertAiAgentRecord({
     id: input.id,
     slug: "navigator",
     name: input.name.trim(),
@@ -59,6 +61,8 @@ export async function updateChatAgentAction(input: UpdateChatAgentInput) {
     max_output_tokens: normalizeNumber(input.maxOutputTokens),
     metadata,
   });
+
+  await logAiAgentVersion(updated, editor);
 
   revalidatePath("/owner/agents");
   revalidatePath("/owner");
@@ -96,13 +100,14 @@ export async function updateLibrarianAgentAction(input: UpdateLibrarianAgentInpu
     throw new Error("Missing agent id");
   }
 
-  await requireOwner();
+  const owner = await requireOwner();
+  const editor = owner.email ?? owner.id;
 
   const metadata = {
     instructions: input.instructions,
   };
 
-  await upsertAiAgentRecord({
+  const updated = await upsertAiAgentRecord({
     id: input.id,
     slug: "librarian",
     name: input.name.trim(),
@@ -114,6 +119,8 @@ export async function updateLibrarianAgentAction(input: UpdateLibrarianAgentInpu
     max_output_tokens: normalizeNumber(input.maxOutputTokens),
     metadata,
   });
+
+  await logAiAgentVersion(updated, editor);
 
   revalidatePath("/owner/agents");
   revalidatePath("/owner");
@@ -139,7 +146,8 @@ export async function createAgentAction(input: CreateAgentInput) {
     throw new Error("Name is required");
   }
 
-  await requireOwner();
+  const owner = await requireOwner();
+  const editor = owner.email ?? owner.id;
 
   let metadata: AiAgentRecord["metadata"] = null;
   if (input.metadataJson && input.metadataJson.trim()) {
@@ -150,7 +158,7 @@ export async function createAgentAction(input: CreateAgentInput) {
     }
   }
 
-  await upsertAiAgentRecord({
+  const created = await upsertAiAgentRecord({
     slug: input.slug.trim().toLowerCase(),
     name: input.name.trim(),
     description: normalize(input.description) ?? null,
@@ -160,6 +168,8 @@ export async function createAgentAction(input: CreateAgentInput) {
     system_prompt: normalize(input.systemPrompt),
     metadata,
   });
+
+  await logAiAgentVersion(created, editor);
 
   revalidatePath("/owner/agents");
   revalidatePath("/owner");

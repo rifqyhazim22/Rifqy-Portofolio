@@ -98,10 +98,24 @@ create policy "Block anon select ai agents"
 drop policy if exists "Block anon writes ai agents" on public.ai_agents;
 create policy "Block anon writes ai agents"
   on public.ai_agents for insert with check (false);
+
+drop policy if exists "Block anon updates ai agents" on public.ai_agents;
 create policy "Block anon updates ai agents"
   on public.ai_agents for update using (false) with check (false);
+
+drop policy if exists "Block anon delete ai agents" on public.ai_agents;
 create policy "Block anon delete ai agents"
   on public.ai_agents for delete using (false);
+
+create table if not exists public.ai_agent_versions (
+  id uuid primary key default gen_random_uuid(),
+  agent_id uuid references public.ai_agents(id) on delete cascade,
+  snapshot jsonb not null,
+  updated_by text,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists ai_agent_versions_agent_id_idx on public.ai_agent_versions (agent_id);
 
 -- updated_at triggers
 create or replace function public.ensure_touch_updated_at()

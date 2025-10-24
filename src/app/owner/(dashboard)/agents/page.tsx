@@ -33,7 +33,7 @@ export default async function OwnerAgentsPage() {
             </ul>
           </section>
         ) : null}
-        <CreateAgentPanel />
+        <CreateAgentPanel agents={agents} />
       </div>
     </div>
   );

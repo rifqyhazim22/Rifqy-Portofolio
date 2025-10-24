@@ -15,6 +15,14 @@ export type AiAgentRecord = {
   updated_at: string;
 };
 
+export type AiAgentVersionRecord = {
+  id: string;
+  agent_id: string;
+  snapshot: Record<string, unknown>;
+  updated_by: string | null;
+  created_at: string;
+};
+
 const client = () => createSupabaseServiceClient();
 
 export const listAiAgents = async (): Promise<AiAgentRecord[]> => {
@@ -100,5 +108,32 @@ export const deleteAiAgentRecord = async (id: string) => {
   const { error } = await supabase.from("ai_agents").delete().eq("id", id);
   if (error) {
     throw new Error(error.message);
+  }
+};
+
+export const logAiAgentVersion = async (agent: AiAgentRecord, updatedBy?: string | null) => {
+  const supabase = client();
+  const snapshot = {
+    id: agent.id,
+    slug: agent.slug,
+    name: agent.name,
+    description: agent.description,
+    type: agent.type,
+    status: agent.status,
+    model: agent.model,
+    system_prompt: agent.system_prompt,
+    max_output_tokens: agent.max_output_tokens,
+    metadata: agent.metadata,
+    updated_at: agent.updated_at,
+  };
+
+  const { error } = await supabase.from("ai_agent_versions").insert({
+    agent_id: agent.id,
+    snapshot,
+    updated_by: updatedBy ?? null,
+  });
+
+  if (error) {
+    console.error("Failed to log agent version", error);
   }
 };

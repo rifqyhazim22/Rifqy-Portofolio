@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import type { AiAgentRecord } from "@/lib/supabase/agents";
 import { createAgentAction } from "./actions";
 
 const DEFAULT_METADATA_BY_TYPE: Record<string, string> = {
@@ -29,7 +30,14 @@ const DEFAULT_METADATA_BY_TYPE: Record<string, string> = {
   ),
 };
 
-export const CreateAgentPanel = () => {
+type CreateAgentPanelProps = {
+  agents: AiAgentRecord[];
+};
+
+const serializeMetadata = (metadata: AiAgentRecord["metadata"] | null | undefined) =>
+  JSON.stringify(metadata ?? {}, null, 2);
+
+export const CreateAgentPanel = ({ agents }: CreateAgentPanelProps) => {
   const [formState, setFormState] = useState({
     slug: "",
     name: "",
@@ -41,6 +49,7 @@ export const CreateAgentPanel = () => {
   });
   const [isPending, startTransition] = useTransition();
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [cloneSource, setCloneSource] = useState<string>("");
 
   const handleTypeChange = (type: "chat" | "librarian" | "other") => {
     setFormState((prev) => ({
@@ -64,9 +73,26 @@ export const CreateAgentPanel = () => {
           systemPrompt: "",
           metadataJson: DEFAULT_METADATA_BY_TYPE[formState.type] ?? "",
         });
+        setCloneSource("");
       } catch (error) {
         setFeedback(error instanceof Error ? error.message : "Failed to create agent");
       }
+    });
+  };
+
+  const handleClone = (agentId: string) => {
+    setCloneSource(agentId);
+    const agent = agents.find((item) => item.id === agentId);
+    if (!agent) return;
+    const baseSlug = agent.slug.endsWith("-clone") ? agent.slug : `${agent.slug}-clone`;
+    setFormState({
+      slug: baseSlug,
+      name: `${agent.name} clone`,
+      type: (agent.type as "chat" | "librarian" | "other") ?? "other",
+      description: agent.description ?? "",
+      model: agent.model ?? "",
+      systemPrompt: agent.system_prompt ?? "",
+      metadataJson: serializeMetadata(agent.metadata),
     });
   };
 
@@ -79,6 +105,22 @@ export const CreateAgentPanel = () => {
         </div>
       </header>
       <div className="owner-story-card__section">
+        {agents.length ? (
+          <label className="owner-panel__field owner-story-card__field--wide">
+            <span>Clone existing agent</span>
+            <select
+              value={cloneSource}
+              onChange={(event) => handleClone(event.target.value)}
+            >
+              <option value="">— pilih agent untuk ditiru —</option>
+              {agents.map((agent) => (
+                <option key={agent.id} value={agent.id}>
+                  {agent.name} ({agent.slug})
+                </option>
+              ))}
+            </select>
+          </label>
+        ) : null}
         <div className="owner-story-card__grid owner-story-card__grid--three">
           <label className="owner-panel__field">
             <span>Slug</span>

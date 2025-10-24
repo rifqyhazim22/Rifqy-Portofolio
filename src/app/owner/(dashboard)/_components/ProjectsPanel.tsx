@@ -6,6 +6,7 @@ import {
   deleteProjectAction,
   upsertProjectAction,
 } from "../actions";
+import type { MediaAssetRecord } from "@/lib/supabase/owner-assets";
 
 export type ProjectRecord = {
   id: string;
@@ -24,6 +25,17 @@ export type ProjectRecord = {
 
 type ProjectsPanelProps = {
   projects: ProjectRecord[];
+  assets: MediaAssetRecord[];
+};
+
+const PUBLIC_STORAGE_BASE = process.env.NEXT_PUBLIC_SUPABASE_URL
+  ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/owner-assets`
+  : "";
+
+const buildPublicAssetUrl = (filePath: string) => {
+  if (filePath.startsWith("http")) return filePath;
+  if (!PUBLIC_STORAGE_BASE) return filePath;
+  return `${PUBLIC_STORAGE_BASE}/${filePath.replace(/^\/+/, "")}`;
 };
 
 const formatTimestamp = (value?: string | null) => {
@@ -103,7 +115,7 @@ const EmptyListPlaceholder = () => (
   </li>
 );
 
-export const ProjectsPanel = ({ projects }: ProjectsPanelProps) => {
+export const ProjectsPanel = ({ projects, assets }: ProjectsPanelProps) => {
   const router = useRouter();
   const { selectedId, formState, setFormState, select } = useProjectState(projects);
   const isEmpty = projects.length === 0;
@@ -171,6 +183,28 @@ export const ProjectsPanel = ({ projects }: ProjectsPanelProps) => {
   };
 
   const tagsValue = (formState.tags ?? []).join(", ");
+  const assetOptions = useMemo(
+    () =>
+      assets.map((asset) => ({
+        id: asset.id,
+        filePath: asset.file_path,
+        label: asset.title || asset.file_path,
+        type: asset.type,
+      })),
+    [assets],
+  );
+
+  const currentAssetSelection = useMemo(() => {
+    if (!formState.hero_image_url) return "";
+    const match = assetOptions.find((option) => {
+      const publicUrl = buildPublicAssetUrl(option.filePath);
+      return (
+        formState.hero_image_url === publicUrl ||
+        formState.hero_image_url === option.filePath
+      );
+    });
+    return match?.filePath ?? "";
+  }, [assetOptions, formState.hero_image_url]);
 
   return (
     <section className="owner-story-card owner-story-card--wide">
@@ -294,13 +328,41 @@ export const ProjectsPanel = ({ projects }: ProjectsPanelProps) => {
               </label>
               <label className="owner-panel__field">
                 <span>Hero asset</span>
-                <input
-                  value={formState.hero_image_url ?? ""}
-                  onChange={(event) =>
-                    setFormState((prev) => ({ ...prev, hero_image_url: event.target.value }))
-                  }
-                  placeholder="/images/project-x.png atau pilih dari Assets"
-                />
+                <div className="owner-panel__field-combo">
+                  <select
+                    value={currentAssetSelection}
+                    onChange={(event) => {
+                      const filePath = event.target.value;
+                      if (!filePath) {
+                        setFormState((prev) => ({ ...prev, hero_image_url: "" }));
+                        return;
+                      }
+                      setFormState((prev) => ({
+                        ...prev,
+                        hero_image_url: buildPublicAssetUrl(filePath),
+                      }));
+                    }}
+                  >
+                    <option value="">— pilih dari asset library —</option>
+                    {assetOptions.map((option) => (
+                      <option key={option.id} value={option.filePath}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  <input
+                    value={formState.hero_image_url ?? ""}
+                    onChange={(event) =>
+                      setFormState((prev) => ({ ...prev, hero_image_url: event.target.value }))
+                    }
+                    placeholder="URL atau path gambar"
+                  />
+                </div>
+                {formState.hero_image_url ? (
+                  <div className="owner-project-preview">
+                    <img src={formState.hero_image_url} alt="Hero preview" />
+                  </div>
+                ) : null}
               </label>
             </div>
             <label className="owner-panel__field owner-story-card__field--wide">

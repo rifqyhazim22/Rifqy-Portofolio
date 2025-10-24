@@ -10,4 +10,5 @@ export {
   fetchAiAgentBySlug,
   upsertAiAgentRecord,
   deleteAiAgentRecord,
+  logAiAgentVersion,
 } from "./agents";

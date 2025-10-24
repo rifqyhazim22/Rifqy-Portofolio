@@ -1,6 +1,7 @@
 import { SiteSectionsPanel, type SiteSection } from "../_components/SiteSectionsPanel";
 import { ProjectsPanel, type ProjectRecord } from "../_components/ProjectsPanel";
 import { createSupabaseServiceClient } from "@/lib/supabase";
+import { listMediaAssets } from "@/lib/supabase/owner-assets";
 
 const fetchContentData = async () => {
   const supabase = createSupabaseServiceClient();
@@ -22,12 +23,13 @@ const fetchContentData = async () => {
 
 export default async function OwnerContentPage() {
   const { sections, projects } = await fetchContentData();
+  const assets = await listMediaAssets();
 
   return (
     <div className="owner-dashboard" data-animate>
       <div className="owner-dashboard__panel-stack">
         <SiteSectionsPanel sections={sections} />
-        <ProjectsPanel projects={projects} />
+        <ProjectsPanel projects={projects} assets={assets} />
       </div>
     </div>
   );
