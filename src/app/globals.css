@@ -4528,6 +4528,23 @@ section {
   color: color-mix(in oklab, var(--fg) 65%, transparent);
 }
 
+.owner-agent-card__status {
+  display: flex;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(122, 162, 255, 0.16);
+  background: rgba(12, 24, 48, 0.55);
+}
+
+.owner-agent-card__status label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+}
+
 .owner-agent-card__section {
   display: flex;
   flex-direction: column;

@@ -305,33 +305,34 @@ export const LibrarianAgentsPanel = ({ agents }: LibrarianAgentsPanelProps) => {
                 </div>
               </header>
 
+              <div className="owner-agent-card__status">
+                <label>
+                  <span>Status</span>
+                  <select
+                    value={state.status}
+                    onChange={(event) =>
+                      updateForm(agent.id, (prev) => ({
+                        ...prev,
+                        status: event.target.value as "active" | "disabled" | "draft",
+                      }))
+                    }
+                  >
+                    <option value="active">Active</option>
+                    <option value="draft">Draft</option>
+                    <option value="disabled">Disabled</option>
+                  </select>
+                </label>
+              </div>
+
               <div className="owner-agent-card__section">
                 <h4>Identitas</h4>
-                <div className="owner-story-card__grid owner-story-card__grid--two">
-                  <label className="owner-panel__field">
-                    <span>Name</span>
-                    <input
-                      value={state.name}
-                      onChange={(event) => updateForm(agent.id, (prev) => ({ ...prev, name: event.target.value }))}
-                    />
-                  </label>
-                  <label className="owner-panel__field">
-                    <span>Status</span>
-                    <select
-                      value={state.status}
-                      onChange={(event) =>
-                        updateForm(agent.id, (prev) => ({
-                          ...prev,
-                          status: event.target.value as "active" | "disabled" | "draft",
-                        }))
-                      }
-                    >
-                      <option value="active">Active</option>
-                      <option value="draft">Draft</option>
-                      <option value="disabled">Disabled</option>
-                    </select>
-                  </label>
-                </div>
+                <label className="owner-panel__field owner-story-card__field--wide">
+                  <span>Name</span>
+                  <input
+                    value={state.name}
+                    onChange={(event) => updateForm(agent.id, (prev) => ({ ...prev, name: event.target.value }))}
+                  />
+                </label>
                 <label className="owner-panel__field owner-story-card__field--wide">
                   <span>Description</span>
                   <textarea
