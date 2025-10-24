@@ -5,8 +5,10 @@ import ReactFlow, {
   Background,
   BackgroundVariant,
   Controls,
+  Handle,
   MiniMap,
   Panel,
+  Position,
   addEdge,
   useEdgesState,
   useNodesState,
@@ -26,6 +28,8 @@ const STATUS_PILLS: Array<{ id: "draft" | "active" | "archived"; label: string }
   { id: "active", label: "ACTIVE" },
   { id: "archived", label: "ARCHIVED" },
 ];
+
+const EDGE_STYLE = { stroke: "#6CA8FF", strokeWidth: 2 } as const;
 
 const buildNodeId = () => `node-${crypto.randomUUID()}`;
 
@@ -52,6 +56,7 @@ type AgentCanvasProps = {
 
 const TriggerNode = ({ data }: { data: CanvasNodeData }) => (
   <div className="canvas-node canvas-node--trigger">
+    <Handle type="source" position={Position.Bottom} className="canvas-node__handle" />
     <span className="canvas-node__badge">Trigger</span>
     <strong>{data.label}</strong>
     {data.description ? <p>{data.description}</p> : null}
@@ -60,6 +65,8 @@ const TriggerNode = ({ data }: { data: CanvasNodeData }) => (
 
 const AgentNode = ({ data }: { data: CanvasNodeData }) => (
   <div className="canvas-node canvas-node--agent">
+    <Handle type="target" position={Position.Top} className="canvas-node__handle" />
+    <Handle type="source" position={Position.Bottom} className="canvas-node__handle" />
     <span className="canvas-node__badge">Agent</span>
     <strong>{data.label}</strong>
     {data.agentSlug ? <small>handles: {data.agentSlug}</small> : null}
@@ -69,6 +76,8 @@ const AgentNode = ({ data }: { data: CanvasNodeData }) => (
 
 const ActionNode = ({ data }: { data: CanvasNodeData }) => (
   <div className="canvas-node canvas-node--action">
+    <Handle type="target" position={Position.Top} className="canvas-node__handle" />
+    <Handle type="source" position={Position.Bottom} className="canvas-node__handle" />
     <span className="canvas-node__badge">Action</span>
     <strong>{data.label}</strong>
     {data.description ? <p>{data.description}</p> : null}
@@ -77,6 +86,9 @@ const ActionNode = ({ data }: { data: CanvasNodeData }) => (
 
 const DecisionNode = ({ data }: { data: CanvasNodeData }) => (
   <div className="canvas-node canvas-node--decision">
+    <Handle type="target" position={Position.Top} className="canvas-node__handle" />
+    <Handle type="source" position={Position.Left} className="canvas-node__handle" />
+    <Handle type="source" position={Position.Right} className="canvas-node__handle" />
     <span className="canvas-node__badge">Decision</span>
     <strong>{data.label}</strong>
     {data.description ? <p>{data.description}</p> : null}
@@ -85,6 +97,8 @@ const DecisionNode = ({ data }: { data: CanvasNodeData }) => (
 
 const IntegrationNode = ({ data }: { data: CanvasNodeData }) => (
   <div className="canvas-node canvas-node--integration">
+    <Handle type="target" position={Position.Top} className="canvas-node__handle" />
+    <Handle type="source" position={Position.Bottom} className="canvas-node__handle" />
     <span className="canvas-node__badge">Integration</span>
     <strong>{data.label}</strong>
     {data.description ? <p>{data.description}</p> : null}
@@ -149,12 +163,16 @@ const INITIAL_EDGES: Edge[] = [
     target: INITIAL_NODES[1].id,
     markerEnd: { type: MarkerType.ArrowClosed },
     animated: true,
+    type: "smoothstep",
+    style: EDGE_STYLE,
   },
   {
     id: "edge-2",
     source: INITIAL_NODES[1].id,
     target: INITIAL_NODES[2].id,
     markerEnd: { type: MarkerType.ArrowClosed },
+    type: "smoothstep",
+    style: EDGE_STYLE,
   },
   {
     id: "edge-3",
@@ -162,6 +180,8 @@ const INITIAL_EDGES: Edge[] = [
     target: INITIAL_NODES[3].id,
     markerEnd: { type: MarkerType.ArrowClosed },
     label: "Complex intent",
+    type: "smoothstep",
+    style: EDGE_STYLE,
   },
 ];
 
@@ -354,6 +374,9 @@ export const AgentCanvas = ({ agents, assets }: AgentCanvasProps) => {
     }, {});
   }, [nodes]);
 
+  const [showPalette, setShowPalette] = useState(true);
+  const [showInspector, setShowInspector] = useState(true);
+
   return (
     <div className="owner-canvas">
       <section className="owner-canvas__header">
@@ -394,12 +417,35 @@ export const AgentCanvas = ({ agents, assets }: AgentCanvasProps) => {
             <button type="button" onClick={handleSimulate} disabled={isSaving} className="owner-panel__primary">
               {isSaving ? "Simulating…" : "Simulate run"}
             </button>
+            <div className="owner-canvas__view-toggle" role="group" aria-label="Canvas visibility">
+              <button
+                type="button"
+                onClick={() => setShowPalette((prev) => !prev)}
+                className={`owner-canvas__mini-btn ${showPalette ? "is-active" : ""}`}
+              >
+                {showPalette ? "Hide palette" : "Show palette"}
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowInspector((prev) => !prev)}
+                className={`owner-canvas__mini-btn ${showInspector ? "is-active" : ""}`}
+              >
+                {showInspector ? "Hide inspector" : "Show inspector"}
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
-      <div className="owner-canvas__body">
-        <aside className="owner-canvas__palette">
+      <div
+        className="owner-canvas__body"
+        style={{
+          gridTemplateColumns: `${showPalette ? "minmax(240px, 280px)" : "0px"} minmax(0, 1fr) ${
+            showInspector ? "minmax(260px, 320px)" : "0px"
+          }`,
+        }}
+      >
+        <aside className={`owner-canvas__palette ${showPalette ? "" : "is-hidden"}`}>
           <header>
             <h4>Canvas palette</h4>
             <p>Drag &amp; drop atau klik untuk menambah node.</p>
@@ -444,6 +490,12 @@ export const AgentCanvas = ({ agents, assets }: AgentCanvasProps) => {
             nodeTypes={NODE_TYPES}
             onNodeClick={(_, node) => setSelectedNodeId(node.id)}
             onPaneClick={() => setSelectedNodeId(null)}
+            defaultEdgeOptions={{
+              animated: false,
+              markerEnd: { type: MarkerType.ArrowClosed },
+              type: "smoothstep",
+              style: EDGE_STYLE,
+            }}
           >
             <Background gap={24} color="#1f2a57" variant={BackgroundVariant.Dots} />
             <Controls position="bottom-right" />
@@ -457,7 +509,7 @@ export const AgentCanvas = ({ agents, assets }: AgentCanvasProps) => {
           </ReactFlow>
         </div>
 
-        <aside className="owner-canvas__inspector">
+        <aside className={`owner-canvas__inspector ${showInspector ? "" : "is-hidden"}`}>
           <header>
             <h4>Inspector</h4>
             <p>{selectedNode ? `Node ${selectedNode.data.kind}` : "Pilih node untuk mengedit"}</p>

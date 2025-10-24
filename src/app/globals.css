@@ -4671,6 +4671,34 @@ section {
   gap: 12px;
 }
 
+.owner-canvas__view-toggle {
+  display: inline-flex;
+  gap: 10px;
+}
+
+.owner-canvas__mini-btn {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(122, 162, 255, 0.2);
+  background: rgba(12, 24, 52, 0.48);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--fg) 72%, transparent);
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.owner-canvas__mini-btn:hover,
+.owner-canvas__mini-btn:focus-visible {
+  border-color: rgba(122, 162, 255, 0.38);
+  color: var(--fg);
+}
+
+.owner-canvas__mini-btn.is-active {
+  background: rgba(122, 162, 255, 0.22);
+  color: var(--fg);
+}
+
 .owner-canvas__import {
   display: inline-flex;
   align-items: center;
@@ -4699,6 +4727,11 @@ section {
   box-shadow: 0 28px 46px rgba(6, 12, 30, 0.45);
   max-height: 80vh;
   overflow-y: auto;
+}
+
+.owner-canvas__palette.is-hidden {
+  pointer-events: none;
+  opacity: 0;
 }
 
 .owner-canvas__palette-group {
@@ -4792,6 +4825,11 @@ section {
   overflow-y: auto;
 }
 
+.owner-canvas__inspector.is-hidden {
+  pointer-events: none;
+  opacity: 0;
+}
+
 .owner-canvas__inspector-body {
   display: flex;
   flex-direction: column;
@@ -4870,4 +4908,12 @@ section {
 
 .canvas-node--decision .canvas-node__badge {
   background: rgba(251, 191, 36, 0.9);
+}
+
+.canvas-node__handle {
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 999px;
+  border: 2px solid #0f1d3a !important;
+  background: #6ca8ff !important;
 }
