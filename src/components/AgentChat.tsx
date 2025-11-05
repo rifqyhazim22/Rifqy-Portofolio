@@ -20,8 +20,7 @@ interface AgentResponse {
 
 const STORAGE_KEY = "rh-agent-chat-session";
 const IDENTITY_STORAGE_KEY = "fi-visitor-identity";
-const FORCE_IDENTITY_PROMPT =
-  process.env.NEXT_PUBLIC_FORCE_IDENTITY_PROMPT === "true";
+const IDENTITY_SESSION_KEY = "fi-visitor-identity-session";
 
 function resolveLanguage(): "id" | "en" {
   if (typeof document === "undefined") {
@@ -108,6 +107,19 @@ export default function AgentChat() {
     };
   }, []);
 
+  const storeIdentity = (nextIdentity: VisitorIdentity) => {
+    if (typeof window === "undefined") return;
+    const payload = JSON.stringify(nextIdentity);
+    window.localStorage.setItem(IDENTITY_STORAGE_KEY, payload);
+    window.sessionStorage.setItem(IDENTITY_SESSION_KEY, payload);
+  };
+
+  const clearStoredIdentity = () => {
+    if (typeof window === "undefined") return;
+    window.localStorage.removeItem(IDENTITY_STORAGE_KEY);
+    window.sessionStorage.removeItem(IDENTITY_SESSION_KEY);
+  };
+
   useEffect(() => {
     let cancelled = false;
 
@@ -118,7 +130,9 @@ export default function AgentChat() {
           | { isOwner?: boolean }
           | null;
         if (!cancelled && data?.isOwner) {
-          setIdentity({ name: "Owner", source: "internal" });
+          const ownerIdentity: VisitorIdentity = { name: "Owner", source: "internal" };
+          setIdentity(ownerIdentity);
+          storeIdentity(ownerIdentity);
           setIdentityReady(true);
           setCheckingIdentity(false);
           return;
@@ -129,8 +143,10 @@ export default function AgentChat() {
 
       if (cancelled) return;
 
-      if (!FORCE_IDENTITY_PROMPT && typeof window !== "undefined") {
-        const stored = window.localStorage.getItem(IDENTITY_STORAGE_KEY);
+      if (typeof window !== "undefined") {
+        const stored =
+          window.localStorage.getItem(IDENTITY_STORAGE_KEY) ??
+          window.sessionStorage.getItem(IDENTITY_SESSION_KEY);
         if (stored) {
           try {
             const parsed = JSON.parse(stored) as VisitorIdentity;
@@ -139,7 +155,7 @@ export default function AgentChat() {
               setIdentityReady(true);
             }
           } catch {
-            window.localStorage.removeItem(IDENTITY_STORAGE_KEY);
+            clearStoredIdentity();
           }
         }
       }
@@ -224,12 +240,7 @@ export default function AgentChat() {
 
   const persistIdentity = (nextIdentity: VisitorIdentity) => {
     setIdentity(nextIdentity);
-    if (!FORCE_IDENTITY_PROMPT && typeof window !== "undefined") {
-      window.localStorage.setItem(
-        IDENTITY_STORAGE_KEY,
-        JSON.stringify(nextIdentity),
-      );
-    }
+    storeIdentity(nextIdentity);
   };
 
   const handleIdentityChange = (nextIdentity: VisitorIdentity) => {
@@ -348,6 +359,13 @@ export default function AgentChat() {
     }, 140);
   };
 
+  const resetIdentity = () => {
+    clearStoredIdentity();
+    setIdentity({ name: "", source: "" });
+    setIdentityReady(false);
+    setIdentityError(null);
+  };
+
   return (
     <div
       className="agent"
@@ -403,6 +421,16 @@ export default function AgentChat() {
             </div>
           ) : (
             <>
+              <div className="agent__identity-chip">
+                <span>
+                  {language === "en"
+                    ? `Chatting as ${identity.name}`
+                    : `Mengobrol sebagai ${identity.name}`}
+                </span>
+                <button type="button" onClick={resetIdentity}>
+                  {language === "en" ? "Change" : "Ganti"}
+                </button>
+              </div>
               <div className="agent__messages">
                 {messages.map((message, index) => (
                   <div key={index} className={`agent__message agent__message--${message.role}`}>

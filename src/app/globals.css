@@ -1363,6 +1363,34 @@ body::before {
   box-shadow: 0 14px 24px rgba(11, 18, 32, 0.35);
 }
 
+.agent__identity-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 2px 6px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.agent__identity-chip button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: var(--accent-foreground);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.agent__identity-chip button:hover {
+  text-decoration: none;
+}
+
+:root[data-theme="light"] .agent__identity-chip button {
+  color: var(--accent);
+}
+
 :root[data-palette="earthy"] .agent__message--user > div {
   background: linear-gradient(135deg, rgba(242, 140, 73, 0.92), rgba(209, 105, 50, 0.9));
   color: #1a0a03;
@@ -1858,6 +1886,30 @@ nav.pills {
   max-height: 420px;
   overflow-y: auto;
   padding-right: 8px;
+}
+
+.librarian__identity-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 2px 6px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.librarian__identity-chip button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: var(--accent-foreground);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.librarian__identity-chip button:hover {
+  text-decoration: none;
 }
 
 .librarian__message {

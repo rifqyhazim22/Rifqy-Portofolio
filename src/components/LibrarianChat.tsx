@@ -13,8 +13,8 @@ import {
   type VisitorIdentity,
 } from "./VisitorIdentityPrompt";
 
-const FORCE_IDENTITY_PROMPT =
-  process.env.NEXT_PUBLIC_FORCE_IDENTITY_PROMPT === "true";
+const IDENTITY_STORAGE_KEY = "fi-visitor-identity";
+const IDENTITY_SESSION_KEY = "fi-visitor-identity-session";
 
 type Language = "id" | "en";
 type Tone = "formal" | "santai" | "deep";
@@ -73,10 +73,7 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
   const [loading, setLoading] = useState(false);
   const [pendingImages, setPendingImages] = useState<ImageDraft[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [identity, setIdentity] = useState<VisitorIdentity>({
-    name: "",
-    source: "",
-  });
+  const [identity, setIdentity] = useState<VisitorIdentity>({ name: "", source: "" });
   const [identityReady, setIdentityReady] = useState(false);
   const [identityError, setIdentityError] = useState<string | null>(null);
   const [checkingIdentity, setCheckingIdentity] = useState(true);
@@ -112,6 +109,19 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
     return () => window.removeEventListener("tonechange", handler as EventListener);
   }, []);
 
+  const storeIdentity = (nextIdentity: VisitorIdentity) => {
+    if (typeof window === "undefined") return;
+    const payload = JSON.stringify(nextIdentity);
+    window.localStorage.setItem(IDENTITY_STORAGE_KEY, payload);
+    window.sessionStorage.setItem(IDENTITY_SESSION_KEY, payload);
+  };
+
+  const clearStoredIdentity = () => {
+    if (typeof window === "undefined") return;
+    window.localStorage.removeItem(IDENTITY_STORAGE_KEY);
+    window.sessionStorage.removeItem(IDENTITY_SESSION_KEY);
+  };
+
   useEffect(() => {
     let cancelled = false;
 
@@ -122,7 +132,9 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
           | { isOwner?: boolean }
           | null;
         if (!cancelled && data?.isOwner) {
-          setIdentity({ name: "Owner", source: "internal" });
+          const ownerIdentity: VisitorIdentity = { name: "Owner", source: "internal" };
+          setIdentity(ownerIdentity);
+          storeIdentity(ownerIdentity);
           setIdentityReady(true);
           setCheckingIdentity(false);
           return;
@@ -133,21 +145,19 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
 
       if (cancelled) return;
 
-      if (!FORCE_IDENTITY_PROMPT && typeof window !== "undefined") {
-        const stored = window.localStorage.getItem("fi-visitor-identity");
+      if (typeof window !== "undefined") {
+        const stored =
+          window.localStorage.getItem(IDENTITY_STORAGE_KEY) ??
+          window.sessionStorage.getItem(IDENTITY_SESSION_KEY);
         if (stored) {
           try {
             const parsed = JSON.parse(stored) as VisitorIdentity;
             if (parsed?.name && parsed?.source) {
-              setIdentity({
-                name: parsed.name,
-                source: parsed.source,
-              });
+              setIdentity({ name: parsed.name, source: parsed.source });
               setIdentityReady(true);
             }
           } catch {
-            // remove corrupt data
-            window.localStorage.removeItem("fi-visitor-identity");
+            clearStoredIdentity();
           }
         }
       }
@@ -169,12 +179,7 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
 
   const persistIdentity = (nextIdentity: VisitorIdentity) => {
     setIdentity(nextIdentity);
-    if (!FORCE_IDENTITY_PROMPT && typeof window !== "undefined") {
-      window.localStorage.setItem(
-        "fi-visitor-identity",
-        JSON.stringify(nextIdentity),
-      );
-    }
+    storeIdentity(nextIdentity);
   };
 
   const handleIdentityChange = (nextIdentity: VisitorIdentity) => {
@@ -380,6 +385,13 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
     }
   };
 
+  const resetIdentity = () => {
+    clearStoredIdentity();
+    setIdentity({ name: "", source: "" });
+    setIdentityReady(false);
+    setIdentityError(null);
+  };
+
   if (checkingIdentity) {
     return (
       <div className="librarian card">
@@ -412,6 +424,16 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
 
   return (
     <div className="librarian card">
+      <div className="librarian__identity-chip">
+        <span>
+          {language === "id"
+            ? `Mengobrol sebagai ${identity.name}`
+            : `Chatting as ${identity.name}`}
+        </span>
+        <button type="button" onClick={resetIdentity}>
+          {language === "id" ? "Ganti identitas" : "Change identity"}
+        </button>
+      </div>
       <div className="librarian__messages">
         {messages.map((message, index) => (
           <div key={index} className={`librarian__message ${message.role === "user" ? "librarian__message--user" : ""}`}>

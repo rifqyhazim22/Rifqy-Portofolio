@@ -8,6 +8,7 @@ import {
   fetchFeaturedProjects,
   type ProjectRecord,
 } from "@/lib/supabase/content";
+import { resolveLocalizedMetadata, resolveLocalizedText } from "@/lib/siteSections";
 import type {
   HomeHeroContent,
   HomePlaybooksSection,
@@ -36,24 +37,45 @@ export default async function HomePage() {
     fetchFeaturedProjects(),
   ]);
 
-  const mergeHero = (defaultHero: HomeHeroContent): HomeHeroContent => {
+  const selectHero = (fallback: HomeHeroContent): HomeHeroContent => {
     const record = sections["home-hero"];
-    if (!record?.metadata) return defaultHero;
-    const metadata = record.metadata as Partial<HomeHeroContent>;
+    if (!record) return fallback;
+
+    const localized =
+      resolveLocalizedMetadata<HomeHeroContent>(record.metadata, language) ??
+      (language === "id" && record.metadata ? (record.metadata as Partial<HomeHeroContent>) : null);
+
+    if (!localized) {
+      return fallback;
+    }
+
     return {
-      ...defaultHero,
-      ...metadata,
-      summary: metadata.summary ?? defaultHero.summary,
-      tagline: metadata.tagline ?? defaultHero.tagline,
-      availability: metadata.availability ?? defaultHero.availability,
-      actions: Array.isArray(metadata.actions) ? (metadata.actions as HomeHeroContent["actions"]) : defaultHero.actions,
-      highlights: Array.isArray(metadata.highlights)
-        ? (metadata.highlights as HomeHeroContent["highlights"])
-        : defaultHero.highlights,
+      ...fallback,
+      ...localized,
+      name: typeof localized.name === "string" ? localized.name : fallback.name,
+      title: typeof localized.title === "string" ? localized.title : fallback.title,
+      summary: typeof localized.summary === "string" ? localized.summary : fallback.summary,
+      tagline: typeof localized.tagline === "string" ? localized.tagline : fallback.tagline,
+      availability:
+        typeof localized.availability === "string" ? localized.availability : fallback.availability,
+      actions: Array.isArray(localized.actions)
+        ? (localized.actions as HomeHeroContent["actions"])
+        : fallback.actions,
+      highlights: Array.isArray(localized.highlights)
+        ? (localized.highlights as HomeHeroContent["highlights"])
+        : fallback.highlights,
+      portraitSrc:
+        typeof localized.portraitSrc === "string"
+          ? localized.portraitSrc
+          : fallback.portraitSrc,
+      backgroundSrc:
+        typeof localized.backgroundSrc === "string"
+          ? localized.backgroundSrc
+          : fallback.backgroundSrc,
     };
   };
 
-  const mergeSection = <
+  const buildSection = <
     T extends HomeSection | HomePlaybooksSection | HomeLearningSection | HomeUpdatesSection,
   >(
     slug: string,
@@ -61,55 +83,111 @@ export default async function HomePage() {
   ): T => {
     const record = sections[slug];
     if (!record) return fallback;
-    const metadata = (record.metadata ?? {}) as Partial<T>;
-    const next = { ...fallback, ...metadata } as T;
 
-    if ("heading" in fallback && record.title) {
-      (next as HomeSection).heading = record.title as any;
+    const localized =
+      resolveLocalizedMetadata<T>(record.metadata, language) ??
+      (language === "id" && record.metadata ? (record.metadata as Partial<T>) : null);
+
+    const next = { ...fallback, ...(localized ?? {}) } as T;
+
+    if ("heading" in fallback) {
+      const currentHeading =
+        (localized as Partial<HomeSection>)?.heading ?? (fallback as HomeSection).heading;
+      (next as HomeSection).heading = resolveLocalizedText(
+        record.title,
+        language,
+        typeof currentHeading === "string" ? currentHeading : (fallback as HomeSection).heading,
+      );
     }
 
-    if ("description" in fallback && record.body) {
-      (next as HomePlaybooksSection).description = record.body;
-    } else if (!("description" in fallback) && record.body && "text" in fallback) {
-      (next as any).text = record.body;
+    if ("description" in fallback) {
+      const fallbackDescription =
+        typeof (localized as Partial<HomePlaybooksSection>)?.description === "string"
+          ? (localized as Partial<HomePlaybooksSection>).description!
+          : (fallback as HomePlaybooksSection).description;
+      (next as HomePlaybooksSection).description = resolveLocalizedText(
+        record.body,
+        language,
+        fallbackDescription,
+      );
+    } else if ("text" in fallback) {
+      const fallbackText =
+        typeof (localized as Partial<HomeSection & { text?: string }>)?.text === "string"
+          ? (localized as Partial<HomeSection & { text?: string }>).text!
+          : (fallback as HomeSection & { text: string }).text;
+      (next as HomeSection & { text: string }).text = resolveLocalizedText(
+        record.body,
+        language,
+        fallbackText,
+      );
     }
 
     return next;
   };
 
-  const hero = mergeHero(home.hero);
+  const hero = selectHero(home.hero);
+
   const promoRecord = sections["home-promo"];
-  const promo = promoRecord
-    ? {
-        title: promoRecord.title ?? home.promo?.title ?? "",
-        body: promoRecord.body ?? home.promo?.body ?? "",
-        buttonLabel:
-          (promoRecord.metadata?.buttonLabel as string | undefined) ?? home.promo?.buttonLabel ?? "",
-        buttonHref:
-          (promoRecord.metadata?.buttonHref as string | undefined) ?? home.promo?.buttonHref ?? "#",
-      }
-    : home.promo;
+  type PromoMetadata = {
+    title?: string;
+    body?: string;
+    buttonLabel?: string;
+    buttonHref?: string;
+  };
+
+  const promoMetadata: Partial<PromoMetadata> | null =
+    resolveLocalizedMetadata<PromoMetadata>(promoRecord?.metadata, language) ??
+    (language === "id" && promoRecord?.metadata
+      ? (promoRecord.metadata as Partial<PromoMetadata>)
+      : null);
+
+  const promoTitle = resolveLocalizedText(
+    promoRecord?.title,
+    language,
+    typeof promoMetadata?.title === "string"
+      ? promoMetadata.title
+      : home.promo?.title ?? "",
+  );
+  const promoBody = resolveLocalizedText(
+    promoRecord?.body,
+    language,
+    typeof promoMetadata?.body === "string" ? promoMetadata.body : home.promo?.body ?? "",
+  );
+  const promoButtonLabel =
+    typeof promoMetadata?.buttonLabel === "string"
+      ? promoMetadata.buttonLabel
+      : home.promo?.buttonLabel ?? "";
+  const promoButtonHref =
+    typeof promoMetadata?.buttonHref === "string"
+      ? promoMetadata.buttonHref
+      : home.promo?.buttonHref ?? "#";
+
+  const promo =
+    promoRecord || promoMetadata
+      ? {
+          title: promoTitle,
+          body: promoBody,
+          buttonLabel: promoButtonLabel,
+          buttonHref: promoButtonHref,
+        }
+      : home.promo;
 
   const quoteRecord = sections["home-quote"];
-  const quote = quoteRecord
-    ? {
-        label: quoteRecord.title ?? home.quote.label,
-        text: quoteRecord.body ?? home.quote.text,
-      }
-    : home.quote;
+  const quote = {
+    label: resolveLocalizedText(quoteRecord?.title, language, home.quote.label),
+    text: resolveLocalizedText(quoteRecord?.body, language, home.quote.text),
+  };
 
   const journeyRecord = sections["home-journey"];
-  const journey = journeyRecord
-    ? {
-        label: journeyRecord.title ?? home.journey.label,
-        text: journeyRecord.body ?? home.journey.text,
-      }
-    : home.journey;
+  const journey = {
+    label: resolveLocalizedText(journeyRecord?.title, language, home.journey.label),
+    text: resolveLocalizedText(journeyRecord?.body, language, home.journey.text),
+  };
 
-  const whatIDo = mergeSection("home-what-i-do", home.whatIDo);
-  const playbooks = mergeSection("home-playbooks", home.playbooks);
-  const learning = mergeSection("home-learning", home.learning);
-  const updatesSection = mergeSection("home-updates", home.updates);
+  const whatIDo = buildSection("home-what-i-do", home.whatIDo);
+  const playbooks = buildSection("home-playbooks", home.playbooks);
+  const learning = buildSection("home-learning", home.learning);
+  const updatesSection = buildSection("home-updates", home.updates);
 
   const featuredShowcase = featuredProjects
     .slice(0, 3)
@@ -120,9 +198,22 @@ export default async function HomePage() {
     }));
 
   const featuredRecord = sections["home-featured"];
-  const featuredMetadataItems = Array.isArray(featuredRecord?.metadata?.items)
-    ? (featuredRecord!.metadata!.items as Array<{ href: string; title: string; sub: string }>)
-    : null;
+  type FeaturedMetadata = {
+    heading?: string;
+    body?: string;
+    items?: Array<{ href: string; title: string; sub: string }>;
+  };
+
+  const featuredMetadata: Partial<FeaturedMetadata> | null =
+    resolveLocalizedMetadata<FeaturedMetadata>(featuredRecord?.metadata, language) ??
+    (language === "id" && featuredRecord?.metadata
+      ? (featuredRecord.metadata as Partial<FeaturedMetadata>)
+      : null);
+
+  const featuredMetadataItems =
+    featuredMetadata && Array.isArray(featuredMetadata.items)
+      ? featuredMetadata.items
+      : null;
 
   const fallbackFeatured = featuredShowcase.length
     ? featuredShowcase
@@ -134,8 +225,25 @@ export default async function HomePage() {
 
   const featuredCards = featuredMetadataItems?.length ? featuredMetadataItems : fallbackFeatured;
 
-  const featuredHeading = featuredRecord?.title ?? (language === "id" ? "Proyek Unggulan" : "Featured Projects");
-  const featuredDescription = featuredRecord?.body ?? (featuredRecord ? "" : dictionary.projects.intro);
+  const featuredHeading = resolveLocalizedText(
+    featuredRecord?.title,
+    language,
+    typeof featuredMetadata?.heading === "string"
+      ? featuredMetadata.heading
+      : language === "id"
+        ? "Proyek Unggulan"
+        : "Featured Projects",
+  );
+
+  const featuredDescription = resolveLocalizedText(
+    featuredRecord?.body,
+    language,
+    typeof featuredMetadata?.body === "string"
+      ? featuredMetadata.body
+      : featuredRecord
+        ? ""
+        : dictionary.projects.intro,
+  );
 
   return (
     <div className="home">
