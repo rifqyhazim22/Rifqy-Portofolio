@@ -80,6 +80,24 @@ create table if not exists public.contact_messages (
 
 create index if not exists contact_messages_status_idx on public.contact_messages (status);
 
+create table if not exists public.playbook_progress (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users (id) on delete cascade,
+  playbook_id text not null,
+  status text not null default 'locked' check (status in ('locked', 'active', 'completed')),
+  xp integer not null default 0,
+  streak integer not null default 0,
+  completed_levels text[] not null default '{}',
+  claimed_rewards text[] not null default '{}',
+  state jsonb,
+  updated_at timestamptz not null default now(),
+  created_at timestamptz not null default now(),
+  constraint playbook_progress_user_playbook_unique unique (user_id, playbook_id)
+);
+
+create index if not exists playbook_progress_user_idx on public.playbook_progress (user_id, playbook_id);
+create index if not exists playbook_progress_status_idx on public.playbook_progress (status);
+
 -- Triggers -----------------------------------------------------------------
 
 create or replace function public.touch_updated_at()
@@ -110,6 +128,11 @@ create trigger set_updated_at_contact_messages
   before update on public.contact_messages
   for each row execute function public.touch_updated_at();
 
+drop trigger if exists set_updated_at_playbook_progress on public.playbook_progress;
+create trigger set_updated_at_playbook_progress
+  before update on public.playbook_progress
+  for each row execute function public.touch_updated_at();
+
 -- Row Level Security -------------------------------------------------------
 
 alter table public.site_sections enable row level security;
@@ -117,6 +140,7 @@ alter table public.projects enable row level security;
 alter table public.testimonials enable row level security;
 alter table public.agent_sessions enable row level security;
 alter table public.contact_messages enable row level security;
+alter table public.playbook_progress enable row level security;
 
 -- Allow anyone with the anon key to read published content -----------------
 
@@ -156,6 +180,22 @@ create policy "Block anon access to agent sessions"
 drop policy if exists "Block anon writes to agent sessions" on public.agent_sessions;
 create policy "Block anon writes to agent sessions"
   on public.agent_sessions for insert with check (false);
+
+drop policy if exists "Playbook progress is private" on public.playbook_progress;
+create policy "Playbook progress is private"
+  on public.playbook_progress for select
+  using (auth.uid() = user_id);
+
+drop policy if exists "Owner can upsert playbook progress" on public.playbook_progress;
+create policy "Owner can upsert playbook progress"
+  on public.playbook_progress for
+  insert with check (auth.uid() = user_id);
+
+drop policy if exists "Owner can update playbook progress" on public.playbook_progress;
+create policy "Owner can update playbook progress"
+  on public.playbook_progress for update
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
 
 -- Notes --------------------------------------------------------------------
 -- * Supabase service role (used by Next.js API / server actions) bypasses RLS

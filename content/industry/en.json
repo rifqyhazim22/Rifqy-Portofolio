@@ -41,6 +41,209 @@
       }
     ]
   },
+  "trainingGames": [
+    {
+      "playbookId": "ai-workbench",
+      "storyline": "You helm an agent studio tasked with aligning planner, researcher, and writer roles so briefs land with precision.",
+      "bossChallenge": "Ship an end-to-end agent orchestration that handles long-form briefs with self-review.",
+      "rewards": [
+        {
+          "id": "ai-blueprint-kit",
+          "label": "Orchestration Blueprint",
+          "description": "A ready-to-use checklist for multi-role agent briefings."
+        },
+        {
+          "id": "eval-playset",
+          "label": "Evaluation Playset",
+          "description": "JSON rubric + prompt pair to score outputs before release."
+        }
+      ],
+      "levels": [
+        {
+          "id": "ai-workbench-1",
+          "title": "Level 1 — Intent Lab",
+          "summary": "Frame the arena: personas, privacy, and success checkpoints.",
+          "objective": "Complete the intent canvas and compliance guardrails.",
+          "xp": 120,
+          "challengeType": "drag-drop",
+          "npcHints": [
+            "Match each persona to a privacy lane before launching.",
+            "Log fallback channels so humans can intervene fast."
+          ],
+          "resources": [
+            { "href": "/updates/agent-eval", "title": "Intent Canvas", "sub": "Worksheet for personas & constraints." },
+            { "href": "/industry/ai", "title": "Guardrail Guide", "sub": "Examples of tone and privacy rules." }
+          ]
+        },
+        {
+          "id": "ai-workbench-2",
+          "title": "Level 2 — Graph Forge",
+          "summary": "Design the planner → researcher → synthesizer relay.",
+          "objective": "Lay out agent roles with checkpoints and memory slots.",
+          "xp": 180,
+          "challengeType": "decision-tree",
+          "npcHints": [
+            "Keep the researcher brief short and scoped.",
+            "Insert an eval stop before the final answer ships."
+          ],
+          "resources": [
+            { "href": "https://github.com/rifqyhazim22", "title": "Graph Template", "sub": "Starter for agent flows." },
+            { "href": "/updates/ai-web", "title": "Orchestration Case", "sub": "Real-world implementation notes." }
+          ]
+        },
+        {
+          "id": "ai-workbench-3",
+          "title": "Level 3 — Eval Sprint",
+          "summary": "Teach agents to score themselves against the rubric.",
+          "objective": "Wire automated scoring with human fallback switching.",
+          "xp": 260,
+          "challengeType": "quiz",
+          "npcHints": [
+            "Blend tone and factual weights to match the brand.",
+            "Keep escalation visible so owners can override instantly."
+          ],
+          "resources": [
+            { "href": "/updates/prompt-engineering", "title": "Evaluator Prompt", "sub": "Reference scoring prompt." },
+            { "href": "/learning-hub", "title": "Guardrail Module", "sub": "5-minute video refresher." }
+          ]
+        }
+      ]
+    },
+    {
+      "playbookId": "crypto-hub",
+      "storyline": "You coordinate a neighborhood DAO where utility, governance, and treasury health need to stay in sync.",
+      "bossChallenge": "Launch a governance proposal with clear utility and alert automations.",
+      "rewards": [
+        {
+          "id": "token-design-kit",
+          "label": "Token Design Kit",
+          "description": "Spreadsheet + calculator for sustainable distributions."
+        },
+        {
+          "id": "governance-ops",
+          "label": "Governance Ops Pack",
+          "description": "Proposal templates and community automation flows."
+        }
+      ],
+      "levels": [
+        {
+          "id": "crypto-hub-1",
+          "title": "Level 1 — Utility Forge",
+          "summary": "Define how members earn, spend, and influence with the token.",
+          "objective": "Map roles, unlockables, and contribution rewards.",
+          "xp": 140,
+          "challengeType": "decision-tree",
+          "npcHints": [
+            "Give builders extra voting weight for depth contributions.",
+            "Limit perks to what the core team can maintain reliably."
+          ],
+          "resources": [
+            { "href": "/updates/token-brief", "title": "Utility Checklist", "sub": "Key questions for real usage." },
+            { "href": "/industry/crypto", "title": "Utility Cases", "sub": "Snapshots from live communities." }
+          ]
+        },
+        {
+          "id": "crypto-hub-2",
+          "title": "Level 2 — Treasury Run",
+          "summary": "Run a voting simulation plus payout automation.",
+          "objective": "Draft the proposal lifecycle with alerts and audits.",
+          "xp": 200,
+          "challengeType": "drag-drop",
+          "npcHints": [
+            "Trigger Discord alerts when quorum is close.",
+            "Add an audit trail for multi-sig actions."
+          ],
+          "resources": [
+            { "href": "https://mirror.xyz", "title": "Proposal Template", "sub": "Launch doc for token votes." },
+            { "href": "/updates/crypto-dashboard", "title": "Treasury Dashboard", "sub": "Reference analytics layout." }
+          ]
+        },
+        {
+          "id": "crypto-hub-3",
+          "title": "Level 3 — Community Pulse",
+          "summary": "Blend engagement metrics with health alerts.",
+          "objective": "Deploy reputation rules and feedback loops.",
+          "xp": 250,
+          "challengeType": "quiz",
+          "npcHints": [
+            "Reward collaboration, not just voting frequency.",
+            "Segment alerts by roles to avoid notification fatigue."
+          ],
+          "resources": [
+            { "href": "/updates/crypto-signal", "title": "Alert Playbook", "sub": "Automation examples." },
+            { "href": "/learning-hub", "title": "Governance Session", "sub": "Video deep dive for stewards." }
+          ]
+        }
+      ]
+    },
+    {
+      "playbookId": "biotech-lab",
+      "storyline": "You lead a distributed lab validating a new biomaterial. Documenting safely and sharing insights keeps the project breathing.",
+      "bossChallenge": "Publish a partner-ready experiment report with next-step suggestions.",
+      "rewards": [
+        {
+          "id": "lab-notebook-pack",
+          "label": "Lab Notebook Pack",
+          "description": "Structured docs to log every trial and reagent."
+        },
+        {
+          "id": "ethics-brief",
+          "label": "Ethics Brief",
+          "description": "Compliance checklist with outreach messaging."
+        }
+      ],
+      "levels": [
+        {
+          "id": "biotech-lab-1",
+          "title": "Level 1 — Hypothesis Deck",
+          "summary": "Write the problem, outcome, and validation signals.",
+          "objective": "Frame the hypothesis with measurable checkpoints.",
+          "xp": 130,
+          "challengeType": "quiz",
+          "npcHints": [
+            "Pair each assumption with a validation route.",
+            "Note the safety level required before lab entry."
+          ],
+          "resources": [
+            { "href": "/updates/biotech-notes", "title": "Hypothesis Template", "sub": "Ready-to-clone doc." },
+            { "href": "/industry/biotech", "title": "Use Case Gallery", "sub": "Successful experiment formats." }
+          ]
+        },
+        {
+          "id": "biotech-lab-2",
+          "title": "Level 2 — Lab Orchestration",
+          "summary": "Schedule equipment, crew, and reagent logistics.",
+          "objective": "Build a timeline with safety and calibration tasks.",
+          "xp": 210,
+          "challengeType": "drag-drop",
+          "npcHints": [
+            "Reserve sterilization time between runs.",
+            "Attach procurement notes for sensitive materials."
+          ],
+          "resources": [
+            { "href": "https://opentrons.com", "title": "Automation Guide", "sub": "Steps to offload pipetting." },
+            { "href": "/updates/biotech-safety", "title": "Safety SOP", "sub": "Checklist for lab operations." }
+          ]
+        },
+        {
+          "id": "biotech-lab-3",
+          "title": "Level 3 — Publish Sprint",
+          "summary": "Compose the narrative and partner outreach deck.",
+          "objective": "Summarize findings with action invites.",
+          "xp": 270,
+          "challengeType": "sandbox",
+          "npcHints": [
+            "Highlight leading indicators before final results.",
+            "Offer collaboration paths for potential co-founders."
+          ],
+          "resources": [
+            { "href": "/updates/biotech-launch", "title": "Report Template", "sub": "Slide deck sample." },
+            { "href": "/learning-hub", "title": "Storytelling Module", "sub": "Video on scientific narratives." }
+          ]
+        }
+      ]
+    }
+  ],
   "interactive": {
     "heading": "Interactive Playbook Explorer",
     "description": "Pick a playbook, follow three quick moves, and launch the matching resources. Each workflow is scoped for a one-week sprint.",

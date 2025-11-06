@@ -10,6 +10,37 @@ export interface InteractivePlaybook {
   resources: LinkCard[];
 }
 
+export type TrainingChallengeType =
+  | "decision-tree"
+  | "drag-drop"
+  | "quiz"
+  | "sandbox";
+
+export interface TrainingGameLevel {
+  id: string;
+  title: string;
+  summary: string;
+  objective: string;
+  xp: number;
+  challengeType: TrainingChallengeType;
+  npcHints: string[];
+  resources: LinkCard[];
+}
+
+export interface TrainingGameReward {
+  id: string;
+  label: string;
+  description: string;
+}
+
+export interface TrainingGame {
+  playbookId: string;
+  storyline: string;
+  bossChallenge: string;
+  rewards: TrainingGameReward[];
+  levels: TrainingGameLevel[];
+}
+
 export interface IndustryOverview {
   title: string;
   intro: string;
@@ -41,4 +72,5 @@ export interface IndustryContent {
   };
   details: Record<string, IndustryDetail>;
   learningHub: LearningHubContent;
+  trainingGames: TrainingGame[];
 }

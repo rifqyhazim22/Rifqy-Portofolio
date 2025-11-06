@@ -41,6 +41,209 @@
       }
     ]
   },
+  "trainingGames": [
+    {
+      "playbookId": "ai-workbench",
+      "storyline": "Bangun studio agent yang punya basecamp sendiri. Kamu memulai sebagai arsitek yang diminta menyatukan planner, researcher, dan writer agar siap menerima brief apa pun.",
+      "bossChallenge": "Merancang orkestrasi agent end-to-end yang sanggup memproses brief konten panjang dengan evaluasi otomatis.",
+      "rewards": [
+        {
+          "id": "ai-blueprint-kit",
+          "label": "Blueprint Orkestrasi",
+          "description": "Checklist dan sequence untuk briefing agent multi-peran."
+        },
+        {
+          "id": "eval-playset",
+          "label": "Set Evaluasi",
+          "description": "Rubric JSON + prompt evaluasi untuk menjaga kualitas."
+        }
+      ],
+      "levels": [
+        {
+          "id": "ai-workbench-1",
+          "title": "Level 1 — Warm-up Brief",
+          "summary": "Kenali persona dan batasan privasi sebelum agent aktif.",
+          "objective": "Menyusun intent canvas dan mapping persona.",
+          "xp": 120,
+          "challengeType": "drag-drop",
+          "npcHints": [
+            "Seret persona ke slot intent agar guardrail relevan.",
+            "Gunakan catatan privasi untuk menentukan data yang aman."
+          ],
+          "resources": [
+            { "href": "/updates/agent-eval", "title": "Canvas Intent", "sub": "Worksheet persona & batasan." },
+            { "href": "/industry/ai", "title": "Guideline Guardrail", "sub": "Contoh aturan tone & privasi." }
+          ]
+        },
+        {
+          "id": "ai-workbench-2",
+          "title": "Level 2 — Graph Architect",
+          "summary": "Susun node agent dengan memori singkat agar kolaborasi lancar.",
+          "objective": "Mendesain alur planner → researcher → synthesizer.",
+          "xp": 180,
+          "challengeType": "decision-tree",
+          "npcHints": [
+            "Pastikan planner mengirim ringkasan batas waktu ke researcher.",
+            "Tambahkan checkpoint evaluasi sebelum output final."
+          ],
+          "resources": [
+            { "href": "https://github.com/rifqyhazim22", "title": "Template Graph", "sub": "Starter agent flow." },
+            { "href": "/updates/ai-web", "title": "Contoh Orkestrasi", "sub": "Studi kasus implementasi." }
+          ]
+        },
+        {
+          "id": "ai-workbench-3",
+          "title": "Level 3 — Eval Sprint",
+          "summary": "Latih agent untuk menilai jawabannya sendiri sebelum dikirim.",
+          "objective": "Mengaktifkan rubric otomatis dan fallback manual.",
+          "xp": 260,
+          "challengeType": "quiz",
+          "npcHints": [
+            "Pilih pola evaluasi yang sesuai gaya brand.",
+            "Sediakan jalur eskalasi ke manusia jika skor turun."
+          ],
+          "resources": [
+            { "href": "/updates/prompt-engineering", "title": "Prompt Evaluator", "sub": "Contoh scoring rubric." },
+            { "href": "/learning-hub", "title": "Modul Guardrail", "sub": "Video pendek 5 menit." }
+          ]
+        }
+      ]
+    },
+    {
+      "playbookId": "crypto-hub",
+      "storyline": "Mengatur kota kecil yang ingin membangun DAO komunitas. Kamu harus memastikan tokenomics, governance, dan automasi komunitas berjalan selaras.",
+      "bossChallenge": "Meluncurkan proposal voting lengkap dengan token utility dan alur notifikasi otomatis.",
+      "rewards": [
+        {
+          "id": "token-design-kit",
+          "label": "Token Design Kit",
+          "description": "Spreadsheet + kalkulator untuk model distribusi token."
+        },
+        {
+          "id": "governance-ops",
+          "label": "Governance Ops Pack",
+          "description": "Template proposal + workflow automasi komunitas."
+        }
+      ],
+      "levels": [
+        {
+          "id": "crypto-hub-1",
+          "title": "Level 1 — Utility Forge",
+          "summary": "Rancang kegunaan token agar komunitas merasa terlibat.",
+          "objective": "Menentukan utility utama, peran anggota, dan reward.",
+          "xp": 140,
+          "challengeType": "decision-tree",
+          "npcHints": [
+            "Jaga keseimbangan antara reward dan tanggung jawab anggota.",
+            "Gunakan kartu tujuan agar token punya fungsi yang jelas."
+          ],
+          "resources": [
+            { "href": "/updates/token-brief", "title": "Utility Checklist", "sub": "Daftar pertanyaan penting." },
+            { "href": "/industry/crypto", "title": "Case Token Unggulan", "sub": "Rangkuman studi kasus." }
+          ]
+        },
+        {
+          "id": "crypto-hub-2",
+          "title": "Level 2 — Treasury Run",
+          "summary": "Simulasikan voting dan distribusi dana untuk misi komunitas.",
+          "objective": "Membuat alur snapshot vote dan automasi pelaporan.",
+          "xp": 200,
+          "challengeType": "drag-drop",
+          "npcHints": [
+            "Pastikan jalur notifikasi Telegram aktif di akhir alur.",
+            "Gunakan rule untuk mencegah spam proposal."
+          ],
+          "resources": [
+            { "href": "https://mirror.xyz", "title": "Template Proposal", "sub": "Struktur pitch DAO." },
+            { "href": "/updates/crypto-dashboard", "title": "Dashboard Treasury", "sub": "Contoh tampilan monitoring." }
+          ]
+        },
+        {
+          "id": "crypto-hub-3",
+          "title": "Level 3 — Community Pulse",
+          "summary": "Satukan data partisipasi dan feedback agar DAO tetap sehat.",
+          "objective": "Membangun sistem reputasi dan alert komunitas.",
+          "xp": 250,
+          "challengeType": "quiz",
+          "npcHints": [
+            "Skor reputasi harus memberi rasa adil bagi kontributor lama.",
+            "Segmentasikan alert berdasarkan jenis kontribusi."
+          ],
+          "resources": [
+            { "href": "/updates/crypto-signal", "title": "Playbook Alert", "sub": "Kumpulan automasi sinyal." },
+            { "href": "/learning-hub", "title": "Sesi Governance", "sub": "Video modul lanjutan." }
+          ]
+        }
+      ]
+    },
+    {
+      "playbookId": "biotech-lab",
+      "storyline": "Memimpin tim lab kolaboratif yang ingin memvalidasi biomaterial baru. Kamu mengatur eksperimen, dokumentasi, dan komunikasi etika.",
+      "bossChallenge": "Memublikasikan laporan eksperimen lengkap yang siap dibagi ke partner riset.",
+      "rewards": [
+        {
+          "id": "lab-notebook-pack",
+          "label": "Lab Notebook Pack",
+          "description": "Template dokumentasi siap track untuk tiap eksperimen."
+        },
+        {
+          "id": "ethics-brief",
+          "label": "Ethics Brief",
+          "description": "Checklist perizinan dan komunikasi risiko."
+        }
+      ],
+      "levels": [
+        {
+          "id": "biotech-lab-1",
+          "title": "Level 1 — Hypothesis Deck",
+          "summary": "Merumuskan hipotesis dan indikator keberhasilan eksperimen.",
+          "objective": "Menulis problem statement dan outcome terukur.",
+          "xp": 130,
+          "challengeType": "quiz",
+          "npcHints": [
+            "Gunakan format SMART agar outcome jelas.",
+            "Pastikan semua asumsi punya rencana verifikasi."
+          ],
+          "resources": [
+            { "href": "/updates/biotech-notes", "title": "Template Hipotesis", "sub": "Doc Notion siap pakai." },
+            { "href": "/industry/biotech", "title": "Contoh Use Case", "sub": "Kumpulan eksperimen sukses." }
+          ]
+        },
+        {
+          "id": "biotech-lab-2",
+          "title": "Level 2 — Lab Orchestration",
+          "summary": "Atur jadwal penggunaan peralatan dan logistik bahan.",
+          "objective": "Membangun timeline eksperimen dan checklist safety.",
+          "xp": 210,
+          "challengeType": "drag-drop",
+          "npcHints": [
+            "Pisahkan peralatan steril dan non-steril untuk efisiensi.",
+            "Sisipkan reminder kalibrasi alat sebelum sesi dimulai."
+          ],
+          "resources": [
+            { "href": "https://opentrons.com", "title": "Automation Guide", "sub": "Langkah otomasi pipetting." },
+            { "href": "/updates/biotech-safety", "title": "Safety SOP", "sub": "Checklist mitigasi risiko." }
+          ]
+        },
+        {
+          "id": "biotech-lab-3",
+          "title": "Level 3 — Publish Sprint",
+          "summary": "Rangkai data hasil eksperimen menjadi laporan menarik.",
+          "objective": "Menyusun deck hasil + rencana kolaborasi lanjut.",
+          "xp": 270,
+          "challengeType": "sandbox",
+          "npcHints": [
+            "Gunakan grafis sederhana agar reviewer cepat paham.",
+            "Tambahkan call-to-action untuk partner potensial."
+          ],
+          "resources": [
+            { "href": "/updates/biotech-launch", "title": "Template Laporan", "sub": "Slide siap edit." },
+            { "href": "/learning-hub", "title": "Modul Storytelling", "sub": "Video storytelling ilmiah." }
+          ]
+        }
+      ]
+    }
+  ],
   "interactive": {
     "heading": "Eksplorasi Playbook Interaktif",
     "description": "Pilih satu playbook, cek langkah kilat, lalu jalankan resource yang relevan. Tiap langkah menjaga fokus supaya progress bisa diukur mingguan.",

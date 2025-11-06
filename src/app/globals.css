@@ -4542,6 +4542,455 @@ section {
   border: 1px solid rgba(122, 162, 255, 0.2);
 }
 
+.playbooks__hero-meta {
+  margin-top: 16px;
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+  color: color-mix(in oklab, var(--muted) 60%, var(--fg));
+}
+
+.playbooks__hero-actions {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.playbooks__summary {
+  margin: 24px 0;
+  padding: 24px;
+  border-radius: 28px;
+  background: rgba(10, 18, 36, 0.75);
+  border: 1px solid rgba(122, 162, 255, 0.32);
+}
+
+.playbooks__summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 18px;
+}
+
+.playbooks__summary-label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: color-mix(in oklab, var(--muted) 70%, var(--fg));
+}
+
+.playbooks__summary-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--fg);
+}
+
+.playbooks__map {
+  margin: 18px 0;
+}
+
+.playbooks__map-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.playbooks__map-card {
+  position: relative;
+  padding: 22px 24px;
+  border-radius: 28px;
+  background: rgba(9, 14, 28, 0.85);
+  border: 1px solid rgba(122, 162, 255, 0.28);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform var(--transition), border-color var(--transition);
+}
+
+.playbooks__map-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(122, 162, 255, 0.55);
+}
+
+.playbooks__map-card--active {
+  border-color: rgba(122, 162, 255, 0.65);
+  background: rgba(12, 22, 42, 0.92);
+}
+
+.playbooks__map-card--completed {
+  border-color: rgba(120, 255, 189, 0.65);
+  box-shadow: 0 18px 32px rgba(20, 36, 26, 0.4);
+}
+
+.playbooks__map-card--locked {
+  filter: grayscale(0.3);
+  opacity: 0.82;
+}
+
+.playbooks__map-status {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: color-mix(in oklab, var(--accent) 70%, var(--fg));
+}
+
+.playbooks__map-title {
+  text-transform: capitalize;
+}
+
+.playbooks__map-story {
+  font-size: 15px;
+  color: color-mix(in oklab, var(--muted) 50%, var(--fg));
+}
+
+.playbooks__map-progress {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: color-mix(in oklab, var(--muted) 40%, var(--fg));
+}
+
+.playbooks__tabs {
+  margin: 28px 0 10px;
+  display: inline-flex;
+  gap: 12px;
+  background: rgba(10, 15, 30, 0.6);
+  padding: 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(122, 162, 255, 0.24);
+}
+
+.playbooks__tab {
+  background: transparent;
+  border: none;
+  color: color-mix(in oklab, var(--muted) 50%, var(--fg));
+  padding: 10px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background var(--transition), color var(--transition);
+}
+
+.playbooks__tab--active {
+  background: rgba(122, 162, 255, 0.18);
+  color: var(--fg);
+}
+
+.playbooks__tabcontent {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.playbooks__missions {
+  display: grid;
+  gap: 20px;
+}
+
+.playbooks__mission-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: rgba(10, 20, 42, 0.9);
+  padding: 24px;
+  border-radius: 30px;
+  border: 1px solid rgba(122, 162, 255, 0.28);
+  box-shadow: 0 18px 36px rgba(8, 12, 24, 0.36);
+}
+
+.playbooks__mission-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.playbooks__mission-levels {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.playbooks__mission-level {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 20px;
+  background: rgba(7, 12, 22, 0.68);
+  border: 1px solid transparent;
+  transition: border-color var(--transition), transform var(--transition);
+}
+
+.playbooks__mission-level--active {
+  border-color: rgba(122, 162, 255, 0.45);
+  transform: translateY(-2px);
+}
+
+.playbooks__mission-level--done {
+  border-color: rgba(120, 255, 189, 0.55);
+}
+
+.playbooks__mission-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  color: color-mix(in oklab, var(--muted) 50%, var(--fg));
+}
+
+.playbooks__mission-details {
+  margin-top: 12px;
+  font-size: 14px;
+  color: color-mix(in oklab, var(--muted) 60%, var(--fg));
+}
+
+.playbooks__mission-details summary {
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.playbooks__mission-details ul {
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.playbooks__rewards {
+  display: grid;
+  gap: 18px;
+}
+
+.playbooks__reward-card {
+  padding: 22px 24px;
+  border-radius: 28px;
+  background: rgba(8, 16, 30, 0.9);
+  border: 1px solid rgba(122, 162, 255, 0.24);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.playbooks__reward-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.playbooks__reward-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.playbooks__reward-item {
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: rgba(7, 12, 22, 0.68);
+  border: 1px solid rgba(122, 162, 255, 0.2);
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.playbooks__reward-item--claimed {
+  border-color: rgba(120, 255, 189, 0.6);
+  background: rgba(24, 44, 38, 0.85);
+}
+
+.playbooks__learning--tracks {
+  margin: 32px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.playbooks-arena {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: 48px;
+}
+
+.playbooks-arena__hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 22px;
+  align-items: center;
+  padding: 24px 28px;
+  border-radius: 32px;
+  background: linear-gradient(120deg, rgba(10, 32, 64, 0.82), rgba(12, 18, 36, 0.9));
+  border: 1px solid rgba(122, 162, 255, 0.28);
+}
+
+.playbooks-arena__stats {
+  display: flex;
+  gap: 18px;
+}
+
+.playbooks-arena__stats div {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: color-mix(in oklab, var(--muted) 50%, var(--fg));
+}
+
+.playbooks-arena__stats strong {
+  font-size: 24px;
+  color: var(--fg);
+}
+
+.playbooks-arena__grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.playbooks-arena__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px;
+  border-radius: 28px;
+  background: rgba(8, 16, 30, 0.88);
+  border: 1px solid rgba(122, 162, 255, 0.24);
+}
+
+.playbooks-arena__boss,
+.playbooks-arena__rewards {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.playbooks-arena__rewards ul {
+  list-style: disc;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.playbooks-arena__claim {
+  width: fit-content;
+}
+
+.playbooks-arena__back {
+  width: fit-content;
+}
+
+.playbooks-arena__error {
+  font-size: 13px;
+  color: rgba(255, 150, 150, 0.85);
+}
+
+.playbooks-arena__levels {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.playbooks-arena__level {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(10, 20, 36, 0.72);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color var(--transition), transform var(--transition);
+}
+
+.playbooks-arena__level:hover {
+  transform: translateY(-1px);
+}
+
+.playbooks-arena__level--active {
+  border-color: rgba(122, 162, 255, 0.45);
+}
+
+.playbooks-arena__level--done {
+  border-color: rgba(120, 255, 189, 0.55);
+  background: rgba(24, 44, 36, 0.72);
+}
+
+.playbooks-arena__level-title {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.playbooks-arena__level-meta {
+  font-size: 13px;
+  color: color-mix(in oklab, var(--muted) 50%, var(--fg));
+  text-transform: capitalize;
+}
+
+.playbooks-arena__level-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 24px;
+  background: rgba(7, 12, 22, 0.68);
+  border: 1px solid rgba(122, 162, 255, 0.22);
+}
+
+.playbooks-arena__hints ul {
+  list-style: disc;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.playbooks-arena__resources {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.playbooks-arena__resource-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.playbooks-arena__complete {
+  align-self: flex-start;
+}
+
+.playbooks-arena__coach-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.playbooks-arena__coach-note {
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(7, 12, 22, 0.6);
+  border: 1px solid rgba(122, 162, 255, 0.22);
+}
+
+@media (max-width: 720px) {
+  .playbooks__hero-meta {
+    flex-direction: column;
+  }
+
+  .playbooks-arena__hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .playbooks-arena__stats {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
 @media (max-width: 960px) {
   .grid.grid-3 {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

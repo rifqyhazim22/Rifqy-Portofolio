@@ -44,6 +44,7 @@ export interface Dictionary {
   industryInteractive: IndustryContent["interactive"];
   industryDetails: IndustryContent["details"];
   learningHub: IndustryContent["learningHub"];
+  trainingGames: IndustryContent["trainingGames"];
   works: {
     title: string;
     intro: string;
@@ -150,6 +151,7 @@ const idDictionary: Dictionary = {
     industryInteractive: industryCache.id.interactive,
     industryDetails: industryCache.id.details,
     learningHub: industryCache.id.learningHub,
+    trainingGames: industryCache.id.trainingGames,
 
     works: {
       title: "Karya",
@@ -356,6 +358,7 @@ const enDictionary: Dictionary = {
     industryInteractive: industryCache.en.interactive,
     industryDetails: industryCache.en.details,
     learningHub: industryCache.en.learningHub,
+    trainingGames: industryCache.en.trainingGames,
     works: {
       title: "Works",
       intro: "I lean on GPT-5 Codex, ChatGPT, and prompt + generative toolchains to build agents, automation, and immersive products. Every delivery is woven from empathy, system mapping, evaluation, and privacy-first workflows.",
