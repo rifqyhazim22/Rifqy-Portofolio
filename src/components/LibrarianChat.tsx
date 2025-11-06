@@ -123,6 +123,24 @@ export default function LibrarianChat({ initialLanguage }: LibrarianChatProps) {
   };
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const resetIdentity = () => {
+      clearStoredIdentity();
+    };
+
+    resetIdentity();
+
+    window.addEventListener("beforeunload", resetIdentity);
+    window.addEventListener("pagehide", resetIdentity);
+
+    return () => {
+      window.removeEventListener("beforeunload", resetIdentity);
+      window.removeEventListener("pagehide", resetIdentity);
+    };
+  }, []);
+
+  useEffect(() => {
     let cancelled = false;
 
     const bootstrapIdentity = async () => {

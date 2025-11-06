@@ -121,6 +121,29 @@ export default function AgentChat() {
   };
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const resetSession = () => {
+      try {
+        window.sessionStorage.removeItem(STORAGE_KEY);
+      } catch {
+        // ignore session storage errors
+      }
+      clearStoredIdentity();
+    };
+
+    resetSession();
+
+    window.addEventListener("beforeunload", resetSession);
+    window.addEventListener("pagehide", resetSession);
+
+    return () => {
+      window.removeEventListener("beforeunload", resetSession);
+      window.removeEventListener("pagehide", resetSession);
+    };
+  }, []);
+
+  useEffect(() => {
     let cancelled = false;
 
     const bootstrapIdentity = async () => {
