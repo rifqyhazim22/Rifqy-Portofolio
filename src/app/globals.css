@@ -1517,6 +1517,11 @@ body::before {
   transition: background var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
+.sitebar .wrap {
+  width: 100%;
+  max-width: 1248px;
+}
+
 :root[data-theme="light"] .sitebar .bar {
   background: color-mix(in oklab, var(--bg) 88%, #ffffff 12%);
   border-color: rgba(122, 162, 255, 0.28);
