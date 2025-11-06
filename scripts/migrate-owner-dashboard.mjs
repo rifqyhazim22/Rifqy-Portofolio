@@ -48,6 +48,14 @@ create table if not exists public.media_assets (
 create index if not exists media_assets_status_idx on public.media_assets (status);
 create index if not exists media_assets_type_idx on public.media_assets (type);
 
+alter table public.media_assets enable row level security;
+
+drop policy if exists "Media assets restricted" on public.media_assets;
+create policy "Media assets restricted"
+  on public.media_assets for all
+  using (false)
+  with check (false);
+
 create table if not exists public.automations (
   id uuid primary key default gen_random_uuid(),
   name text not null,
@@ -57,6 +65,14 @@ create table if not exists public.automations (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table public.automations enable row level security;
+
+drop policy if exists "Automations restricted" on public.automations;
+create policy "Automations restricted"
+  on public.automations for all
+  using (false)
+  with check (false);
 
 create table if not exists public.automation_runs (
   id uuid primary key default gen_random_uuid(),
@@ -70,6 +86,14 @@ create table if not exists public.automation_runs (
 );
 
 create index if not exists automation_runs_automation_id_idx on public.automation_runs (automation_id);
+
+alter table public.automation_runs enable row level security;
+
+drop policy if exists "Automation runs restricted" on public.automation_runs;
+create policy "Automation runs restricted"
+  on public.automation_runs for all
+  using (false)
+  with check (false);
 
 create table if not exists public.ai_agents (
   id uuid primary key default gen_random_uuid(),
@@ -117,9 +141,20 @@ create table if not exists public.ai_agent_versions (
 
 create index if not exists ai_agent_versions_agent_id_idx on public.ai_agent_versions (agent_id);
 
+alter table public.ai_agent_versions enable row level security;
+
+drop policy if exists "AI agent versions restricted" on public.ai_agent_versions;
+create policy "AI agent versions restricted"
+  on public.ai_agent_versions for all
+  using (false)
+  with check (false);
+
 -- updated_at triggers
 create or replace function public.ensure_touch_updated_at()
-returns void as $$
+returns void
+language plpgsql
+set search_path = public
+as $$
 declare
   has_fn boolean;
 begin
@@ -135,7 +170,7 @@ begin
     raise exception 'Function touch_updated_at is required';
   end if;
 end;
-$$ language plpgsql;
+$$;
 
 select public.ensure_touch_updated_at();
 
