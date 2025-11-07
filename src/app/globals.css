@@ -4584,225 +4584,126 @@ section {
   color: var(--fg);
 }
 
-.playbooks__map {
-  margin: 18px 0;
-}
-
-.playbooks__map-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 18px;
-}
-
-.playbooks__map-card {
-  position: relative;
-  padding: 22px 24px;
-  border-radius: 28px;
-  background: rgba(9, 14, 28, 0.85);
-  border: 1px solid rgba(122, 162, 255, 0.28);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  transition: transform var(--transition), border-color var(--transition);
-}
-
-.playbooks__map-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(122, 162, 255, 0.55);
-}
-
-.playbooks__map-card--active {
-  border-color: rgba(122, 162, 255, 0.65);
-  background: rgba(12, 22, 42, 0.92);
-}
-
-.playbooks__map-card--completed {
-  border-color: rgba(120, 255, 189, 0.65);
-  box-shadow: 0 18px 32px rgba(20, 36, 26, 0.4);
-}
-
-.playbooks__map-card--locked {
-  filter: grayscale(0.3);
-  opacity: 0.82;
-}
-
-.playbooks__map-status {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: color-mix(in oklab, var(--accent) 70%, var(--fg));
-}
-
-.playbooks__map-title {
-  text-transform: capitalize;
-}
-
-.playbooks__map-story {
-  font-size: 15px;
-  color: color-mix(in oklab, var(--muted) 50%, var(--fg));
-}
-
-.playbooks__map-progress {
-  margin-top: auto;
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  color: color-mix(in oklab, var(--muted) 40%, var(--fg));
-}
-
-.playbooks__tabs {
-  margin: 28px 0 10px;
-  display: inline-flex;
-  gap: 12px;
-  background: rgba(10, 15, 30, 0.6);
-  padding: 8px;
-  border-radius: 999px;
-  border: 1px solid rgba(122, 162, 255, 0.24);
-}
-
-.playbooks__tab {
-  background: transparent;
-  border: none;
-  color: color-mix(in oklab, var(--muted) 50%, var(--fg));
-  padding: 10px 18px;
-  border-radius: 999px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background var(--transition), color var(--transition);
-}
-
-.playbooks__tab--active {
-  background: rgba(122, 162, 255, 0.18);
-  color: var(--fg);
-}
-
-.playbooks__tabcontent {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-}
-
-.playbooks__missions {
-  display: grid;
-  gap: 20px;
-}
-
-.playbooks__mission-card {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  background: rgba(10, 20, 42, 0.9);
-  padding: 24px;
-  border-radius: 30px;
-  border: 1px solid rgba(122, 162, 255, 0.28);
-  box-shadow: 0 18px 36px rgba(8, 12, 24, 0.36);
-}
-
-.playbooks__mission-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.playbooks__mission-levels {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.playbooks__mission-level {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 14px 16px;
-  border-radius: 20px;
-  background: rgba(7, 12, 22, 0.68);
-  border: 1px solid transparent;
-  transition: border-color var(--transition), transform var(--transition);
-}
-
-.playbooks__mission-level--active {
-  border-color: rgba(122, 162, 255, 0.45);
-  transform: translateY(-2px);
-}
-
-.playbooks__mission-level--done {
-  border-color: rgba(120, 255, 189, 0.55);
-}
-
-.playbooks__mission-meta {
-  display: flex;
-  gap: 12px;
-  font-size: 13px;
-  color: color-mix(in oklab, var(--muted) 50%, var(--fg));
-}
-
-.playbooks__mission-details {
-  margin-top: 12px;
-  font-size: 14px;
-  color: color-mix(in oklab, var(--muted) 60%, var(--fg));
-}
-
-.playbooks__mission-details summary {
-  cursor: pointer;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.playbooks__mission-details ul {
-  padding-left: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.playbooks__rewards {
-  display: grid;
-  gap: 18px;
-}
-
-.playbooks__reward-card {
-  padding: 22px 24px;
-  border-radius: 28px;
-  background: rgba(8, 16, 30, 0.9);
-  border: 1px solid rgba(122, 162, 255, 0.24);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.playbooks__reward-header {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.playbooks__reward-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.playbooks__reward-item {
-  padding: 12px 14px;
-  border-radius: 18px;
-  background: rgba(7, 12, 22, 0.68);
-  border: 1px solid rgba(122, 162, 255, 0.2);
-  transition: border-color var(--transition), background var(--transition);
-}
-
-.playbooks__reward-item--claimed {
-  border-color: rgba(120, 255, 189, 0.6);
-  background: rgba(24, 44, 38, 0.85);
-}
-
 .playbooks__learning--tracks {
   margin: 32px 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+.playbooks__game-panels {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 30px 0;
+}
+
+.playbooks__game-panel {
+  padding: 28px;
+  border-radius: 32px;
+  background: rgba(9, 16, 32, 0.92);
+  border: 1px solid rgba(122, 162, 255, 0.3);
+  box-shadow: 0 28px 48px rgba(5, 10, 20, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.playbooks__game-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.playbooks__game-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(122, 162, 255, 0.15);
+}
+
+.playbooks__game-status--locked {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.playbooks__game-status--active {
+  color: var(--fg);
+}
+
+.playbooks__game-status--completed {
+  color: rgba(120, 255, 189, 0.9);
+  background: rgba(120, 255, 189, 0.15);
+}
+
+.playbooks__game-metrics {
+  display: flex;
+  gap: 12px;
+  font-size: 14px;
+  color: color-mix(in oklab, var(--muted) 50%, var(--fg));
+}
+
+.playbooks__game-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.playbooks__game-boss,
+.playbooks__game-rewards {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.playbooks__game-reward-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.playbooks__game-reward {
+  padding: 10px 12px;
+  border-radius: 18px;
+  background: rgba(7, 12, 22, 0.68);
+  border: 1px solid rgba(122, 162, 255, 0.2);
+  flex: 1 1 220px;
+}
+
+.playbooks__game-levels {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.playbooks__game-level {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 22px;
+  background: rgba(7, 12, 22, 0.72);
+  border: 1px solid rgba(122, 162, 255, 0.18);
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.playbooks__game-level--done {
+  border-color: rgba(120, 255, 189, 0.55);
+  background: rgba(24, 44, 36, 0.78);
+}
+
+.playbooks__game-level-meta {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  font-size: 13px;
+  color: color-mix(in oklab, var(--muted) 50%, var(--fg));
+  text-transform: capitalize;
 }
 
 .playbooks-arena {
@@ -4840,12 +4741,6 @@ section {
   color: var(--fg);
 }
 
-.playbooks-arena__grid {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-}
-
 .playbooks-arena__panel {
   display: flex;
   flex-direction: column;
@@ -4854,6 +4749,23 @@ section {
   border-radius: 28px;
   background: rgba(8, 16, 30, 0.88);
   border: 1px solid rgba(122, 162, 255, 0.24);
+}
+
+.playbooks-arena__panel--full {
+  gap: 24px;
+}
+
+.playbooks-arena__block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.playbooks-arena__block:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 .playbooks-arena__boss,
@@ -4869,6 +4781,12 @@ section {
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+.playbooks-arena__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .playbooks-arena__claim {

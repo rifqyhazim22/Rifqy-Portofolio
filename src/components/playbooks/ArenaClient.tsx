@@ -207,8 +207,8 @@ export function ArenaClient({ game }: ArenaClientProps) {
         </div>
       </header>
 
-      <div className="playbooks-arena__grid">
-        <section className="card playbooks-arena__panel">
+      <section className="card playbooks-arena__panel playbooks-arena__panel--full">
+        <div className="playbooks-arena__block">
           <h2 className="k">Brief Story</h2>
           <p className="sub">{game.storyline}</p>
           <div className="playbooks-arena__boss">
@@ -224,22 +224,24 @@ export function ArenaClient({ game }: ArenaClientProps) {
                 </li>
               ))}
             </ul>
-            <button
-              type="button"
-              className="pill playbooks-arena__claim"
-              onClick={handleClaimRewards}
-              disabled={status !== "completed"}
-            >
-              Klaim Reward
-            </button>
+            <div className="playbooks-arena__actions">
+              <button
+                type="button"
+                className="pill playbooks-arena__claim"
+                onClick={handleClaimRewards}
+                disabled={status !== "completed"}
+              >
+                Klaim Reward
+              </button>
+              <BaseLink href="/playbooks" className="pill playbooks-arena__back">
+                ← Kembali ke Game Hub
+              </BaseLink>
+            </div>
+            {errorMessage ? <p className="playbooks-arena__error">{errorMessage}</p> : null}
           </div>
-          <BaseLink href="/playbooks" className="pill playbooks-arena__back">
-            ← Kembali ke Game Hub
-          </BaseLink>
-          {errorMessage ? <p className="playbooks-arena__error">{errorMessage}</p> : null}
-        </section>
+        </div>
 
-        <section className="card playbooks-arena__panel">
+        <div className="playbooks-arena__block">
           <h2 className="k">Level & Progress</h2>
           <div className="playbooks-arena__levels">
             {game.levels.map((level) => {
@@ -298,9 +300,9 @@ export function ArenaClient({ game }: ArenaClientProps) {
               </button>
             </div>
           ) : null}
-        </section>
+        </div>
 
-        <section className="card playbooks-arena__panel">
+        <div className="playbooks-arena__block">
           <h2 className="k">AI Coach</h2>
           <p className="sub">
             Gunakan agent untuk minta penjelasan, contoh, atau simulasi baru tanpa keluar dari arena.
@@ -341,8 +343,8 @@ export function ArenaClient({ game }: ArenaClientProps) {
           <BaseLink className="pill" href="/ai-agent">
             Buka Halaman Agent →
           </BaseLink>
-        </section>
-      </div>
+        </div>
+      </section>
     </div>
   );
 }

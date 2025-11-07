@@ -10,13 +10,9 @@ import type {
   TrainingGame,
 } from "@/content/industry/types";
 import type { NavLabelKey } from "@/data/navLinks";
-import GameWorldMap from "./GameWorldMap";
-import MissionDeck from "./MissionDeck";
+import GamePanel from "./GamePanel";
 import ProgressSummary from "./ProgressSummary";
-import RewardsShelf from "./RewardsShelf";
 import type { GameProgressSnapshot, MissionStatus } from "./types";
-
-type TabKey = "overview" | "practice" | "rewards";
 
 interface PlaybooksExperienceProps {
   overview: IndustryOverview;
@@ -48,7 +44,6 @@ export function PlaybooksExperience({
   nextStepsHeading,
   navLabels,
 }: PlaybooksExperienceProps) {
-  const [activeTab, setActiveTab] = useState<TabKey>("overview");
   const [progress, setProgress] = useState<GameProgressSnapshot[]>(() =>
     trainingGames.map((game, index) => ({
       playbookId: game.playbookId,
@@ -134,68 +129,6 @@ export function PlaybooksExperience({
     [trainingGames],
   );
 
-  const renderTabContent = () => {
-    if (activeTab === "practice") {
-      return <MissionDeck games={trainingGames} progress={progress} />;
-    }
-
-    if (activeTab === "rewards") {
-      return <RewardsShelf games={trainingGames} progress={progress} />;
-    }
-
-    return (
-      <>
-        <section className="playbooks__grid" data-animate>
-          <div className="grid grid-3">
-            {overview.playbooks.map((item) => (
-              <BaseLink key={item.href} className="card playbooks__card" href={item.href}>
-                <div className="k">{item.title}</div>
-                <div className="sub">{item.sub}</div>
-              </BaseLink>
-            ))}
-          </div>
-        </section>
-
-        <section className="playbooks__interactive" data-animate>
-          <h2 className="h2">{interactive.heading}</h2>
-          <p className="sub">{interactive.description}</p>
-          <div className="grid grid-3">
-            {interactive.playbooks.map((playbook) => (
-              <div key={playbook.id} className="card playbooks__interactive-card">
-                <div className="playbooks__tag">{playbook.tags.join(" · ")}</div>
-                <div className="k">{playbook.title}</div>
-                <p className="sub">{playbook.summary}</p>
-                <div className="playbooks__wins">
-                  {playbook.wins.map((win) => (
-                    <span key={win}>{win}</span>
-                  ))}
-                </div>
-                <details className="playbooks__details">
-                  <summary>Langkah kilat</summary>
-                  <div className="playbooks__steps">
-                    {playbook.steps.map((step) => (
-                      <div key={step.title} className="playbooks__step">
-                        <strong>{step.title}</strong>
-                        <p className="sub">{step.body}</p>
-                      </div>
-                    ))}
-                  </div>
-                </details>
-                <div className="playbooks__resources">
-                  {playbook.resources.map((resource) => (
-                    <BaseLink key={resource.href} href={resource.href} className="pill">
-                      {resource.title}
-                    </BaseLink>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      </>
-    );
-  };
-
   return (
     <div className="playbooks">
       <section className="playbooks__hero" data-animate>
@@ -222,26 +155,63 @@ export function PlaybooksExperience({
 
       <ProgressSummary games={trainingGames} progress={progress} />
 
-      <GameWorldMap games={trainingGames} progress={progress} />
+      <section className="playbooks__grid" data-animate>
+        <div className="grid grid-3">
+          {overview.playbooks.map((item) => (
+            <BaseLink key={item.href} className="card playbooks__card" href={item.href}>
+              <div className="k">{item.title}</div>
+              <div className="sub">{item.sub}</div>
+            </BaseLink>
+          ))}
+        </div>
+      </section>
 
-      <div className="playbooks__tabs" data-animate>
-        {[
-          { key: "overview", label: "Overview" },
-          { key: "practice", label: "Practice" },
-          { key: "rewards", label: "Rewards" },
-        ].map((tab) => (
-          <button
-            key={tab.key}
-            type="button"
-            onClick={() => setActiveTab(tab.key as TabKey)}
-            className={`playbooks__tab${activeTab === tab.key ? " playbooks__tab--active" : ""}`}
-          >
-            {tab.label}
-          </button>
+      <section className="playbooks__interactive" data-animate>
+        <h2 className="h2">{interactive.heading}</h2>
+        <p className="sub">{interactive.description}</p>
+        <div className="grid grid-3">
+          {interactive.playbooks.map((playbook) => (
+            <div key={playbook.id} className="card playbooks__interactive-card">
+              <div className="playbooks__tag">{playbook.tags.join(" · ")}</div>
+              <div className="k">{playbook.title}</div>
+              <p className="sub">{playbook.summary}</p>
+              <div className="playbooks__wins">
+                {playbook.wins.map((win) => (
+                  <span key={win}>{win}</span>
+                ))}
+              </div>
+              <details className="playbooks__details">
+                <summary>Langkah kilat</summary>
+                <div className="playbooks__steps">
+                  {playbook.steps.map((step) => (
+                    <div key={step.title} className="playbooks__step">
+                      <strong>{step.title}</strong>
+                      <p className="sub">{step.body}</p>
+                    </div>
+                  ))}
+                </div>
+              </details>
+              <div className="playbooks__resources">
+                {playbook.resources.map((resource) => (
+                  <BaseLink key={resource.href} href={resource.href} className="pill">
+                    {resource.title}
+                  </BaseLink>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div className="playbooks__game-panels">
+        {trainingGames.map((game) => (
+          <GamePanel
+            key={game.playbookId}
+            game={game}
+            progress={progress.find((item) => item.playbookId === game.playbookId)}
+          />
         ))}
       </div>
-
-      <div className="playbooks__tabcontent">{renderTabContent()}</div>
 
       <section className="playbooks__learning" data-animate>
         <h2 className="h2">{overview.learningHeading}</h2>
