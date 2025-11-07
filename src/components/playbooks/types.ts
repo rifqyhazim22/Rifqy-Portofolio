@@ -9,6 +9,7 @@ export interface GameProgressSnapshot {
   streak: number;
   completedLevels: string[];
   claimedRewards: string[];
+  state?: Record<string, unknown>;
 }
 
 export type { TrainingGame, TrainingGameLevel };

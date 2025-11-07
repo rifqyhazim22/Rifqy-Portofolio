@@ -19,6 +19,7 @@ export function GamePanel({ game, progress }: GamePanelProps) {
   const streak = progress?.streak ?? 0;
   const status = progress?.status ?? "locked";
   const completedLevels = new Set(progress?.completedLevels ?? []);
+  const lives = (progress?.state as { lives?: number })?.lives;
 
   return (
     <div className="card playbooks__game-panel" data-animate>
@@ -34,6 +35,7 @@ export function GamePanel({ game, progress }: GamePanelProps) {
             XP {earnedXp}/{totalXp}
           </span>
           <span>Streak {streak}</span>
+          {typeof lives === "number" ? <span>Lives {lives}</span> : null}
         </div>
         <BaseLink className="pill" href={`/playbooks/${game.playbookId}/arena`}>
           Masuk Arena

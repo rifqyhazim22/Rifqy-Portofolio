@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import BaseLink from "@/components/BaseLink";
 import type { TrainingGame, TrainingGameLevel } from "@/content/industry/types";
+import MiniGameEngine from "./MiniGameEngine";
 import type { MissionStatus } from "./types";
 
 interface ProgressResponse {
@@ -12,6 +13,7 @@ interface ProgressResponse {
   streak: number;
   completedLevels: string[];
   claimedRewards: string[];
+  state?: Record<string, unknown> | null;
 }
 
 interface ArenaClientProps {
@@ -20,6 +22,17 @@ interface ArenaClientProps {
 
 type CoachAction = "hint" | "simulate" | "checklist";
 
+type ArenaProgressState = {
+  lives: number;
+  levelStates: Record<
+    string,
+    {
+      attempts: number;
+      lastOutcome: "success" | "fail" | null;
+    }
+  >;
+};
+
 export function ArenaClient({ game }: ArenaClientProps) {
   const [status, setStatus] = useState<MissionStatus>("active");
   const [xp, setXp] = useState(0);
@@ -27,6 +40,7 @@ export function ArenaClient({ game }: ArenaClientProps) {
   const [completedLevels, setCompletedLevels] = useState<string[]>([]);
   const [claimedRewards, setClaimedRewards] = useState<string[]>([]);
   const [activeLevelId, setActiveLevelId] = useState(() => game.levels[0]?.id ?? "");
+  const [gameState, setGameState] = useState<ArenaProgressState>({ lives: 3, levelStates: {} });
   const [cooldowns, setCooldowns] = useState<Record<CoachAction, number>>({
     hint: 0,
     simulate: 0,
@@ -64,6 +78,13 @@ export function ArenaClient({ game }: ArenaClientProps) {
         setStreak(payload.streak);
         setCompletedLevels(payload.completedLevels);
         setClaimedRewards(payload.claimedRewards);
+        if (payload.state && typeof payload.state === "object") {
+          setGameState((current) => ({
+            lives: Number((payload.state as any).lives) || current.lives,
+            levelStates:
+              ((payload.state as any).levelStates as ArenaProgressState["levelStates"]) ?? current.levelStates,
+          }));
+        }
 
         if (payload.completedLevels.length) {
           const lastLevel = payload.completedLevels[payload.completedLevels.length - 1];
@@ -114,19 +135,30 @@ export function ArenaClient({ game }: ArenaClientProps) {
     }
   };
 
-  const handleLevelComplete = (level: TrainingGameLevel) => {
+  const handleLevelComplete = (level: TrainingGameLevel, bonusXp = 0) => {
     if (completedLevels.includes(level.id)) {
       return;
     }
 
     const nextCompleted = [...completedLevels, level.id];
-    const nextXp = xp + level.xp;
+    const nextXp = xp + level.xp + bonusXp;
     const nextStreak = streak + 1;
     const nextStatus: MissionStatus = nextCompleted.length === game.levels.length ? "completed" : "active";
+    const nextGameState: ArenaProgressState = {
+      lives: gameState.lives,
+      levelStates: {
+        ...gameState.levelStates,
+        [level.id]: {
+          attempts: (gameState.levelStates[level.id]?.attempts ?? 0) + 1,
+          lastOutcome: "success",
+        },
+      },
+    };
 
     setCompletedLevels(nextCompleted);
     setXp(nextXp);
     setStreak(nextStreak);
+    setGameState(nextGameState);
     setStatus(nextStatus);
 
     const payload: ProgressResponse = {
@@ -136,6 +168,7 @@ export function ArenaClient({ game }: ArenaClientProps) {
       streak: nextStreak,
       completedLevels: nextCompleted,
       claimedRewards,
+      state: nextGameState,
     };
 
     void persistProgress(payload);
@@ -155,6 +188,41 @@ export function ArenaClient({ game }: ArenaClientProps) {
     });
 
     window.open(`/ai-agent?${query.toString()}`, "_blank");
+  };
+
+  const handleChallengeSuccess = (bonusXp = 0) => {
+    if (!activeLevel || completedLevels.includes(activeLevel.id)) {
+      return;
+    }
+    handleLevelComplete(activeLevel, bonusXp);
+  };
+
+  const handleChallengeFail = () => {
+    if (!activeLevel) return;
+    setGameState((current) => {
+      const nextState: ArenaProgressState = {
+        lives: Math.max(0, (current.lives ?? 3) - 1),
+        levelStates: {
+          ...current.levelStates,
+          [activeLevel.id]: {
+            attempts: (current.levelStates[activeLevel.id]?.attempts ?? 0) + 1,
+            lastOutcome: "fail",
+          },
+        },
+      };
+
+      void persistProgress({
+        playbookId: game.playbookId,
+        status,
+        xp,
+        streak,
+        completedLevels,
+        claimedRewards,
+        state: nextState,
+      });
+
+      return nextState;
+    });
   };
 
   const handleClaimRewards = async () => {
@@ -203,6 +271,10 @@ export function ArenaClient({ game }: ArenaClientProps) {
           <div>
             <span>Streak</span>
             <strong>{streak}</strong>
+          </div>
+          <div>
+            <span>Lives</span>
+            <strong>{gameState.lives}</strong>
           </div>
         </div>
       </header>
@@ -290,14 +362,13 @@ export function ArenaClient({ game }: ArenaClientProps) {
                   ))}
                 </div>
               </div>
-              <button
-                type="button"
-                className="pill hero__action hero__action--primary playbooks-arena__complete"
-                onClick={() => handleLevelComplete(activeLevel)}
+              <MiniGameEngine
+                key={activeLevel.id}
+                level={activeLevel}
                 disabled={completedLevels.includes(activeLevel.id)}
-              >
-                Tandai Selesai
-              </button>
+                onSuccess={(result) => handleChallengeSuccess(result?.bonusXp ?? 0)}
+                onFail={handleChallengeFail}
+              />
             </div>
           ) : null}
         </div>

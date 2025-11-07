@@ -34,6 +34,7 @@ interface ProgressResponse {
   streak: number;
   completedLevels: string[];
   claimedRewards: string[];
+  state?: Record<string, unknown> | null;
 }
 
 export function PlaybooksExperience({
@@ -52,6 +53,7 @@ export function PlaybooksExperience({
       streak: index === 0 ? 1 : 0,
       completedLevels: index === 0 && game.levels.length ? [game.levels[0].id] : [],
       claimedRewards: [],
+      state: { lives: 3, levelStates: {} },
     })),
   );
 
@@ -89,6 +91,7 @@ export function PlaybooksExperience({
                     streak: incoming.streak,
                     completedLevels: incoming.completedLevels,
                     claimedRewards: incoming.claimedRewards,
+                    state: incoming.state ?? { lives: 3, levelStates: {} },
                   }
                 : snapshot;
             }),
@@ -118,6 +121,7 @@ export function PlaybooksExperience({
             streak: 0,
             completedLevels: [],
             claimedRewards: [],
+            state: { lives: 3, levelStates: {} },
           }
         );
       }),

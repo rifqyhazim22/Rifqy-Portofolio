@@ -16,6 +16,60 @@ export type TrainingChallengeType =
   | "quiz"
   | "sandbox";
 
+export interface DecisionTreeChallengeOption {
+  id: string;
+  label: string;
+  outcome: "success" | "fail";
+  feedback: string;
+  xpBonus?: number;
+}
+
+export interface DecisionTreeChallenge {
+  type: "decision-tree";
+  scenario: string;
+  question: string;
+  options: DecisionTreeChallengeOption[];
+}
+
+export interface QuizChallengeOption {
+  id: string;
+  label: string;
+  explanation: string;
+}
+
+export interface QuizChallenge {
+  type: "quiz";
+  question: string;
+  options: QuizChallengeOption[];
+  correctOptionId: string;
+}
+
+export interface DragDropChallengeItem {
+  id: string;
+  label: string;
+  description?: string;
+}
+
+export interface DragDropChallenge {
+  type: "drag-drop";
+  prompt: string;
+  items: DragDropChallengeItem[];
+  correctOrder: string[];
+}
+
+export interface SandboxChallenge {
+  type: "sandbox";
+  instructions: string;
+  aiPrompt: string;
+  checklist: string[];
+}
+
+export type LevelChallenge =
+  | DecisionTreeChallenge
+  | QuizChallenge
+  | DragDropChallenge
+  | SandboxChallenge;
+
 export interface TrainingGameLevel {
   id: string;
   title: string;
@@ -25,6 +79,7 @@ export interface TrainingGameLevel {
   challengeType: TrainingChallengeType;
   npcHints: string[];
   resources: LinkCard[];
+  challenge: LevelChallenge;
 }
 
 export interface TrainingGameReward {

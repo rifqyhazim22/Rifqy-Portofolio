@@ -10,6 +10,7 @@ interface ProgressPayload {
   streak: number;
   completedLevels: string[];
   claimedRewards: string[];
+  state?: Record<string, unknown> | null;
 }
 
 const defaultProgress = (playbookId: string): ProgressPayload => ({
@@ -19,6 +20,7 @@ const defaultProgress = (playbookId: string): ProgressPayload => ({
   streak: 0,
   completedLevels: [],
   claimedRewards: [],
+  state: null,
 });
 
 export async function GET(_request: NextRequest, context: any) {
@@ -40,7 +42,7 @@ export async function GET(_request: NextRequest, context: any) {
     const serviceClient = createSupabaseServiceClient();
     const { data, error } = await serviceClient
       .from("playbook_progress")
-      .select("status, xp, streak, completed_levels, claimed_rewards")
+      .select("status, xp, streak, completed_levels, claimed_rewards, state")
       .eq("user_id", user.id)
       .eq("playbook_id", playbookId)
       .maybeSingle();
@@ -56,6 +58,7 @@ export async function GET(_request: NextRequest, context: any) {
       streak: data.streak ?? 0,
       completedLevels: (data.completed_levels as string[]) ?? [],
       claimedRewards: (data.claimed_rewards as string[]) ?? [],
+      state: (data.state as Record<string, unknown>) ?? null,
     });
   } catch (error) {
     console.error("Failed to read playbook progress", error);
@@ -94,6 +97,7 @@ export async function PATCH(request: NextRequest, context: any) {
         streak: payload.streak,
         completed_levels: payload.completedLevels,
         claimed_rewards: payload.claimedRewards,
+        state: payload.state ?? null,
         updated_at: new Date().toISOString(),
       },
       { onConflict: "user_id,playbook_id" },
