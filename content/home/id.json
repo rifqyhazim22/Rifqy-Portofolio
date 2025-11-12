@@ -39,7 +39,7 @@
     "text": "\"Ad astra abyssosque\" selalu jadi kompas: menyelam sedalam mungkin, naik setinggi mungkin, lalu membawa kembali inovasi yang manusiawi."
   },
   "whatIDo": {
-    "heading": "Apa yang Aku Lakukan",
+    "heading": "Apa yang Aku Lakukan sebagai Prompt & Context Engineer · Vibe Coder · IT Developer",
     "items": [
       {
         "href": "/works",
@@ -60,7 +60,7 @@
   },
   "playbooks": {
     "heading": "Playbooks",
-    "description": "Kerangka kerja praktis buat kamu yang mau membawa kecerdasan ke industri: AI→AGI/ASI, Crypto, Bioteknologi, Energi Terbarukan, hingga Space.",
+    "description": "Kerangka kerja praktis yang dikurasi seorang Prompt & Context Engineer · Vibe Coder · IT Developer buat kamu yang mau membawa kecerdasan ke industri: AI→AGI/ASI, Crypto, Bioteknologi, Energi Terbarukan, hingga Space.",
     "items": [
       {
         "href": "/industry/ai",
@@ -91,14 +91,14 @@
   },
   "learning": {
     "heading": "Learning Hub",
-    "description": "Semua modul belajar—AI Basics, Prompt Patterns, Tools & Workflow—tersusun sebagai kurasi penuh empati. Mulai dengan apa yang kamu butuhkan, lanjutkan dengan guidance yang hidup.",
+    "description": "Butuh jalur belajar? Sebagai Prompt & Context Engineer · Vibe Coder · IT Developer, aku mengkurasi AI Basics, Prompt Patterns, dan Tools & Workflow dengan empati supaya kamu bisa mulai dari kebutuhanmu.",
     "cta": {
       "label": "Buka Learning Hub →",
       "href": "/learning-hub"
     }
   },
   "updates": {
-    "heading": "Updates Teranyar",
+    "heading": "Updates Teranyar dari seorang Prompt & Context Engineer · Vibe Coder · IT Developer",
     "cta": {
       "label": "Lihat semua updates →",
       "href": "/updates"

@@ -54,7 +54,7 @@ const sections = [
   },
   {
     slug: "home-what-i-do",
-    title: "Apa yang Aku Lakukan",
+    title: "Apa yang Aku Lakukan sebagai Prompt & Context Engineer · Vibe Coder · IT Developer",
     body: null,
     metadata: {
       items: [
@@ -80,7 +80,7 @@ const sections = [
     slug: "home-playbooks",
     title: "Playbooks",
     body:
-      "Kerangka kerja praktis buat kamu yang mau membawa kecerdasan ke industri: AI→AGI/ASI, Crypto, Bioteknologi, Energi Terbarukan, hingga Space.",
+      "Kerangka kerja praktis yang dikurasi seorang Prompt & Context Engineer · Vibe Coder · IT Developer buat kamu yang mau membawa kecerdasan ke industri: AI→AGI/ASI, Crypto, Bioteknologi, Energi Terbarukan, hingga Space.",
     metadata: {
       items: [
         {
@@ -115,7 +115,7 @@ const sections = [
     slug: "home-learning",
     title: "Learning Hub",
     body:
-      "Semua modul belajar—AI Basics, Prompt Patterns, Tools & Workflow—tersusun sebagai kurasi penuh empati. Mulai dengan apa yang kamu butuhkan, lanjutkan dengan guidance yang hidup.",
+      "Butuh jalur belajar? Sebagai Prompt & Context Engineer · Vibe Coder · IT Developer, aku mengkurasi AI Basics, Prompt Patterns, dan Tools & Workflow dengan empati supaya kamu bisa mulai dari kebutuhanmu.",
     metadata: {
       cta: {
         label: "Buka Learning Hub →",
@@ -125,7 +125,7 @@ const sections = [
   },
   {
     slug: "home-updates",
-    title: "Updates Teranyar",
+    title: "Updates Teranyar dari seorang Prompt & Context Engineer · Vibe Coder · IT Developer",
     body: null,
     metadata: {
       cta: {

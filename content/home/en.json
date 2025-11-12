@@ -39,7 +39,7 @@
     "text": "\"Ad astra abyssosque\" is the compass—dive deep, fly far, and return with intelligence that uplifts people."
   },
   "whatIDo": {
-    "heading": "What I Do",
+    "heading": "What I Do as a Prompt & Context Engineer · Vibe Coder · IT Developer",
     "items": [
       {
         "href": "/works",
@@ -60,7 +60,7 @@
   },
   "playbooks": {
     "heading": "Playbooks",
-    "description": "Practical frameworks for anyone bringing intelligence to their industry—AI→AGI/ASI, Crypto, Biotechnology, Renewables, and Space.",
+    "description": "Frameworks curated by a Prompt & Context Engineer · Vibe Coder · IT Developer for anyone bringing intelligence to their industry—AI→AGI/ASI, Crypto, Biotechnology, Renewables, and Space.",
     "items": [
       {
         "href": "/industry/ai",
@@ -91,14 +91,14 @@
   },
   "learning": {
     "heading": "Learning Hub",
-    "description": "Need a guided path? The hub curates AI Basics, Prompt Patterns, and Tools & Workflow with human warmth so you can start where you are.",
+    "description": "Need a guided path? This Prompt & Context Engineer · Vibe Coder · IT Developer curates AI Basics, Prompt Patterns, and Tools & Workflow with human warmth so you can start where you are.",
     "cta": {
       "label": "Open Learning Hub →",
       "href": "/learning-hub"
     }
   },
   "updates": {
-    "heading": "Latest Updates",
+    "heading": "Latest Updates from a Prompt & Context Engineer · Vibe Coder · IT Developer",
     "cta": {
       "label": "See all updates →",
       "href": "/updates"
