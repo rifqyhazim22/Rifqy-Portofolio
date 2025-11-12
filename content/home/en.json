@@ -1,10 +1,10 @@
 {
   "hero": {
     "name": "Rifqy Hazim Haidar Ramadhan",
-    "title": "Prompt & Context Engineer & AI Agent Developer",
-    "tagline": "Prompt & Context Engineer · Web/App Developer · AI Agent Developer",
-    "summary": "I design prompt systems, LLM agents, and web experiences that stay human-first. Every partnership starts with empathy—listening to your context, mapping missions, and keeping evaluation loops that preserve trust.",
-    "availability": "Mission: Freedom of Intelligence—bringing intelligence to every human and corner of the universe. Open for collaborations on LLM context engineering, agent development, and impactful web delivery.",
+    "title": "Prompt & Context Engineer · Vibe Coder · IT Developer",
+    "tagline": "Prompt & Context Engineer · Vibe Coder · IT Developer",
+    "summary": "I'm a prompt & context engineer, vibe coder, and IT developer designing prompt systems, LLM agents, and web experiences that stay human-first. Every partnership starts with empathy—listening to your context, mapping missions, and keeping evaluation loops that preserve trust.",
+    "availability": "Mission: Freedom of Intelligence—bringing intelligence to every human and corner of the universe. Open for collaborations on LLM context engineering, vibe-coded digital systems, and IT delivery that actually ships.",
     "actions": [
       {
         "label": "View AI Case Studies ↗",
@@ -23,7 +23,7 @@
     ],
     "highlights": [
       { "label": "LLM Stack", "value": "Codex · ChatGPT · Gemini" },
-      { "label": "Focus", "value": "Prompt/Context Eng · AI Agent Dev · Web/App Dev" },
+      { "label": "Focus", "value": "Prompt/Context Eng · Vibe Coder · IT Dev" },
       { "label": "Plus", "value": "Web3 Enthusiast" },
       { "label": "Base", "value": "Jabodetabek, Indonesia" }
     ],

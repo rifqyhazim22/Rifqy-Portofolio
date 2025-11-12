@@ -1,8 +1,8 @@
 {
   "hero": {
     "title": "Tentang Rifqy",
-    "tagline": "Prompt & Context Engineer · Web/App Developer · AI Agent Developer",
-    "summary": "Aku menulis sendiri perjalanan ini: seorang prompt & context engineer yang menggabungkan agen LLM, tools generatif, dan pengalaman web yang terasa akrab. Semua dimulai dengan mendengar—berusaha memahami rasa ingin tahu, keresahan, dan potensi tumbuh bersama."
+    "tagline": "Prompt & Context Engineer · Vibe Coder · IT Developer",
+    "summary": "Aku menulis sendiri perjalanan ini: seorang prompt & context engineer, vibe coder, dan IT developer yang menggabungkan agen LLM, tools generatif, dan pengalaman web yang terasa akrab. Semua dimulai dengan mendengar—berusaha memahami rasa ingin tahu, keresahan, dan potensi tumbuh bersama."
   },
   "philosophy": {
     "heading": "Filosofi & Visi",
@@ -28,9 +28,9 @@
     "items": [
       {
         "id": "2025-tsl",
-        "period": "2025 – sekarang",
-        "title": "The Social Linked — AI Creative Specialist & Prompt/Context Engineer",
-        "description": "Memimpin kampanye AI-first, menyusun pipeline Sora → Runway → Flow, serta merancang workflow agen LLM untuk produksi konten."
+        "period": "2024 (kontrak 3 bulan)",
+        "title": "The Social Linked — Prompt & Context Engineer (Kontrak 3 Bulan)",
+        "description": "Menuntaskan kontrak 3 bulan dengan memimpin kampanye AI-first, menyusun pipeline Sora → Runway → Flow, serta merancang workflow agen LLM untuk produksi konten."
       },
       {
         "id": "2025-ai-agent-lab",
