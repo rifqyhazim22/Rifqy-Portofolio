@@ -190,7 +190,7 @@ const idDictionary: Dictionary = {
         {
           href: "mailto:rifqyhazim22@gmail.com",
           title: "Campaign AI TSL",
-          sub: "Konten video generatif berbasis prompt LLM dengan SOP produksi ringkas selama kontrak 3 bulan The Social Linked (2025)."
+          sub: "Konten video generatif berbasis prompt LLM dengan SOP produksi ringkas."
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
@@ -396,7 +396,7 @@ const enDictionary: Dictionary = {
         {
           href: "mailto:rifqyhazim22@gmail.com",
           title: "TSL AI Campaign",
-          sub: "Generative video content shaped by LLM prompt systems and focused production SOPs delivered during the 3-month The Social Linked contract (2025).",
+          sub: "Generative video content shaped by LLM prompt systems and focused production SOPs.",
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",

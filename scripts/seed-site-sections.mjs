@@ -22,9 +22,9 @@ const sections = [
       title: "Prompt & Context Engineer · Vibe Coder · IT Developer",
       tagline: "Prompt & Context Engineer · Vibe Coder · IT Developer",
       summary:
-        "Aku adalah prompt & context engineer, vibe coder, dan IT developer yang merancang sistem prompt, agen LLM, dan aplikasi web yang terasa dekat. Baru saja menuntaskan kontrak 3 bulan di The Social Linked (2025), energi launching itu kubawa ke setiap build sambil tetap berpegang pada empati—mendengar konteksmu, memetakan misi, dan menjaga loop evaluasi yang bikin percaya.",
+        "Aku adalah prompt & context engineer, vibe coder, dan IT developer yang merancang sistem prompt, agen LLM, dan aplikasi web yang terasa dekat. Setiap kolaborasi dimulai dari empati—mendengar konteksmu, memetakan misi, dan menjaga loop evaluasi yang bikin percaya.",
       availability:
-        "Misinya: Freedom of Intelligence—membawa kecerdasan ke seluruh umat manusia dan semesta. Setelah merampungkan kontrak 3 bulan di The Social Linked, aku membuka kolaborasi baru untuk engineering konteks LLM, sistem vibe-coded buat brand & produk, serta delivery IT yang benar-benar jalan.",
+        "Misinya: Freedom of Intelligence—membawa kecerdasan ke seluruh umat manusia dan semesta. Aku siap berkolaborasi untuk engineering konteks LLM, sistem vibe-coded buat brand & produk, serta delivery IT yang benar-benar jalan.",
       actions: [
         { label: "Lihat Studi Kasus AI ↗", href: "/works", variant: "primary" },
         { label: "Eksplor Playbooks AI ↗", href: "/playbooks", variant: "outline" },
@@ -33,7 +33,6 @@ const sections = [
       highlights: [
         { label: "Stack LLM", value: "Codex · ChatGPT · Gemini" },
         { label: "Fokus", value: "Prompt/Context Eng · Vibe Coder · IT Dev" },
-        { label: "Terbaru", value: "Rampungkan kontrak 3 bulan The Social Linked (2025)" },
         { label: "Plus", value: "Web3 Enthusiast" },
         { label: "Basis", value: "Jabodetabek, Indonesia" },
       ],
