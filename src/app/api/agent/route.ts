@@ -467,7 +467,7 @@ export async function POST(request: NextRequest) {
     "/learning-hub": "the Learning Hub (modular tracks, modules, and interactive playbooks)",
     "/updates": "the Updates page (short-form insights and announcements)",
     "/works": "the Works gallery (selected prompt engineering deliverables)",
-    "/projects": "the Projects gallery (web/app builds)",
+    "/projects": "the Projects gallery (vibe-coded IT delivery blueprints)",
     "/contact": "the Contact page (links, email, and FAQ)",
   };
 

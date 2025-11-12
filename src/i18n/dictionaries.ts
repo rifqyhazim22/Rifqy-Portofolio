@@ -135,14 +135,14 @@ const idDictionary: Dictionary = {
         },
         {
           href: "/industry",
-          title: "Web Delivery & Automasi",
-          sub: "Next.js, API, dan orkestrasi otomasi supaya produkmu terasa hidup sejak hari pertama.",
+          title: "IT Delivery & Automasi",
+          sub: "Next.js, API, otomasi, dan vibe-coded experience supaya produkmu terasa hidup sejak hari pertama.",
         },
       ],
       learningHeading: "Eksplorasi Lanjutan",
       learningItems: [
         { href: "/updates/prompt-engineering", title: "Prompt & Agent", sub: "" },
-        { href: "/updates/ai-web", title: "AI + Web Delivery", sub: "" },
+        { href: "/updates/ai-web", title: "AI + IT Delivery", sub: "" },
         { href: "/industry", title: "Shipping Frameworks", sub: "" },
       ],
     },
@@ -190,7 +190,7 @@ const idDictionary: Dictionary = {
         {
           href: "mailto:rifqyhazim22@gmail.com",
           title: "Campaign AI TSL",
-          sub: "Konten video generatif berbasis prompt LLM dengan SOP produksi ringkas."
+          sub: "Konten video generatif berbasis prompt LLM dengan SOP produksi ringkas selama kontrak 3 bulan The Social Linked (2025)."
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
@@ -247,7 +247,7 @@ const idDictionary: Dictionary = {
     },
     contact: {
       title: "Contact",
-      intro: "Ajak diskusi seputar prompt/context engineering, pengembangan agen LLM, web/app, atau kolaborasi riset.",
+      intro: "Ajak diskusi seputar prompt/context engineering, vibe coding, delivery IT, atau kolaborasi riset.",
       contacts: [
         { href: "mailto:rifqyhazim22@gmail.com", title: "Email", sub: "rifqyhazim22@gmail.com" },
         { href: "https://wa.me/6281322963566", title: "WhatsApp", sub: "081322963566" },
@@ -342,8 +342,8 @@ const enDictionary: Dictionary = {
         },
         {
           href: "/playbooks",
-          title: "Web Delivery & Automation",
-          sub: "Next.js apps, APIs, and automation scaffolding that make products feel alive from day one.",
+          title: "IT Delivery & Automation",
+          sub: "IT systems, automation scaffolding, and vibe-coded touchpoints that make products feel alive from day one.",
         },
       ],
       learningHeading: "Keep Exploring",
@@ -396,7 +396,7 @@ const enDictionary: Dictionary = {
         {
           href: "mailto:rifqyhazim22@gmail.com",
           title: "TSL AI Campaign",
-          sub: "Generative video content shaped by LLM prompt systems and focused production SOPs.",
+          sub: "Generative video content shaped by LLM prompt systems and focused production SOPs delivered during the 3-month The Social Linked contract (2025).",
         },
         {
           href: "mailto:rifqyhazim22@gmail.com",
@@ -453,7 +453,7 @@ const enDictionary: Dictionary = {
     },
     contact: {
       title: "Contact",
-      intro: "Reach out for prompt/context engineering, AI agent development, web/app builds, or research collaborations.",
+      intro: "Reach out for prompt/context engineering, vibe coding, IT delivery, or research collaborations.",
       contacts: [
         { href: "mailto:rifqyhazim22@gmail.com", title: "Email", sub: "rifqyhazim22@gmail.com" },
         { href: "https://wa.me/6281322963566", title: "WhatsApp", sub: "+62 813-2296-3566" },
