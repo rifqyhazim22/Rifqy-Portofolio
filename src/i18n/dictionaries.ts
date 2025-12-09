@@ -260,7 +260,7 @@ const idDictionary: Dictionary = {
       downloadsNote: "File docx tersimpan di perpustakaan ini. Kalau kamu butuh format lain atau versi app, tinggal hubungi aku.",
       downloads: [
         {
-          href: "/cv-dan-portofolio/Rifqy Hazim Resume CV 2024.docx",
+          href: "/cv-dan-portofolio/Rifqy Hazim Resume CV 2025.docx",
           title: "Download CV (docx)",
           sub: "CV terbaru yang dirapikan oleh agent—siap kamu baca atau adaptasi."
         },
@@ -467,7 +467,7 @@ const enDictionary: Dictionary = {
       downloadsNote: "Docs live inside this library. Need another format or the app build? Ping me and I'll prepare it.",
       downloads: [
         {
-          href: "/cv-dan-portofolio/Rifqy Hazim Resume CV 2024.docx",
+          href: "/cv-dan-portofolio/Rifqy Hazim Resume CV 2025.docx",
           title: "Download CV (.docx)",
           sub: "Latest CV curated with the agent—ready for review or remix."
         },
