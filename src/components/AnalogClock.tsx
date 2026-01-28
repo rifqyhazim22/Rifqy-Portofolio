@@ -26,7 +26,8 @@ export default function AnalogClock() {
   }, []);
 
   const { hourAngle, minuteAngle, secondAngle } = useMemo(() => {
-    const current = time ?? new Date();
+    // Prevent hydration mismatch by using a fixed time (00:00:00) until mounted
+    const current = time ?? new Date(new Date().setHours(0, 0, 0, 0));
     return getAngles(current);
   }, [time]);
 
