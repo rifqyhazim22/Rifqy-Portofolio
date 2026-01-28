@@ -7,6 +7,7 @@ import PointerGlow from "@/components/PointerGlow";
 import ScrollOrchestrator from "@/components/ScrollOrchestrator";
 import { getCurrentLanguage } from "@/lib/language";
 import { getDictionary } from "@/i18n/dictionaries";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export async function generateMetadata(): Promise<Metadata> {
   const language = await getCurrentLanguage();
@@ -47,6 +48,7 @@ export default async function RootLayout({
         </footer>
         <FloatingDate />
         <AgentChat />
+        <SpeedInsights />
       </body>
     </html>
   );
