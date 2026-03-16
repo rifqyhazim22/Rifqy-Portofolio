@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  headerNav,
-  type HeaderNavChild,
-  type HeaderNavItem,
-  type NavLabelKey,
-} from "@/data/navLinks";
+import { headerNav, type NavLabelKey } from "@/data/navLinks";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type FocusEvent, type PointerEvent as ReactPointerEvent } from "react";
@@ -41,32 +36,13 @@ export default function Header({ brand, navLabels, language, languageToggle }: H
   const pathname = usePathname() ?? "/";
   const [menuOpen, setMenuOpen] = useState(false);
   const [featuresOpen, setFeaturesOpen] = useState(false);
-  const [submenuOpen, setSubmenuOpen] = useState(false);
   const controlsRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
-  const servicesRef = useRef<HTMLLIElement>(null);
-  const submenuTimer = useRef<number | undefined>(undefined);
   const [controlsWidth, setControlsWidth] = useState(0);
   const menuHoverTimer = useRef<number | undefined>(undefined);
   const featuresHoverTimer = useRef<number | undefined>(undefined);
 
-  const servicesItem = headerNav.find((item) => item.type === "menu");
-  const servicesChildren: HeaderNavChild[] = servicesItem?.type === "menu"
-    ? Array.from(servicesItem.children)
-    : [];
-  const servicesActive = servicesChildren.some((child) => isActive(pathname, child.href));
   const aboutActive = isActive(pathname, "/about");
-
-  // Sync submenu state with current route when menu opens
-  useEffect(() => {
-    if (!menuOpen) {
-      setSubmenuOpen(false);
-      return;
-    }
-    if (servicesActive) {
-      setSubmenuOpen(true);
-    }
-  }, [menuOpen, servicesActive]);
 
   // Track control cluster width to size the overlay
   useEffect(() => {
@@ -113,9 +89,6 @@ export default function Header({ brand, navLabels, language, languageToggle }: H
 
   // Clear hover timers on unmount
   useEffect(() => () => {
-    if (submenuTimer.current) {
-      window.clearTimeout(submenuTimer.current);
-    }
     if (menuHoverTimer.current) {
       window.clearTimeout(menuHoverTimer.current);
     }
@@ -152,7 +125,6 @@ export default function Header({ brand, navLabels, language, languageToggle }: H
   const closeMenu = () => {
     clearMenuHoverTimer();
     setMenuOpen(false);
-    setSubmenuOpen(false);
   };
 
   const toggleMenu = () => {
@@ -196,46 +168,6 @@ export default function Header({ brand, navLabels, language, languageToggle }: H
     }, 160);
   };
 
-  const openSubmenu = () => {
-    if (submenuTimer.current) {
-      window.clearTimeout(submenuTimer.current);
-    }
-    setSubmenuOpen(true);
-  };
-
-  const scheduleCloseSubmenu = () => {
-    if (submenuTimer.current) {
-      window.clearTimeout(submenuTimer.current);
-    }
-    submenuTimer.current = window.setTimeout(() => {
-      setSubmenuOpen(false);
-    }, 120);
-  };
-
-  const toggleSubmenu = () => {
-    if (submenuTimer.current) {
-      window.clearTimeout(submenuTimer.current);
-    }
-    setSubmenuOpen((open) => !open);
-  };
-
-  const handleSubmenuBlur = (event: FocusEvent<HTMLElement>) => {
-    if (!servicesRef.current) return;
-
-    const related = event.relatedTarget as Node | null;
-    if (related && servicesRef.current.contains(related)) {
-      return;
-    }
-
-    window.setTimeout(() => {
-      if (!servicesRef.current) return;
-      const active = document.activeElement;
-      if (!active || !servicesRef.current.contains(active)) {
-        setSubmenuOpen(false);
-      }
-    }, 0);
-  };
-
   useEffect(() => {
     if (!menuOpen && !featuresOpen) return;
 
@@ -249,7 +181,6 @@ export default function Header({ brand, navLabels, language, languageToggle }: H
         featuresHoverTimer.current = undefined;
       }
       setMenuOpen(false);
-      setSubmenuOpen(false);
       setFeaturesOpen(false);
     };
 
@@ -330,77 +261,6 @@ export default function Header({ brand, navLabels, language, languageToggle }: H
         closeFeatures();
       }
     }, 0);
-  };
-
-  const renderNavItem = (item: HeaderNavItem) => {
-    if (item.type === "link") {
-      const active = isActive(pathname, item.href);
-      return (
-        <li key={item.key} className="menu-item">
-          <BaseLink
-            href={item.href}
-            className="menu-link"
-            data-active={active}
-            aria-current={active ? "page" : undefined}
-            onClick={handleNavigate}
-          >
-            {navLabels[item.key]}
-          </BaseLink>
-        </li>
-      );
-    }
-
-    const expanded = submenuOpen || servicesActive;
-
-    const submenuId = `${item.key}-submenu`;
-
-    return (
-      <li
-        key={item.key}
-        className="menu-item has-children"
-        data-active={expanded}
-        ref={servicesRef}
-        onMouseEnter={openSubmenu}
-        onMouseLeave={scheduleCloseSubmenu}
-      >
-        <button
-          type="button"
-          className="menu-link menu-toggle"
-          aria-expanded={expanded}
-          aria-haspopup="true"
-          aria-controls={submenuId}
-          onClick={toggleSubmenu}
-          onFocus={openSubmenu}
-          onBlur={handleSubmenuBlur}
-        >
-          {navLabels[item.key]}
-        </button>
-        <div
-          id={submenuId}
-          className="submenu"
-          data-open={expanded}
-          aria-hidden={!expanded}
-          onFocusCapture={openSubmenu}
-          onBlur={handleSubmenuBlur}
-        >
-          {item.children.map((child) => {
-            const childActive = isActive(pathname, child.href);
-            return (
-              <BaseLink
-                key={child.href}
-                href={child.href}
-                className="submenu-link"
-                data-active={childActive}
-                aria-current={childActive ? "page" : undefined}
-                onClick={handleNavigate}
-              >
-                {navLabels[child.key]}
-              </BaseLink>
-            );
-          })}
-        </div>
-      </li>
-    );
   };
 
   return (
@@ -489,7 +349,22 @@ export default function Header({ brand, navLabels, language, languageToggle }: H
             >
               <nav aria-label="Primary navigation">
                 <ul className="menu-list">
-                  {headerNav.map((item) => renderNavItem(item))}
+                  {headerNav.map((item) => {
+                    const active = isActive(pathname, item.href);
+                    return (
+                      <li key={item.key} className="menu-item">
+                        <BaseLink
+                          href={item.href}
+                          className="menu-link"
+                          data-active={active}
+                          aria-current={active ? "page" : undefined}
+                          onClick={handleNavigate}
+                        >
+                          {navLabels[item.key]}
+                        </BaseLink>
+                      </li>
+                    );
+                  })}
                 </ul>
               </nav>
             </div>

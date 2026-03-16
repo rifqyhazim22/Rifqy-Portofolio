@@ -7,14 +7,9 @@
     "availability": "Mission: Freedom of Intelligence—bringing intelligence to every human and corner of the universe. Open for collaborations on LLM context engineering, vibe-coded digital systems, and IT delivery that actually ships.",
     "actions": [
       {
-        "label": "View AI Case Studies ↗",
+        "label": "View Works & Projects ↗",
         "href": "/works",
         "variant": "primary"
-      },
-      {
-        "label": "Explore AI Playbooks ↗",
-        "href": "/playbooks",
-        "variant": "outline"
       },
       {
         "label": "Get to know me better ↗",
@@ -47,61 +42,15 @@
         "sub": "Multi-agent orchestration, memory, and evaluation designed to stay empathetic to the teams using it."
       },
       {
-        "href": "/projects",
+        "href": "/works",
         "title": "Prompt & Context Systems",
         "sub": "Prompt blueprints, knowledge bases, and generative tool integrations that keep workflows consistent."
       },
       {
-        "href": "/playbooks",
+        "href": "/works",
         "title": "IT Delivery & Automation",
         "sub": "IT systems, automation, and adaptive experiences ready to ship."
       }
     ]
-  },
-  "playbooks": {
-    "heading": "Playbooks",
-    "description": "Frameworks curated by a Prompt & Context Engineer · Vibe Coder · IT Developer for anyone bringing intelligence to their industry—AI→AGI/ASI, Crypto, Biotechnology, Renewables, and Space.",
-    "items": [
-      {
-        "href": "/industry/ai",
-        "title": "AI → AGI → ASI",
-        "sub": "From today's AI delivery to general intelligence, complete with prompt & agent playbooks."
-      },
-      {
-        "href": "/industry/crypto",
-        "title": "Crypto",
-        "sub": "Token design, smart-contract orchestration, and DeFi coordination patterns."
-      },
-      {
-        "href": "/industry/biotech",
-        "title": "Biotechnology",
-        "sub": "Bio innovation, precision food, and biomaterials with responsible guardrails."
-      },
-      {
-        "href": "/industry/energy",
-        "title": "Renewable Energy",
-        "sub": "Clean energy stack—from generation to storage and intelligent grids."
-      },
-      {
-        "href": "/industry/space",
-        "title": "Space",
-        "sub": "Orbital services, earth intelligence, and practical space exploration workflows."
-      }
-    ]
-  },
-  "learning": {
-    "heading": "Learning Hub",
-    "description": "Need a guided path? This Prompt & Context Engineer · Vibe Coder · IT Developer curates AI Basics, Prompt Patterns, and Tools & Workflow with human warmth so you can start where you are.",
-    "cta": {
-      "label": "Open Learning Hub →",
-      "href": "/learning-hub"
-    }
-  },
-  "updates": {
-    "heading": "Latest Updates from a Prompt & Context Engineer · Vibe Coder · IT Developer",
-    "cta": {
-      "label": "See all updates →",
-      "href": "/updates"
-    }
   }
 }

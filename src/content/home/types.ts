@@ -39,27 +39,9 @@ export interface HomeSection {
   items: HomeLinkCard[];
 }
 
-export interface HomePlaybooksSection {
-  heading: string;
-  description: string;
-  items: HomeLinkCard[];
-  cta?: HomeAction;
-}
-
-export interface HomeLearningSection {
-  heading: string;
-  description: string;
-  cta: HomeAction;
-}
-
 export interface HomeQuote {
   label: string;
   text: string;
-}
-
-export interface HomeUpdatesSection {
-  heading: string;
-  cta: HomeAction;
 }
 
 export interface HomeContent {
@@ -68,7 +50,4 @@ export interface HomeContent {
   quote: HomeQuote;
   journey: HomeQuote;
   whatIDo: HomeSection;
-  playbooks: HomePlaybooksSection;
-  learning: HomeLearningSection;
-  updates: HomeUpdatesSection;
 }

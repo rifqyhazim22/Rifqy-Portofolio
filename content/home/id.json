@@ -7,14 +7,9 @@
     "availability": "Misinya: Freedom of Intelligence—membawa kecerdasan ke seluruh umat manusia dan semesta. Aku siap berkolaborasi untuk engineering konteks LLM, sistem vibe-coded buat brand & produk, serta delivery IT yang benar-benar jalan.",
     "actions": [
       {
-        "label": "Lihat Studi Kasus AI ↗",
+        "label": "Lihat Karya & Proyek ↗",
         "href": "/works",
         "variant": "primary"
-      },
-      {
-        "label": "Eksplor Playbooks AI ↗",
-        "href": "/playbooks",
-        "variant": "outline"
       },
       {
         "label": "Tahu Aku Lebih Lanjut ↗",
@@ -47,61 +42,15 @@
         "sub": "Aku mengorkestrasi multi-agent, memori, dan evaluasi supaya keputusanmu tetap tajam dan empatik."
       },
       {
-        "href": "/projects",
+        "href": "/works",
         "title": "Prompt & Context Systems",
         "sub": "Blueprint prompt, knowledge base, dan integrasi tools generatif untuk workflow yang konsisten."
       },
       {
-        "href": "/playbooks",
+        "href": "/works",
         "title": "IT Delivery & Automasi",
         "sub": "Sistem IT, otomasi, dan pengalaman adaptif yang siap tayang."
       }
     ]
-  },
-  "playbooks": {
-    "heading": "Playbooks",
-    "description": "Kerangka kerja praktis yang dikurasi seorang Prompt & Context Engineer · Vibe Coder · IT Developer buat kamu yang mau membawa kecerdasan ke industri: AI→AGI/ASI, Crypto, Bioteknologi, Energi Terbarukan, hingga Space.",
-    "items": [
-      {
-        "href": "/industry/ai",
-        "title": "AI → AGI → ASI",
-        "sub": "Strategi menggabungkan prompt, agent, dan governance menuju kecerdasan umum."
-      },
-      {
-        "href": "/industry/crypto",
-        "title": "Crypto",
-        "sub": "Playbook koordinasi on-chain: token, smart contract, dan mekanisme DeFi."
-      },
-      {
-        "href": "/industry/biotech",
-        "title": "Biotechnology",
-        "sub": "Eksperimen bio, food tech, dan biomaterial dengan etika & regulasi terukur."
-      },
-      {
-        "href": "/industry/energy",
-        "title": "Renewable Energy",
-        "sub": "Blueprint solusi energi bersih: generasi, penyimpanan, dan smart grid."
-      },
-      {
-        "href": "/industry/space",
-        "title": "Space",
-        "sub": "Orbital services, satelit, observasi bumi, dan eksplorasi luar angkasa."
-      }
-    ]
-  },
-  "learning": {
-    "heading": "Learning Hub",
-    "description": "Butuh jalur belajar? Sebagai Prompt & Context Engineer · Vibe Coder · IT Developer, aku mengkurasi AI Basics, Prompt Patterns, dan Tools & Workflow dengan empati supaya kamu bisa mulai dari kebutuhanmu.",
-    "cta": {
-      "label": "Buka Learning Hub →",
-      "href": "/learning-hub"
-    }
-  },
-  "updates": {
-    "heading": "Updates Teranyar dari seorang Prompt & Context Engineer · Vibe Coder · IT Developer",
-    "cta": {
-      "label": "Lihat semua updates →",
-      "href": "/updates"
-    }
   }
 }

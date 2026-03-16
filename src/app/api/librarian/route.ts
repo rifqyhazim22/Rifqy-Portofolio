@@ -1,7 +1,5 @@
 import OpenAI from "openai";
 import { NextRequest, NextResponse } from "next/server";
-import { findKnowledgeSnippets, knowledgeToContext } from "@/lib/knowledge";
-import { createSupabaseServiceClient, fetchAiAgentBySlug } from "@/lib/supabase";
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -21,7 +19,6 @@ type LibrarianInstructions = {
   fallback: LocaleMap;
   imageGuidance: LocaleMap;
   navigationRule: LocaleMap;
-  contextLead: LocaleMap;
 };
 
 type LibrarianConfig = {
@@ -30,80 +27,57 @@ type LibrarianConfig = {
   instructions: LibrarianInstructions;
 };
 
-const DEFAULT_LIBRARIAN_INSTRUCTIONS: LibrarianInstructions = {
-  intro: {
-    id: "Kamu adalah penjaga perpustakaan digital Rifqy Hazim HR—AI librarian yang mengenal CV, portofolio, dan seluruh narasi website.",
-    en: "You are the digital librarian for Rifqy Hazim HR—you know his CV, portfolio, and all narratives on the website.",
-  },
-  empathy: {
-    id: "Jagalah empati, sambut pengunjung layaknya tamu istimewa, dan bantu mereka memahami misi Freedom of Intelligence.",
-    en: "Maintain empathy, welcome the visitor like a special guest, and help them understand the Freedom of Intelligence mission.",
-  },
-  pronoun: {
-    id: 'Gunakan "aku" saat merujuk pada dirimu sebagai agent perpustakaan digital ini, sebut Rifqy sebagai pihak ketiga (Rifqy/ beliau), sapa pengunjung dengan "kamu", dan jangan pernah menyebut pengunjung sebagai agent.',
-    en: "Use “I/me” for yourself as the site’s library agent, refer to Rifqy in the third person (Rifqy/he), address the visitor as “you”, and never label the visitor as the agent.",
-  },
-  tone: {
-    default: {
-      id: "Pertahankan nada profesional yang hangat.",
-      en: "Use a confident, warm professional tone.",
-    },
-    santai: {
-      id: "Terapkan nada santai namun tetap profesional dan empatik.",
-      en: "Lean into a relaxed yet warm tone.",
-    },
-    deep: {
-      id: "Bangun suasana yang dalam dan reflektif tanpa berlebihan.",
-      en: "Use a reflective tone that still feels approachable.",
-    },
-  },
-  lengthRule: {
-    id: "Batasi jawaban maksimal 120 kata atau empat kalimat. Mulai dengan jawaban inti, lanjutkan insight ringkas, tawarkan bantuan lanjutan seperlunya, dan gunakan maksimal dua emoji yang benar-benar relevan dengan kalimatnya.",
-    en: "Keep the reply under 120 words or four sentences. Lead with the core answer, add concise insight, offer follow-up only if useful, and use at most two emojis that directly support the lines they’re attached to.",
-  },
-  knowledgeInstruction: {
-    id: "Jika menjawab berdasarkan referensi situs, sertakan path halaman di dalam tanda kurung, contoh: (/about).",
-    en: "When citing site references, include the page path inside parentheses, e.g., (/about).",
-  },
-  fallback: {
-    id: "Jika kamu belum punya data, jelaskan dengan jujur tanpa mengada-ada dan tawarkan opsi lanjutan seperti menjadwalkan diskusi atau memperbarui dokumen.",
-    en: "If information is missing, say so transparently and suggest follow-ups such as scheduling a chat or updating the documents.",
-  },
-  imageGuidance: {
-    id: "Kalau pengunjung mengunggah gambar, sampaikan observasi utama dalam maksimal tiga kalimat. Jika konteks belum jelas, ajukan pertanyaan singkat.",
-    en: "If the visitor shares an image, describe the key observations in no more than three sentences. Ask for clarification briefly when needed.",
-  },
-  navigationRule: {
-    id: "Jangan membuat directive navigasi atau format [[NAVIGATE]].",
-    en: "Do not produce navigation directives or the [[NAVIGATE]] format.",
-  },
-  contextLead: {
-    id: "Berikut konteks perpustakaan yang bisa kamu gunakan:",
-    en: "Here is the library context you can rely on:",
-  },
-};
-
-const DEFAULT_LIBRARIAN_CONFIG: LibrarianConfig = {
+const LIBRARIAN_CONFIG: LibrarianConfig = {
   model: "gpt-5-nano",
   maxOutputTokens: 3200,
-  instructions: DEFAULT_LIBRARIAN_INSTRUCTIONS,
-};
-
-const loadLibrarianConfig = async (): Promise<LibrarianConfig> => {
-  try {
-    const record = await fetchAiAgentBySlug("librarian");
-    if (!record) return DEFAULT_LIBRARIAN_CONFIG;
-    const metadata = (record.metadata ?? {}) as Record<string, unknown>;
-    const instructions = (metadata.instructions as LibrarianInstructions) ?? DEFAULT_LIBRARIAN_INSTRUCTIONS;
-    return {
-      model: record.model ?? DEFAULT_LIBRARIAN_CONFIG.model,
-      maxOutputTokens: record.max_output_tokens ?? DEFAULT_LIBRARIAN_CONFIG.maxOutputTokens,
-      instructions,
-    };
-  } catch (error) {
-    console.error("Failed to load librarian agent config", error);
-    return DEFAULT_LIBRARIAN_CONFIG;
-  }
+  instructions: {
+    intro: {
+      id: "Kamu adalah penjaga perpustakaan digital Rifqy Hazim HR—AI librarian yang mengenal CV, portofolio, dan seluruh narasi website.",
+      en: "You are the digital librarian for Rifqy Hazim HR—you know his CV, portfolio, and all narratives on the website.",
+    },
+    empathy: {
+      id: "Jagalah empati, sambut pengunjung layaknya tamu istimewa, dan bantu mereka memahami misi Freedom of Intelligence.",
+      en: "Maintain empathy, welcome the visitor like a special guest, and help them understand the Freedom of Intelligence mission.",
+    },
+    pronoun: {
+      id: 'Gunakan "aku" saat merujuk pada dirimu sebagai agent perpustakaan digital ini, sebut Rifqy sebagai pihak ketiga (Rifqy/ beliau), sapa pengunjung dengan "kamu", dan jangan pernah menyebut pengunjung sebagai agent.',
+      en: "Use \u201CI/me\u201D for yourself as the site\u2019s library agent, refer to Rifqy in the third person (Rifqy/he), address the visitor as \u201Cyou\u201D, and never label the visitor as the agent.",
+    },
+    tone: {
+      default: {
+        id: "Pertahankan nada profesional yang hangat.",
+        en: "Use a confident, warm professional tone.",
+      },
+      santai: {
+        id: "Terapkan nada santai namun tetap profesional dan empatik.",
+        en: "Lean into a relaxed yet warm tone.",
+      },
+      deep: {
+        id: "Bangun suasana yang dalam dan reflektif tanpa berlebihan.",
+        en: "Use a reflective tone that still feels approachable.",
+      },
+    },
+    lengthRule: {
+      id: "Batasi jawaban maksimal 120 kata atau empat kalimat. Mulai dengan jawaban inti, lanjutkan insight ringkas, tawarkan bantuan lanjutan seperlunya, dan gunakan maksimal dua emoji yang benar-benar relevan dengan kalimatnya.",
+      en: "Keep the reply under 120 words or four sentences. Lead with the core answer, add concise insight, offer follow-up only if useful, and use at most two emojis that directly support the lines they\u2019re attached to.",
+    },
+    knowledgeInstruction: {
+      id: "Jika menjawab berdasarkan referensi situs, sertakan path halaman di dalam tanda kurung, contoh: (/about).",
+      en: "When citing site references, include the page path inside parentheses, e.g., (/about).",
+    },
+    fallback: {
+      id: "Jika kamu belum punya data, jelaskan dengan jujur tanpa mengada-ada dan tawarkan opsi lanjutan seperti menjadwalkan diskusi atau memperbarui dokumen.",
+      en: "If information is missing, say so transparently and suggest follow-ups such as scheduling a chat or updating the documents.",
+    },
+    imageGuidance: {
+      id: "Kalau pengunjung mengunggah gambar, sampaikan observasi utama dalam maksimal tiga kalimat. Jika konteks belum jelas, ajukan pertanyaan singkat.",
+      en: "If the visitor shares an image, describe the key observations in no more than three sentences. Ask for clarification briefly when needed.",
+    },
+    navigationRule: {
+      id: "Jangan membuat directive navigasi atau format [[NAVIGATE]].",
+      en: "Do not produce navigation directives or the [[NAVIGATE]] format.",
+    },
+  },
 };
 
 type Message = {
@@ -122,11 +96,6 @@ interface LibrarianRequest {
   language?: "id" | "en";
   tone?: "formal" | "santai" | "deep";
   images?: ImageAttachment[];
-  identity?: {
-    name?: string;
-    source?: string;
-    email?: string;
-  };
   page?: string;
 }
 
@@ -139,7 +108,7 @@ function clampWords(text: string, maxWords: number): string {
   if (words.length <= maxWords) {
     return trimmed;
   }
-  return `${words.slice(0, maxWords).join(" ")}…`;
+  return `${words.slice(0, maxWords).join(" ")}\u2026`;
 }
 
 const getLocaleValue = (entry: LocaleMap, language: "id" | "en") => entry[language] ?? entry.id;
@@ -147,10 +116,8 @@ const getLocaleValue = (entry: LocaleMap, language: "id" | "en") => entry[langua
 function buildSystemPrompt(
   language: "id" | "en",
   tone: "formal" | "santai" | "deep" | undefined,
-  knowledge: string,
-  config: LibrarianConfig,
 ) {
-  const instructions = config.instructions;
+  const instructions = LIBRARIAN_CONFIG.instructions;
   const toneKey = tone === "santai" || tone === "deep" ? tone : "default";
   const toneEntry = instructions.tone[toneKey] ?? instructions.tone.default;
 
@@ -164,8 +131,6 @@ function buildSystemPrompt(
     getLocaleValue(instructions.fallback, language),
     getLocaleValue(instructions.imageGuidance, language),
     getLocaleValue(instructions.navigationRule, language),
-    getLocaleValue(instructions.contextLead, language),
-    knowledge,
   ].join("\n");
 }
 
@@ -200,39 +165,6 @@ function prepareMessages(messages: Message[], images: ImageAttachment[] | undefi
   return prepared;
 }
 
-type AgentSessionLog = {
-  identity?: LibrarianRequest["identity"];
-  intent?: string;
-  language: "id" | "en";
-  tone?: "formal" | "santai" | "deep";
-  page?: string;
-};
-
-async function logAgentSession(log: AgentSessionLog) {
-  if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    return;
-  }
-
-  try {
-    const supabase = createSupabaseServiceClient();
-    await supabase.from("agent_sessions").insert({
-      visitor_name: log.identity?.name?.slice(0, 160) ?? null,
-      visitor_email: log.identity?.email?.slice(0, 160) ?? null,
-      referrer: (log.identity?.source ?? log.page)?.slice(0, 255) ?? null,
-      agent_type: "librarian",
-      intent: log.intent ? clampWords(log.intent, 32) : null,
-      metadata: {
-        page: log.page ?? null,
-        language: log.language,
-        tone: log.tone ?? null,
-      },
-      created_at: new Date().toISOString(),
-    });
-  } catch (error) {
-    console.error("Failed to log agent session", error);
-  }
-}
-
 export async function POST(request: NextRequest) {
   const body = (await request.json().catch(() => null)) as LibrarianRequest | null;
 
@@ -241,7 +173,6 @@ export async function POST(request: NextRequest) {
   }
 
   const language = body.language ?? DEFAULT_LANGUAGE;
-  const agentConfig = await loadLibrarianConfig();
 
   if (!client.apiKey) {
     const message =
@@ -252,11 +183,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const lastUserMessage = [...body.messages].reverse().find((message) => message.role === "user");
-    const knowledgeEntries = findKnowledgeSnippets(lastUserMessage?.content, 3);
-    const knowledgeContext = knowledgeToContext(knowledgeEntries, language);
-
-    const systemPrompt = buildSystemPrompt(language, body.tone, knowledgeContext, agentConfig);
+    const systemPrompt = buildSystemPrompt(language, body.tone);
 
     const history = prepareMessages(body.messages, body.images);
     const input = [
@@ -268,8 +195,8 @@ export async function POST(request: NextRequest) {
     ];
 
     const response = await client.responses.create({
-      model: agentConfig.model,
-      max_output_tokens: agentConfig.maxOutputTokens ?? undefined,
+      model: LIBRARIAN_CONFIG.model,
+      max_output_tokens: LIBRARIAN_CONFIG.maxOutputTokens ?? undefined,
       input: input as any,
     });
 
@@ -279,22 +206,7 @@ export async function POST(request: NextRequest) {
 
     const message = clampWords(response.output_text.trim(), 140);
 
-    await logAgentSession({
-      identity: body.identity,
-      intent: lastUserMessage?.content,
-      language,
-      tone: body.tone,
-      page: body.page,
-    });
-
-    return NextResponse.json({
-      message,
-      knowledge: knowledgeEntries.map((entry) => ({
-        id: entry.id,
-        title: entry.title,
-        paths: entry.source.paths,
-      })),
-    });
+    return NextResponse.json({ message });
   } catch (error) {
     console.error("Librarian agent error", error);
 

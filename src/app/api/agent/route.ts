@@ -2,8 +2,6 @@ import OpenAI from "openai";
 import { NextRequest, NextResponse } from "next/server";
 import navigationEmbeddings from "@/content/navigation/embeddings.json";
 import navigationConfig from "@/content/navigation/config.json";
-import { findKnowledgeSnippets, knowledgeToContext } from "@/lib/knowledge";
-import { createSupabaseServiceClient, fetchAiAgentBySlug } from "@/lib/supabase";
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -14,12 +12,12 @@ type ChatAgentConfig = {
   model: string;
 };
 
-const DEFAULT_CHAT_AGENT_CONFIG: ChatAgentConfig = {
+const CHAT_AGENT_CONFIG: ChatAgentConfig = {
   systemPrompt: `You are the AI agent for Rifqy Hazim HR's portfolio website.
-- “HR” in the brand stands for Haidar Ramadhan (part of his full name), not Human Resources.
+- "HR" in the brand stands for Haidar Ramadhan (part of his full name), not Human Resources.
 - Rifqy Hazim HR is an AI engineer focused on prompt engineering, agent orchestration, and web delivery—keep that positioning clear.
-- Introduce yourself (when needed) as Rifqy’s AI agent. Use “I/me” for yourself, keep Rifqy in third person (he/him), and never imply the visitor is the agent.
-- Reply in the visitor’s language with high-signal guidance only.
+- Introduce yourself (when needed) as Rifqy's AI agent. Use "I/me" for yourself, keep Rifqy in third person (he/him), and never imply the visitor is the agent.
+- Reply in the visitor's language with high-signal guidance only.
 - Hard limit: 3 sentences or 90 words. Lead with the direct answer and keep paragraphs tight.
 - Use a short bullet list only when it clearly improves clarity (e.g., multiple options).
 - When helpful, mention at most one section to explore using the format "Explore: /path".
@@ -35,24 +33,6 @@ const DEFAULT_CHAT_AGENT_CONFIG: ChatAgentConfig = {
   model: "gpt-5-nano",
 };
 
-const loadChatAgentConfig = async (): Promise<ChatAgentConfig> => {
-  try {
-    const record = await fetchAiAgentBySlug("navigator");
-    if (!record) return DEFAULT_CHAT_AGENT_CONFIG;
-    const metadata = (record.metadata ?? {}) as Record<string, unknown>;
-    const tonePrompts = (metadata.tonePrompts as Record<string, string>) ?? DEFAULT_CHAT_AGENT_CONFIG.tonePrompts;
-    return {
-      systemPrompt: record.system_prompt ?? DEFAULT_CHAT_AGENT_CONFIG.systemPrompt,
-      tonePrompts,
-      maxOutputTokens: record.max_output_tokens ?? DEFAULT_CHAT_AGENT_CONFIG.maxOutputTokens,
-      model: record.model ?? DEFAULT_CHAT_AGENT_CONFIG.model,
-    };
-  } catch (error) {
-    console.error("Failed to load chat agent config", error);
-    return DEFAULT_CHAT_AGENT_CONFIG;
-  }
-};
-
 type ChatMessage = {
   role: "user" | "assistant";
   content: string;
@@ -63,11 +43,6 @@ type AgentRequest = {
   language?: "id" | "en";
   location?: string;
   tone?: "formal" | "santai" | "deep";
-  identity?: {
-    name?: string;
-    source?: string;
-    email?: string;
-  };
 };
 
 interface RouteConfig {
@@ -95,78 +70,13 @@ const ROUTE_CONFIG: RouteConfig[] = [
     keywords: ["about", "profile", "bio", "story", "tentang"],
   },
   {
-    route: "/updates",
-    aliases: ["/news", "/blog"],
-    keywords: [
-      "update",
-      "updates",
-      "news",
-      "blog",
-      "insight",
-      "posts",
-      "ai update",
-      "ai updates",
-    ],
-  },
-  {
-    route: "/playbooks",
-    aliases: ["/industry", "/industries", "/learning", "/learn"],
-    keywords: [
-      "playbook",
-      "playbooks",
-      "industry",
-      "learning",
-      "learn",
-      "kelas",
-      "education",
-      "ai education",
-      "academy",
-      "study",
-      "course",
-      "framework",
-    ],
-  },
-  {
-    route: "/learning-hub",
-    aliases: ["/learninghub", "/hub"],
-    keywords: ["learning hub", "track", "modul", "course", "curriculum"],
-  },
-  {
-    route: "/industry/ai",
-    aliases: ["/playbooks/ai", "/playbooks/agi", "/agi", "/ai-playbook", "/ai"],
-    keywords: ["agi", "general intelligence", "artificial intelligence", "ai playbook", "strong ai"],
-  },
-  {
-    route: "/industry/crypto",
-    aliases: ["/playbooks/crypto", "/crypto"],
-    keywords: ["crypto", "blockchain", "web3", "defi"],
-  },
-  {
-    route: "/industry/biotech",
-    aliases: ["/playbooks/biotech", "/biotech"],
-    keywords: ["biotech", "biology", "bio", "life science"],
-  },
-  {
-    route: "/industry/energy",
-    aliases: ["/playbooks/energy", "/energy"],
-    keywords: ["energy", "renewable", "solar", "wind"],
-  },
-  {
-    route: "/industry/space",
-    aliases: ["/playbooks/space", "/space"],
-    keywords: ["space", "orbital", "satellite", "exploration"],
-  },
-  {
     route: "/works",
-    keywords: ["works", "work", "portfolio", "prompt", "showcase", "deliverables"],
+    keywords: ["works", "work", "portfolio", "prompt", "showcase", "deliverables", "project", "projects"],
   },
   {
-    route: "/projects",
-    keywords: ["project", "projects", "web", "app", "build", "case study"],
-  },
-  {
-    route: "/contact",
-    keywords: ["contact", "hubungi", "email", "reach", "connect"],
+    route: "/ai-agent",
+    aliases: ["/librarian", "/agent"],
+    keywords: ["agent", "ai", "librarian", "chat"],
   },
 ];
 
@@ -182,7 +92,7 @@ const ROUTE_ALIAS_MAP = ROUTE_CONFIG.reduce<Record<string, string>>((acc, config
 const NAVIGATION_EMBEDDINGS = navigationEmbeddings as NavigationEmbedding[];
 const EMBEDDING_THRESHOLD = 0.78;
 const intentMemory = new Map<string, Map<string, number>>();
-const ROUTE_MENU_TEXT = (navigationConfig as Array<{ title: string; route: string }> )
+const ROUTE_MENU_TEXT = (navigationConfig as Array<{ title: string; route: string }>)
   .map((item) => `- ${item.title} (${item.route})`)
   .join("\n");
 
@@ -194,42 +104,6 @@ function clampWords(text: string, maxWords: number): string {
     return trimmed;
   }
   return `${words.slice(0, maxWords).join(" ")}…`;
-}
-
-type AgentSessionLogInput = {
-  identity?: AgentRequest["identity"];
-  intent?: string;
-  language: "id" | "en";
-  tone: "formal" | "santai" | "deep";
-  location?: string | null;
-  navigation?: string | null;
-};
-
-async function logNavigatorSession(input: AgentSessionLogInput) {
-  if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    return;
-  }
-
-  try {
-    const supabase = createSupabaseServiceClient();
-    await supabase.from("agent_sessions").insert({
-      visitor_name: input.identity?.name?.slice(0, 160) ?? null,
-      visitor_email: input.identity?.email?.slice(0, 160) ?? null,
-      referrer:
-        input.identity?.source?.slice(0, 255) ?? input.location?.slice(0, 255) ?? null,
-      agent_type: "navigator",
-      intent: input.intent ? clampWords(input.intent, 32) : null,
-      metadata: {
-        location: input.location ?? null,
-        navigation: input.navigation ?? null,
-        language: input.language,
-        tone: input.tone,
-      },
-      created_at: new Date().toISOString(),
-    });
-  } catch (error) {
-    console.error("Failed to log navigator session", error);
-  }
 }
 
 function normalizePath(value: string | null): string | null {
@@ -305,10 +179,7 @@ function resolveNavigationByHeuristics(raw: string | null, messages: ChatMessage
           score += 3;
         }
         for (const alias of config.aliases ?? []) {
-          const aliasTokens = alias
-            .toLowerCase()
-            .split("/")
-            .filter(Boolean);
+          const aliasTokens = alias.toLowerCase().split("/").filter(Boolean);
           if (aliasTokens.some((aliasToken) => token === aliasToken)) {
             score += 2;
           }
@@ -448,8 +319,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "OpenAI API key not configured." }, { status: 500 });
   }
 
-  const agentConfig = await loadChatAgentConfig();
-
   let payload: AgentRequest;
   try {
     payload = (await request.json()) as AgentRequest;
@@ -457,36 +326,27 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON payload." }, { status: 400 });
   }
 
-  const { messages = [], language = "id", location, tone = "formal", identity } = payload;
+  const { messages = [], language = "id", location, tone = "formal" } = payload;
   const normalizedTone = tone === "santai" || tone === "deep" ? tone : "formal";
 
   const locationDescriptions: Record<string, string> = {
     "/": "the home page (hero introduction, quotes, and latest highlights)",
     "/about": "the About page (story, timeline, capabilities, and testimonials)",
-    "/playbooks": "the Playbooks hub (AI education and future-industry frameworks)",
-    "/learning-hub": "the Learning Hub (modular tracks, modules, and interactive playbooks)",
-    "/updates": "the Updates page (short-form insights and announcements)",
-    "/works": "the Works gallery (selected prompt engineering deliverables)",
-    "/projects": "the Projects gallery (vibe-coded IT delivery blueprints)",
-    "/contact": "the Contact page (links, email, and FAQ)",
+    "/works": "the Works & Projects gallery (selected deliverables and case studies)",
+    "/ai-agent": "the AI Agent page (interactive chat with Rifqy's AI assistant)",
   };
 
   const locationContext = location
     ? locationDescriptions[location] ?? `the page at ${location}`
     : undefined;
   const toneDirective =
-    agentConfig.tonePrompts[normalizedTone] ?? agentConfig.tonePrompts.formal ?? "";
-
-  const lastUserMessage = [...messages].reverse().find((message) => message.role === "user");
-  const knowledgeEntries = findKnowledgeSnippets(lastUserMessage?.content, 2);
-  const knowledgeContext = knowledgeToContext(knowledgeEntries, language);
+    CHAT_AGENT_CONFIG.tonePrompts[normalizedTone] ?? CHAT_AGENT_CONFIG.tonePrompts.formal ?? "";
 
   const systemSections = [
-    agentConfig.systemPrompt,
+    CHAT_AGENT_CONFIG.systemPrompt,
     toneDirective,
     "Remember: cap the reply at 3 sentences or 90 words. Skip emoji unless one truly fits.",
     `Current interface language: ${language === "en" ? "English" : "Indonesian"}. Respond using this language.`,
-    `Knowledge base snippets:\n${knowledgeContext}`,
     locationContext
       ? `Visitor is currently browsing ${locationContext}. Take that into account when crafting your answer and navigation hints.`
       : null,
@@ -516,8 +376,8 @@ export async function POST(request: NextRequest) {
     ];
 
     const nanoResponse = await client.responses.create({
-      model: agentConfig.model,
-      max_output_tokens: agentConfig.maxOutputTokens,
+      model: CHAT_AGENT_CONFIG.model,
+      max_output_tokens: CHAT_AGENT_CONFIG.maxOutputTokens,
       input: responseInput as any,
     });
 
@@ -532,15 +392,6 @@ export async function POST(request: NextRequest) {
     const navigation = await resolveNavigationTarget(rawNavigation, trimmedMessages);
     const cleanedText = fullText.replace(/\[\[NAVIGATE:[^\]]+\]\]/gi, "").trim();
     const trimmedText = clampWords(cleanedText, 100);
-
-    await logNavigatorSession({
-      identity,
-      intent: lastUserMessage?.content,
-      language,
-      tone: normalizedTone,
-      location: location ?? null,
-      navigation,
-    });
 
     return NextResponse.json({ message: trimmedText, navigation });
   } catch (error) {

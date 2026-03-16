@@ -2,10 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  VisitorIdentityPrompt,
-  type VisitorIdentity,
-} from "./VisitorIdentityPrompt";
 
 interface Message {
   role: "user" | "assistant";
@@ -19,8 +15,7 @@ interface AgentResponse {
 }
 
 const STORAGE_KEY = "rh-agent-chat-session";
-const IDENTITY_STORAGE_KEY = "fi-visitor-identity";
-const IDENTITY_SESSION_KEY = "fi-visitor-identity-session";
+
 
 function resolveLanguage(): "id" | "en" {
   if (typeof document === "undefined") {
@@ -51,13 +46,6 @@ export default function AgentChat() {
   const [language, setLanguage] = useState<"id" | "en">("id");
   const [tone, setTone] = useState<"formal" | "santai" | "deep">("formal");
   const [allowHover, setAllowHover] = useState(false);
-  const [identity, setIdentity] = useState<VisitorIdentity>({
-    name: "",
-    source: "",
-  });
-  const [identityReady, setIdentityReady] = useState(false);
-  const [identityError, setIdentityError] = useState<string | null>(null);
-  const [checkingIdentity, setCheckingIdentity] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const hoverTimeout = useRef<number | null>(null);
 
@@ -107,19 +95,6 @@ export default function AgentChat() {
     };
   }, []);
 
-  const storeIdentity = (nextIdentity: VisitorIdentity) => {
-    if (typeof window === "undefined") return;
-    const payload = JSON.stringify(nextIdentity);
-    window.localStorage.setItem(IDENTITY_STORAGE_KEY, payload);
-    window.sessionStorage.setItem(IDENTITY_SESSION_KEY, payload);
-  };
-
-  const clearStoredIdentity = () => {
-    if (typeof window === "undefined") return;
-    window.localStorage.removeItem(IDENTITY_STORAGE_KEY);
-    window.sessionStorage.removeItem(IDENTITY_SESSION_KEY);
-  };
-
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -129,7 +104,6 @@ export default function AgentChat() {
       } catch {
         // ignore session storage errors
       }
-      clearStoredIdentity();
     };
 
     resetSession();
@@ -140,56 +114,6 @@ export default function AgentChat() {
     return () => {
       window.removeEventListener("beforeunload", resetSession);
       window.removeEventListener("pagehide", resetSession);
-    };
-  }, []);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const bootstrapIdentity = async () => {
-      try {
-        const response = await fetch("/api/owner/session", { cache: "no-store" });
-        const data = (await response.json().catch(() => null)) as
-          | { isOwner?: boolean }
-          | null;
-        if (!cancelled && data?.isOwner) {
-          const ownerIdentity: VisitorIdentity = { name: "Owner", source: "internal" };
-          setIdentity(ownerIdentity);
-          storeIdentity(ownerIdentity);
-          setIdentityReady(true);
-          setCheckingIdentity(false);
-          return;
-        }
-      } catch {
-        // ignore
-      }
-
-      if (cancelled) return;
-
-      if (typeof window !== "undefined") {
-        const stored =
-          window.localStorage.getItem(IDENTITY_STORAGE_KEY) ??
-          window.sessionStorage.getItem(IDENTITY_SESSION_KEY);
-        if (stored) {
-          try {
-            const parsed = JSON.parse(stored) as VisitorIdentity;
-            if (parsed?.name && parsed?.source) {
-              setIdentity({ name: parsed.name, source: parsed.source });
-              setIdentityReady(true);
-            }
-          } catch {
-            clearStoredIdentity();
-          }
-        }
-      }
-
-      setCheckingIdentity(false);
-    };
-
-    bootstrapIdentity();
-
-    return () => {
-      cancelled = true;
     };
   }, []);
 
@@ -261,48 +185,11 @@ export default function AgentChat() {
     }
   }, []);
 
-  const persistIdentity = (nextIdentity: VisitorIdentity) => {
-    setIdentity(nextIdentity);
-    storeIdentity(nextIdentity);
-  };
 
-  const handleIdentityChange = (nextIdentity: VisitorIdentity) => {
-    setIdentity(nextIdentity);
-    if (identityError) {
-      setIdentityError(null);
-    }
-  };
-
-  const handleIdentitySubmit = () => {
-    const trimmedName = identity.name.trim();
-    const trimmedSource = identity.source.trim();
-
-    if (!trimmedName || !trimmedSource) {
-      setIdentityError(
-        language === "en"
-          ? "Please share your name and how you found the site."
-          : "Nama dan sumber kunjungan wajib diisi.",
-      );
-      return;
-    }
-
-    persistIdentity({ name: trimmedName, source: trimmedSource });
-    setIdentityReady(true);
-    setIdentityError(null);
-  };
 
   const handleSubmit = async () => {
     const trimmed = input.trim();
     if (!trimmed || loading) return;
-
-    if (!identityReady) {
-      setIdentityError(
-        language === "en"
-          ? "Introduce yourself first so I can keep track."
-          : "Kenalan dulu yuk—isi nama dan sumbernya.",
-      );
-      return;
-    }
 
     const newMessage: Message = { role: "user", content: trimmed };
     const history = [...messages, newMessage];
@@ -320,7 +207,6 @@ export default function AgentChat() {
           language,
           location: pathname,
           tone,
-          identity: identityReady ? identity : undefined,
         }),
       });
 
@@ -382,12 +268,7 @@ export default function AgentChat() {
     }, 140);
   };
 
-  const resetIdentity = () => {
-    clearStoredIdentity();
-    setIdentity({ name: "", source: "" });
-    setIdentityReady(false);
-    setIdentityError(null);
-  };
+
 
   return (
     <div
@@ -422,38 +303,7 @@ export default function AgentChat() {
             </button>
           </div>
 
-          {checkingIdentity ? (
-            <div className="agent__messages">
-              <div className="agent__message agent__message--assistant">
-                <div className="agent__typing">
-                  <span />
-                  <span />
-                  <span />
-                </div>
-              </div>
-            </div>
-          ) : !identityReady ? (
-            <div className="agent__identity" style={{ height: "100%" }}>
-              <VisitorIdentityPrompt
-                language={language}
-                identity={identity}
-                onChange={handleIdentityChange}
-                onSubmit={handleIdentitySubmit}
-                error={identityError}
-              />
-            </div>
-          ) : (
-            <>
-              <div className="agent__identity-chip">
-                <span>
-                  {language === "en"
-                    ? `Chatting as ${identity.name}`
-                    : `Mengobrol sebagai ${identity.name}`}
-                </span>
-                <button type="button" onClick={resetIdentity}>
-                  {language === "en" ? "Change" : "Ganti"}
-                </button>
-              </div>
+          <>
               <div className="agent__messages">
                 {messages.map((message, index) => (
                   <div key={index} className={`agent__message agent__message--${message.role}`}>
@@ -484,8 +334,7 @@ export default function AgentChat() {
                   {language === "en" ? "Send" : "Kirim"}
                 </button>
               </div>
-            </>
-          )}
+          </>
         </div>
       )}
     </div>
